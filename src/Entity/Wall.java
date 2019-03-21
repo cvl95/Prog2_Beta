@@ -9,4 +9,8 @@ public class Wall extends Entity {
         this.setPosition(pos);
         this.setId(id);
     }
+    public Wall( XY pos){
+        this.updateEnergy(-10);
+        this.setPosition(pos);
+    }
 }

@@ -1,5 +1,7 @@
 package Main;
 
+import Core.Board;
+import Core.BoardConfig;
 import Entity.*;
 import Movement.XY;
 
@@ -7,9 +9,9 @@ import Movement.XY;
 
 public class Main {
 
-    public static void main(String[]args){
+    public static void main(String[]args) throws Exception {
 
-        EntitySet entitySet = new EntitySet();
+      /*  EntitySet entitySet = new EntitySet();
         MasterSquirel masterSquirel = new MasterSquirel(1,new XY(0,0));
         BadBeast badBeast = new BadBeast(2,new XY(3,4));
         GoodBeast goodBeast = new GoodBeast(3,new XY(2,1));
@@ -29,5 +31,13 @@ public class Main {
 
         entitySet.callNextStep();
         System.out.println(entitySet.toString());
+        */
+       /* EntitySet entitySet = new EntitySet();
+        BoardConfig boardConfig = new BoardConfig(20,20,20);
+        Board board =new Board(entitySet,boardConfig);
+
+        System.out.println(board);
+        */
+
     }
 }
