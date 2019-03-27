@@ -22,6 +22,8 @@ public class MasterSquirel extends Entity {
         miniSquirel.updateEnergy(GivenEnergy);
         this.updateEnergy(-GivenEnergy);
         miniSquirel.setId(this.getId()*2); // need Id generation stuff
+
+        //Wichtig zum, testen
         miniSquirel.setPosition(new XY(0, -1));
         //Position of minisquirel how? why? when? diffrent Method??
 
@@ -42,11 +44,11 @@ public class MasterSquirel extends Entity {
 
     @Override
     public void nextStep(EntitySet entities) {
-        this.getPosition().getNewPosition();
+        this.setPosition(this.getPosition().getNewPosition());
         resolveColission(entities);
     }
 
-    private void resolveColission(EntitySet entities){
+    public void resolveColission(EntitySet entities){
         for (int i = 0; i<entities.getLENTGH();i++) {
             Entity entity = entities.getEntitySet()[i];
             if(entity instanceof GoodPlant && this.getPosition() == entity.getPosition()){
