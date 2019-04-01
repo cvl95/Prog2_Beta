@@ -2,20 +2,23 @@ package Movement;
 
 public class XY {
 
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
 
     public XY(int x, int y){
         this.x = x;
         this.y = y;
     }
-    public XY getNewPosition(){
+    public void getNewPosition(){
+
         int newX = calculateRandom();
         int newY = calculateRandom();
         if(newX == 0 && newY == 0){
             getNewPosition();
         }
-        return new XY(this.x + newX,this.y + newY);
+
+        this.x = this.x + newX;
+        this.y = this.y + newY;
 
     }
     private int calculateRandom(){
@@ -26,8 +29,9 @@ public class XY {
         y= -1 + (int)random;
         return y;
     }
-    public XY getUserInputLoc(int nx, int ny){
-        return new XY(this.x + nx, this.y + ny );
+    public void getUserInputLoc(int nx, int ny){
+        this.x = this.x + nx;
+        this.y = this.y + ny;
     }
 
     public int getX() {
@@ -36,6 +40,14 @@ public class XY {
 
     public int getY() {
         return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     @Override

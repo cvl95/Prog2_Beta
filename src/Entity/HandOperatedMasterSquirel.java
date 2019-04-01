@@ -1,9 +1,6 @@
 package Entity;
 
-import Console.MoveCommand;
 import Movement.XY;
-import org.graalvm.compiler.lir.sparc.SPARCMove;
-
 import java.util.Scanner;
 
 public class HandOperatedMasterSquirel extends MasterSquirel {
@@ -18,9 +15,7 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
 
     @Override
     public void nextStep(EntitySet entities) {
-        MoveCommand moveCommand = new MoveCommand(this.getPosition());
-        this.setPosition(moveCommand.command());
-        resolveColission(entities);
+
     }
 
 }

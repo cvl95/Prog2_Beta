@@ -12,6 +12,6 @@ public class GoodBeast extends Entity {
 
     @Override
     public void nextStep(EntitySet entities) {
-        this.setPosition(this.getPosition().getNewPosition());
+        this.getPosition().getNewPosition();
     }
 }
