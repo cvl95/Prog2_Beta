@@ -1,5 +1,8 @@
 package Console;
 
+import Entity.HandOperatedMasterSquirel;
+import Movement.XY;
+
 import java.util.Scanner;
 
 public class MoveCommand {
@@ -12,14 +15,16 @@ public class MoveCommand {
     private static final int UPRIGHT = UP+RIGHT;
     private static final int DOWNRIGHT = DOWN+RIGHT;
     private static final int DOWNLEFT = DOWN+LEFT;
-    private  int x = 0;
-    private  int y = 0;
+    XY pos;
 
-    MoveCommand() {
+    public MoveCommand() {
         command();
     }
+    public MoveCommand(XY pos){
+        this.pos = pos;
+    }
 
-    private void command(){
+    public XY command(){
         Scanner scanner = new Scanner(System.in);
         printHelp();
         String input = scanner.nextLine();
@@ -32,40 +37,25 @@ public class MoveCommand {
         }
         switch (str){
             case UP:
-                setX(0);
-                setY(-1);
-                break;
+                return pos.getUserInputLoc(0, -1);
             case DOWN:
-                setX(0);
-                setY(1);
-                break;
+                return pos.getUserInputLoc(0, 1);
             case LEFT:
-                setX(-1);
-                setY(0);
-                break;
+                return pos.getUserInputLoc(-1, 0);
             case RIGHT:
-                setX(1);
-                setY(0);
-                break;
+                return pos.getUserInputLoc(1, 0);
             case UPLEFT:
-                setX(-1);
-                setY(-1);
-                break;
+                return pos.getUserInputLoc(-1, -1);
             case UPRIGHT:
-                setX(1);
-                setY(-1);
-                break;
+                return pos.getUserInputLoc(1, -1);
             case DOWNLEFT:
-                setX(-1);
-                setY(1);
-                break;
+                return pos.getUserInputLoc(0, -1);
             case DOWNRIGHT:
-                setX(1);
-                setY(1);
-                break;
+                return pos.getUserInputLoc(1, 1);
             default:
                 System.out.println("Please enter correct directions. ");
                 printHelp();
+                return pos.getUserInputLoc(0, 0);
         }
     }
     private void printHelp(){
@@ -80,19 +70,7 @@ public class MoveCommand {
                 "down right = sd ");
     }
 
-    private void setX(int x) {
-        this.x = x;
-    }
-
-    private void setY(int y) {
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    public XY getPos() {
+        return pos;
     }
 }
