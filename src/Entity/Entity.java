@@ -26,9 +26,6 @@ public class Entity {
 
     }
 
-/*    Entity(XY pos){
-        this.position = pos;
-    }*/
 
     public int getEnergy() {
         return energy;

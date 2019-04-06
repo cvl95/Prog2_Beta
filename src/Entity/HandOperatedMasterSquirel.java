@@ -7,10 +7,9 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
 
 
 
-    public HandOperatedMasterSquirel(int id, XY pos){
-        this.setId(id);
-        this.setPosition(pos);
-        this.updateEnergy(1000);
+    public HandOperatedMasterSquirel(int energy, XY pos){
+
+        super(1000,pos);
     }
 
     @Override

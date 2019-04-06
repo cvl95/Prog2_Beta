@@ -9,21 +9,17 @@ public class MasterSquirel extends Entity {
 
     private List<MiniSquirel> miniSquirelList = new ArrayList<>();
 
+    public MasterSquirel(int energy, XY pos){
 
-    MasterSquirel(int energy, XY pos) {
         super(1000, pos);
+
     }
 
-    public MiniSquirel createMinisquirel(int GivenEnergy){
-        MiniSquirel miniSquirel = new MiniSquirel();
-        miniSquirel.updateEnergy(GivenEnergy);
+    public MiniSquirel createMinisquirel(int GivenEnergy, XY pos){
+        MiniSquirel miniSquirel = new MiniSquirel(GivenEnergy, pos);
         this.updateEnergy(-GivenEnergy);
-        miniSquirel.setId(this.getId()*2); // need Id generation stuff
-        miniSquirel.setPosition(new XY(0, -1));
-        //Position of minisquirel how? why? when? diffrent Method??
-
-       this.miniSquirelList.add(miniSquirel);
-       return miniSquirel;
+        this.miniSquirelList.add(miniSquirel);
+        return miniSquirel;
     }
 
     // how to move to minisquirel
