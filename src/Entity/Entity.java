@@ -2,21 +2,33 @@ package Entity;
 
 import Movement.XY;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Entity {
 
-    private int id;
+    private final int id;
     private int energy;
     private XY position;
+    private static List idList = new ArrayList<Integer>();
 
-    Entity(){}
+
     Entity(int energy, XY pos, int Id){
         this.energy = energy;
         this.position = pos;
         this.id = Id;
     }
-    Entity(XY pos){
+
+    Entity(int energy, XY pos){
+        this.energy = energy;
         this.position = pos;
+        this.id = assignID();
+
     }
+
+/*    Entity(XY pos){
+        this.position = pos;
+    }*/
 
     public int getEnergy() {
         return energy;
@@ -42,10 +54,29 @@ public class Entity {
         this.id = id;
     }
 
+    public int generateRandomId(){
+        int id = (int) (System.currentTimeMillis() & 0xfffffff);
+        return id;
+    }
 
+    public boolean checkLst(int id){
+        return idList.contains(id);
+    }
+
+    public int assignID() {
+    id = generateRandomId();
+        if (checkLst(id)) {
+            this.id = id;
+            idList.add(id);
+        }
+        else
+            assignID();
+        return id;
+    }
     public void nextStep(EntitySet entities){
 
     }
+
 
     @Override
     public String toString() {

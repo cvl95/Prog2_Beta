@@ -11,5 +11,6 @@ public class ID {
     private static void setID(){
         ID.id ++;
     }
+    //Prüfen ob ID schon vergeben ist
 
 }

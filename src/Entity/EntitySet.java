@@ -1,13 +1,18 @@
 package Entity;
 
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 public class EntitySet {
 
     private static final int LENTGH = 30;
     private Entity[] entitySet = new Entity[this.LENTGH];
+
+
 
     public void addEntity(Entity entity){
         for (int i = 0; i<this.LENTGH;i++) {
@@ -18,6 +23,7 @@ public class EntitySet {
                 System.out.println("no place in Array delete elements first");
             }
         }
+
     }
     public void deleteEntity(Entity entity){
         for (int i = 0; i<this.LENTGH;i++) {
