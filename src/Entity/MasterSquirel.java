@@ -35,11 +35,11 @@ public class MasterSquirel extends Entity {
 
     @Override
     public void nextStep(EntitySet entities) {
-        this.getPosition().getNewPosition();
+        this.setPosition(this.getPosition().getNewPosition());
         resolveColission(entities);
     }
 
-    private void resolveColission(EntitySet entities){
+    public void resolveColission(EntitySet entities){
         for (int i = 0; i<entities.getLENTGH();i++) {
             Entity entity = entities.getEntitySet()[i];
             if(entity instanceof GoodPlant && this.getPosition() == entity.getPosition()){
