@@ -50,10 +50,6 @@ public class Entity {
         this.energy += Delta;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int generateRandomId(){
         int id = (int) (System.currentTimeMillis() & 0xfffffff);
         return id;
@@ -64,14 +60,12 @@ public class Entity {
     }
 
     public int assignID() {
-    id = generateRandomId();
-        if (checkLst(id)) {
-            this.id = id;
-            idList.add(id);
-        }
-        else
+        int iD = generateRandomId();
+        if (checkLst(iD))
             assignID();
-        return id;
+        else
+            idList.add(iD);
+        return iD;
     }
     public void nextStep(EntitySet entities){
 
