@@ -4,10 +4,8 @@ import Movement.XY;
 
 public class BadBeast extends Entity {
 
-    public BadBeast(int id,XY pos){
-        this.updateEnergy(-150);
-        this.setPosition(pos);
-        this.setId(id);
+    BadBeast(int energy, XY pos) {
+        super(-150, pos);
     }
 
     @Override

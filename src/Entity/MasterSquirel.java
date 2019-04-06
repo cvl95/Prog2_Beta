@@ -10,11 +10,8 @@ public class MasterSquirel extends Entity {
     private List<MiniSquirel> miniSquirelList = new ArrayList<>();
 
 
-    public MasterSquirel(){}
-    public MasterSquirel(int id, XY pos){
-        this.updateEnergy(1000);
-        this.setPosition(pos);
-        this.setId(id);
+    MasterSquirel(int energy, XY pos) {
+        super(1000, pos);
     }
 
     public MiniSquirel createMinisquirel(int GivenEnergy){
