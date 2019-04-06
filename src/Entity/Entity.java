@@ -58,10 +58,9 @@ public class Entity {
 
     public int assignID() {
         int iD = generateRandomId();
-        if (checkLst(iD))
-            assignID();
-        else
-            idList.add(iD);
+        while(checkLst(iD) == true)
+            iD = generateRandomId();
+        idList.add(iD);
         return iD;
     }
     public void nextStep(EntitySet entities){

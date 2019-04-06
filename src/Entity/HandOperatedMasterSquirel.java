@@ -2,7 +2,6 @@ package Entity;
 
 import Console.MoveCommand;
 import Movement.XY;
-import org.graalvm.compiler.lir.sparc.SPARCMove;
 
 import java.util.Scanner;
 
