@@ -4,13 +4,10 @@ import Movement.XY;
 
 public class Wall extends Entity {
 
-   public Wall(int id, XY pos){
-        this.updateEnergy(-10);
-        this.setPosition(pos);
-        this.setId(id);
+   public Wall(int energy, XY pos){
+        super(energy,pos);
     }
     public Wall( XY pos){
-        this.updateEnergy(-10);
-        this.setPosition(pos);
+        super(-10,pos);
     }
 }

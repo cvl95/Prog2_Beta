@@ -45,7 +45,7 @@ public class Board {
 
                 try{
                     xy  = findFreePlace(xy) ;
-                    BadBeast badBeast = new BadBeast(generateRandomId() ,xy);
+                    BadBeast badBeast = new BadBeast(-100 ,xy);
                     entitySet.addEntity(badBeast);
                     this.gameBoard[xy.getX()][xy.getY()] = badBeast;
                 }catch (Exception e){
@@ -57,7 +57,7 @@ public class Board {
 
             try{
                 xy = findFreePlace(xy);
-                GoodBeast goodBeast = new GoodBeast(generateRandomId(),xy);
+                GoodBeast goodBeast = new GoodBeast(100,xy);
                 entitySet.addEntity(goodBeast);
                 this.gameBoard[xy.getX()][xy.getY()] = goodBeast;
             }catch (Exception e){
@@ -68,7 +68,7 @@ public class Board {
         for(int i = 1; i <= badPlantNo; i++ ){
             try{
                 xy = findFreePlace(xy);
-                BadPlant badPlant = new BadPlant(generateRandomId(),xy);
+                BadPlant badPlant = new BadPlant(-100,xy);
                 entitySet.addEntity(badPlant);
                 this.gameBoard[xy.getX()][xy.getY()] = badPlant;
             }catch (Exception e){
@@ -79,7 +79,7 @@ public class Board {
         for(int i = 1; i <= goodPlantNo; i++ ){
             try{
                 xy = findFreePlace(xy);
-                GoodPlant goodPlant = new GoodPlant(generateRandomId(),xy);
+                GoodPlant goodPlant = new GoodPlant(50 ,xy);
                 entitySet.addEntity(goodPlant);
                 this.gameBoard[xy.getX()][xy.getY()] = goodPlant;
             }catch (Exception e){
@@ -90,14 +90,13 @@ public class Board {
         for(int i = 1; i <= wallNo ; i++ ){
             try{
                 xy = findFreePlace(xy);
-                Wall wall = new Wall(generateRandomId(),xy);
+                Wall wall = new Wall(-10,xy);
                 entitySet.addEntity(wall);
                 this.gameBoard[xy.getX()][xy.getY()] = wall;
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
         }
-
 
     }
     private XY findFreePlace(XY xy){
@@ -114,11 +113,6 @@ public class Board {
         int randomY = (int)(Math.random() * (this.gameBoard.length)-1);
         return new XY(randomX,randomY);
     }
-    public int generateRandomId(){
-        int id = (int) (System.currentTimeMillis() & 0xfffffff);
-        return id;
-    }
-
 
     public Entity[][] getGameBoard() {
         return gameBoard;

@@ -4,7 +4,7 @@ import Movement.XY;
 
 public class GoodBeast extends Entity {
 
-    GoodBeast(int energy, XY pos) {
+    public GoodBeast(int energy, XY pos) {
         super(200, pos);
     }
 
