@@ -10,6 +10,8 @@ import Movement.XY;
 public class Main {
 
     public static void main(String[]args) throws Exception {
+        while(true){
+        }
 
         EntitySet entitySet = new EntitySet();
         MasterSquirel masterSquirel = new MasterSquirel(1,new XY(0,0));
