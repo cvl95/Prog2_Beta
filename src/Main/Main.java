@@ -29,6 +29,9 @@ public class Main {
         entitySet.addEntity(wall);
         entitySet.addEntity(miniSquirel);
 
+
+        entitySet.callNextStep();
+        System.out.println(entitySet.toString());
         entitySet.callNextStep();
         System.out.println(entitySet.toString());
 
