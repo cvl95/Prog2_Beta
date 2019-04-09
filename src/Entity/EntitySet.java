@@ -9,7 +9,7 @@ import java.util.List;
 
 public class EntitySet {
 
-    private static final int LENTGH = 30;
+    private static final int LENTGH = 300;
     private Entity[] entitySet = new Entity[this.LENTGH];
 
 

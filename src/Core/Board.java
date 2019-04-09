@@ -40,7 +40,7 @@ public class Board {
         int badPlantNo = boardConfig.getNumberOfBadplants();
         int goodPlantNo = boardConfig.getNumberOfGoodplants();
         int wallNo =boardConfig.getNumberOfWalls();
-        XY xy = null;
+        XY xy = calculateRandomPosition();
         // badBeast spawn
         for(int i = 1; i <= badBeastNo; i++ ){
 
@@ -112,8 +112,18 @@ public class Board {
     public String flatten(){
         StringBuilder stringBuilder = new StringBuilder();
 
+
+
+        for(int n = 0; n < entitySet.getEntitySet().length; n++){ //fillFlattenedBoard
+            if(entitySet.getEntitySet()[n] !=null){
+                int x = entitySet.getEntitySet()[n].getPosition().getX();
+                int y = entitySet.getEntitySet()[n].getPosition().getY();
+                flattenedBoard[x][y] = entitySet.getEntitySet()[n];
+            }
+        }
+
         for(int i = 0; i <= flattenedBoard.length-1; i++){
-            for(int j = 0; j<=flattenedBoard[0].length-1-1; j++){
+            for(int j = 0; j<=flattenedBoard[0].length-1; j++){
                 stringBuilder.append(identHelper(this.flattenedBoard[i][j])+" ");
             }stringBuilder.append("\n");
         }
@@ -121,13 +131,13 @@ public class Board {
     }
     private String identHelper(Entity entity){
         if(entity instanceof BadBeast){
-            return " BB";
+            return "BB";
         }else if(entity instanceof GoodBeast){
-            return " GB";
+            return "GB";
         }else if(entity instanceof GoodPlant){
-            return " GP";
+            return "GP";
         }else if(entity instanceof BadPlant){
-            return " BP";
+            return "BP";
         }else if(entity instanceof Wall){
             return " +";
         }else if(entity instanceof MasterSquirel){
