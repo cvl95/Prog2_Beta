@@ -7,13 +7,13 @@ import Movement.XY;
 public class Board {
     EntitySet entitySet;
     BoardConfig boardConfig;
-    private Entity[][] gameBoard;
+    private Entity[][] flattenedBoard;
 
 
     public Board(EntitySet entitySet, BoardConfig boardConfig){
         this.entitySet = entitySet;
         this.boardConfig = boardConfig;
-        this.gameBoard = new Entity[this.boardConfig.getBoardX()][this.boardConfig.getBoardY()];
+        this.flattenedBoard = new Entity[this.boardConfig.getBoardX()][this.boardConfig.getBoardY()];
         buildABoard();
     }
 
@@ -22,24 +22,25 @@ public class Board {
         fillEntitySet();
     }
     private void createWalls(){
-        int max = this.gameBoard.length;
+        int max = this.flattenedBoard.length;
         for(int i = 0; i <= max-1; i++ ){
-            this.gameBoard[i][0] = new Wall(new XY(i,0));
-            this.gameBoard[i][max-1] = new Wall(new XY(i,max-1));
+            entitySet.addEntity(new Wall(new XY(i,0)));
+            entitySet.addEntity(new Wall(new XY(i,max-1)));
             // problem with corners created two times
-            this.gameBoard[0][i] = new Wall(new XY(0,i));
-            this.gameBoard[max-1][i] = new Wall(new XY(max-1,i));
+            entitySet.addEntity(new Wall(new XY(0,i)));
+            entitySet.addEntity(new Wall(new XY(max-1,i)));
         }
 
     }
     private void fillEntitySet(){
+        //Fills flattenedBoard and EntitySet!
 
         int badBeastNo = boardConfig.getNumberOfBadbeast();
         int goodBeastNo = boardConfig.getNumberOfGoodbeast();
         int badPlantNo = boardConfig.getNumberOfBadplants();
         int goodPlantNo = boardConfig.getNumberOfGoodplants();
         int wallNo =boardConfig.getNumberOfWalls();
-        XY xy = calculateRandomPosition();
+        XY xy = null;
         // badBeast spawn
         for(int i = 1; i <= badBeastNo; i++ ){
 
@@ -47,7 +48,6 @@ public class Board {
                     xy  = findFreePlace(xy) ;
                     BadBeast badBeast = new BadBeast(-100 ,xy);
                     entitySet.addEntity(badBeast);
-                    this.gameBoard[xy.getX()][xy.getY()] = badBeast;
                 }catch (Exception e){
                     System.out.println(e.getMessage());
                 }
@@ -59,7 +59,6 @@ public class Board {
                 xy = findFreePlace(xy);
                 GoodBeast goodBeast = new GoodBeast(100,xy);
                 entitySet.addEntity(goodBeast);
-                this.gameBoard[xy.getX()][xy.getY()] = goodBeast;
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -70,7 +69,6 @@ public class Board {
                 xy = findFreePlace(xy);
                 BadPlant badPlant = new BadPlant(-100,xy);
                 entitySet.addEntity(badPlant);
-                this.gameBoard[xy.getX()][xy.getY()] = badPlant;
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -81,7 +79,6 @@ public class Board {
                 xy = findFreePlace(xy);
                 GoodPlant goodPlant = new GoodPlant(50 ,xy);
                 entitySet.addEntity(goodPlant);
-                this.gameBoard[xy.getX()][xy.getY()] = goodPlant;
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -92,7 +89,6 @@ public class Board {
                 xy = findFreePlace(xy);
                 Wall wall = new Wall(-10,xy);
                 entitySet.addEntity(wall);
-                this.gameBoard[xy.getX()][xy.getY()] = wall;
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -100,7 +96,7 @@ public class Board {
 
     }
     private XY findFreePlace(XY xy){
-        if(this.gameBoard[xy.getX()][xy.getY()] == null){
+        if(this.flattenedBoard[xy.getX()][xy.getY()] == null){
             return  new XY (xy.getX(),xy.getY());
         }
         else{
@@ -108,29 +104,22 @@ public class Board {
            return findFreePlace(xy2);
         }
     }
-    private XY calculateRandomPosition(){
-        int randomX = (int)(Math.random() * (this.gameBoard.length)-1);
-        int randomY = (int)(Math.random() * (this.gameBoard.length)-1);
-        return new XY(randomX,randomY);
+    private XY calculateRandomPosition() {
+        int randomX = (int) (Math.random() * (this.flattenedBoard.length) - 1);
+        int randomY = (int) (Math.random() * (this.flattenedBoard.length) - 1);
+        return new XY(randomX, randomY);
     }
-
-    public Entity[][] getGameBoard() {
-        return gameBoard;
-    }
-
-
-    @Override
-    public String toString(){
+    public String flatten(){
         StringBuilder stringBuilder = new StringBuilder();
 
-        for(int i = 0; i <= this.gameBoard.length-1; i++){
-            for(int j = 0; j<=this.gameBoard.length-1; j++){
-                stringBuilder.append(printHelper(this.gameBoard[i][j])+" ");
+        for(int i = 0; i <= flattenedBoard.length-1; i++){
+            for(int j = 0; j<=flattenedBoard[0].length-1-1; j++){
+                stringBuilder.append(identHelper(this.flattenedBoard[i][j])+" ");
             }stringBuilder.append("\n");
         }
         return stringBuilder.toString();
     }
-    private String printHelper(Entity entity){
+    private String identHelper(Entity entity){
         if(entity instanceof BadBeast){
             return " BB";
         }else if(entity instanceof GoodBeast){
@@ -148,8 +137,5 @@ public class Board {
         }
 
     }
-
-
-
 
 }
