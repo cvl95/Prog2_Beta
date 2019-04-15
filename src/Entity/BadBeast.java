@@ -1,7 +1,7 @@
 package Entity;
 
-import Core.EntityContext;
-import Movement.XY;
+        import Core.EntityContext;
+        import Movement.XY;
 
 public class BadBeast extends Entity {
     int counter = 0;
@@ -21,9 +21,9 @@ public class BadBeast extends Entity {
     @Override
     public void nextStep(EntityContext context) {
         if (counter==0)
-         context.
+            context.
 
-        counter++;
+                    counter++;
         if (counter == 3)
             counter = 0;
     }

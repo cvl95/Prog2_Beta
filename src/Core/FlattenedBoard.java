@@ -2,6 +2,9 @@ package Core;
 import Entity.*;
 import Movement.XY;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FlattenedBoard implements Boardview, EntityContext {
     private final Board board;
     private final Entity[][] gameField;
@@ -131,6 +134,11 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void tryMove(MiniSquirel miniSquirel, XY moveDirection) {
+        Entity entityAtMoveDirection = board.getEntitySet().findEntity(moveDirection);
+        
+        miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+        killAndReplace(entityAtMoveDirection);
+        masterSquirel.setPosition(masterSquirel.getPosition().setNewPosition(moveDirection));
 
     }
 
@@ -171,6 +179,21 @@ public class FlattenedBoard implements Boardview, EntityContext {
         }
         kill(entity);
         board.entitySet.addEntity(newEntity);
+    }
+
+    public List checkSuroundings(Entity entity) {
+        List<Entity> surroundingEntities = new ArrayList<Entity>();
+        for (int i = -6; i < 7; i++) {
+            for (int z = -6; z < 7; z++) {
+                if (new XY(entity.getPosition().getX() + i, entity.getPosition().getY() + z) == null) {
+                    continue;
+                } else {
+                    surroundingEntities.add(board.entitySet.findEntity(new XY(entity.getPosition().getX() + i, entity.getPosition().getY() + z)));
+                }
+            }
+
+        }
+        return surroundingEntities;
     }
 
 }
