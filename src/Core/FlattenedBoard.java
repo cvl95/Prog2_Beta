@@ -2,7 +2,7 @@ package Core;
 
 import Entity.*;
 
-public class FlattenedBoard {
+public class FlattenedBoard implements Boardview {
 
     Entity[][] flattenedBoard;
 
@@ -10,8 +10,8 @@ public class FlattenedBoard {
         this.flattenedBoard = flattenedBoard;
     }
 
-    public Entity[][] getFlattenedBoard() {
+    @Override
+    public Entity[][] getBoardRep() {
         return flattenedBoard;
     }
-
 }

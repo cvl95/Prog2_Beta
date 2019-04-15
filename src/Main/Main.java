@@ -32,9 +32,7 @@ public class Main {
         BoardConfig boardConf = new BoardConfig(30,30,14);
         Board board = new Board(entitySet, boardConf);
         entitySet.callNextStep();
-        System.out.println(board.flatten());
         entitySet.callNextStep();
-        System.out.println(board.flatten());
 
        /* EntitySet entitySet = new EntitySet();
         BoardConfig boardConfig = new BoardConfig(20,20,20);

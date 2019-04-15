@@ -1,21 +1,25 @@
 package GameEngine;
+import Console.ConsoleUI;
+import Console.UI;
 
 
 
 public class Game {
 
+    UI ui = new ConsoleUI();
+    
 
     public void run(){
         while (true){
-            render();
+            render(ui);
             processInput();
             update();
         }
     }
 
-    public void render(){
+    public void render(UI ui){
 
-        //Methode stellt jeweils den Spielzustand auf dem Ausgabemedium dar
+        ui.render();
     }
 
     public void update(){
