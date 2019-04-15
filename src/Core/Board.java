@@ -40,7 +40,7 @@ public class Board {
         int badPlantNo = boardConfig.getNumberOfBadplants();
         int goodPlantNo = boardConfig.getNumberOfGoodplants();
         int wallNo =boardConfig.getNumberOfWalls();
-        XY xy = null;
+        XY xy = calculateRandomPosition();
         // badBeast spawn
         for(int i = 1; i <= badBeastNo; i++ ){
 
@@ -109,33 +109,16 @@ public class Board {
         int randomY = (int) (Math.random() * (this.flattenedBoard.length) - 1);
         return new XY(randomX, randomY);
     }
-    public String flatten(){
+    public void flatten() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for(int i = 0; i <= flattenedBoard.length-1; i++){
-            for(int j = 0; j<=flattenedBoard[0].length-1-1; j++){
-                stringBuilder.append(identHelper(this.flattenedBoard[i][j])+" ");
-            }stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
-    }
-    private String identHelper(Entity entity){
-        if(entity instanceof BadBeast){
-            return " BB";
-        }else if(entity instanceof GoodBeast){
-            return " GB";
-        }else if(entity instanceof GoodPlant){
-            return " GP";
-        }else if(entity instanceof BadPlant){
-            return " BP";
-        }else if(entity instanceof Wall){
-            return " +";
-        }else if(entity instanceof MasterSquirel){
-            return " M";
-        }else{
-            return " -";
-        }
 
+        for (int n = 0; n < entitySet.getEntitySet().length; n++) { //fillFlattenedBoard
+            if (entitySet.getEntitySet()[n] != null) {
+                int x = entitySet.getEntitySet()[n].getPosition().getX();
+                int y = entitySet.getEntitySet()[n].getPosition().getY();
+                flattenedBoard[x][y] = entitySet.getEntitySet()[n];
+            }
+        }
     }
-
 }

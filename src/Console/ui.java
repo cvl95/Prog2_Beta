@@ -2,8 +2,7 @@ package Console;
 
 import Core.Boardview;
 
-public interface ui {
-
-    MoveCommand getCommand();
+public interface UI {
     void render(Boardview boardview);
+    void processInput();
 }
