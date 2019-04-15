@@ -1,18 +1,27 @@
 package Entity;
 
+import Core.EntityContext;
 import Movement.XY;
 
 public class BadBeast extends Entity {
     int counter = 0;
+    int snack = 3;
     public BadBeast(int energy, XY pos) {
         super(-150, pos);
     }
 
+    public void setSnack() {
+        this.snack = this.snack--;
+    }
+
+    public int getSnack() {
+        return snack;
+    }
+
     @Override
-    public void nextStep(EntitySet entities) {
+    public void nextStep(EntityContext context) {
         if (counter==0)
-            if (colider.checkSurrondings().contains(MasterSquirel) ||  colider.checkSurrondings().contains(MiniSquirel))
-            this.setPosition(this.getPosition().getNewPosition());
+         context.
 
         counter++;
         if (counter == 3)

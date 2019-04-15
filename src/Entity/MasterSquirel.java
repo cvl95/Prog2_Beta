@@ -24,6 +24,10 @@ public class MasterSquirel extends Entity {
         return miniSquirel;
     }
 
+    public void setStun(int stun) {
+        this.stun = stun;
+    }
+
     // how to move to minisquirel
     public boolean checkOrigin(MiniSquirel miniSquirel){
 

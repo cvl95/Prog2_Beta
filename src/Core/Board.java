@@ -95,7 +95,7 @@ public class Board {
         }
 
     }
-    private XY findFreePlace(XY xy){
+    public XY findFreePlace(XY xy){
         if(this.flattenedBoard[xy.getX()][xy.getY()] == null){
             return  new XY (xy.getX(),xy.getY());
         }
@@ -104,7 +104,7 @@ public class Board {
            return findFreePlace(xy2);
         }
     }
-    private XY calculateRandomPosition() {
+    public XY calculateRandomPosition() {
         int randomX = (int) (Math.random() * (this.flattenedBoard.length) - 1);
         int randomY = (int) (Math.random() * (this.flattenedBoard.length) - 1);
         return new XY(randomX, randomY);
@@ -117,16 +117,8 @@ public class Board {
         return entitySet;
     }
 
-    public void flatten() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-
-        for (int n = 0; n < entitySet.getEntitySet().length; n++) { //fillFlattenedBoard
-            if (entitySet.getEntitySet()[n] != null) {
-                int x = entitySet.getEntitySet()[n].getPosition().getX();
-                int y = entitySet.getEntitySet()[n].getPosition().getY();
-                flattenedBoard[x][y] = entitySet.getEntitySet()[n];
-            }
+    public FlattenedBoard flatten() {
+        return new FlattenedBoard(this);
         }
-    }
+
 }

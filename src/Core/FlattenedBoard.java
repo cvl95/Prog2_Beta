@@ -97,7 +97,36 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void tryMove(MasterSquirel masterSquirel, XY moveDirection) {
+        Entity entityAtMoveDirection = board.getEntitySet().findEntity(moveDirection);
+        if(entityAtMoveDirection == null){
+            masterSquirel.setPosition(masterSquirel.getPosition().setNewPosition(moveDirection));
+        }else if(entityAtMoveDirection instanceof Wall){
+            masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+            masterSquirel.setStun(3);
+        }else if(entityAtMoveDirection instanceof Plant){
+            masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+            killAndReplace(entityAtMoveDirection);
+            masterSquirel.setPosition(masterSquirel.getPosition().setNewPosition(moveDirection));
 
+        }else if(entityAtMoveDirection instanceof GoodBeast){
+            masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+            killAndReplace(entityAtMoveDirection);
+            masterSquirel.setPosition(masterSquirel.getPosition().setNewPosition(moveDirection));
+
+        }else if(entityAtMoveDirection instanceof BadBeast){
+            masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+            if(((BadBeast) entityAtMoveDirection).getSnack() == 0){
+                killAndReplace(entityAtMoveDirection);
+                masterSquirel.setPosition(masterSquirel.getPosition().setNewPosition(moveDirection));
+            }else{
+                ((BadBeast) entityAtMoveDirection).setSnack();
+            }
+        }else if(entityAtMoveDirection instanceof MiniSquirel){
+            masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+            kill(entityAtMoveDirection);
+            masterSquirel.setPosition(masterSquirel.getPosition().setNewPosition(moveDirection));
+
+        }
     }
 
     @Override
@@ -122,11 +151,26 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void kill(Entity entity) {
+        board.entitySet.deleteEntity(entity.getId());
 
     }
 
     @Override
-    public void killAndReplace(Entity entity) {
-
+        public void killAndReplace(Entity entity) {
+        Entity newEntity = null;
+        XY newXY = board.calculateRandomPosition();
+        newXY = board.findFreePlace(newXY);
+        if(entity instanceof GoodPlant){
+            newEntity = new GoodPlant(100, newXY);
+        }else if(entity instanceof BadPlant) {
+            newEntity = new BadPlant(-100,newXY);
+        }else if(entity instanceof GoodBeast) {
+            newEntity = new GoodBeast(200,newXY);
+        }else if(entity instanceof BadBeast) {
+            newEntity = new BadBeast(-150,newXY);
+        }
+        kill(entity);
+        board.entitySet.addEntity(newEntity);
     }
+
 }

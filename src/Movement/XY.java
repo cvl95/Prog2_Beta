@@ -29,7 +29,9 @@ public class XY {
     public XY getUserInputLoc(int nx, int ny){
         return new XY(this.x + nx, this.y + ny );
     }
-
+    public XY setNewPosition(XY xy){
+        return new XY(this.x + xy.getX(), this.y + xy.getY());
+    }
     public int getX() {
         return x;
     }

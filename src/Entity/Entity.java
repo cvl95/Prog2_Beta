@@ -1,5 +1,6 @@
 package Entity;
 
+import Core.EntityContext;
 import GameEngine.Collider;
 import Movement.XY;
 
@@ -65,7 +66,7 @@ public class Entity {
         idList.add(iD);
         return iD;
     }
-    public void nextStep(EntitySet entities){
+    public void nextStep(EntityContext context){
 
     }
 
