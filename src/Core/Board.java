@@ -109,6 +109,14 @@ public class Board {
         int randomY = (int) (Math.random() * (this.flattenedBoard.length) - 1);
         return new XY(randomX, randomY);
     }
+    public XY getSize(){
+        return new XY(this.boardConfig.getBoardX(),this.boardConfig.getBoardY());
+    }
+
+    public EntitySet getEntitySet() {
+        return entitySet;
+    }
+
     public void flatten() {
         StringBuilder stringBuilder = new StringBuilder();
 

@@ -92,7 +92,7 @@ public class EntitySet {
         }return null;
     }
 
-    public static int getLENTGH() {
+    public int getLENTGH() {
         return LENTGH;
     }
 

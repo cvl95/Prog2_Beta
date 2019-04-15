@@ -52,13 +52,7 @@ public class MasterSquirel extends Entity {
                     entities.deleteEntity(fighter);
                     entities.addEntity();
                 }
-
-
-
-
-
-
-        }
+                        }
     }
 
     public void resolveColission(EntitySet entities){
