@@ -1,12 +1,14 @@
 package Entity;
 
 import Movement.XY;
+import com.sun.java.util.jar.pack.Instruction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MasterSquirel extends Entity {
 
+    int stun= 0;
     private List<MiniSquirel> miniSquirelList = new ArrayList<>();
 
     public MasterSquirel(int energy, XY pos){
@@ -35,8 +37,28 @@ public class MasterSquirel extends Entity {
 
     @Override
     public void nextStep(EntitySet entities) {
-        this.setPosition(this.getPosition().getNewPosition());
-        resolveColission(entities);
+        if (stun>0)
+            stun--;
+        else {
+            XY newPos = this.getPosition().getNewPosition();
+            Entity fighter = entities.findEntity(newPos);
+                if (fighter instanceof Wall) {
+                    stun = 3;
+                    this.updateEnergy(fighter.getEnergy());
+                }
+                if (fighter instanceof BadPlant){
+                    this.setPosition(newPos);
+                    updateEnergy(fighter.getEnergy());
+                    entities.deleteEntity(fighter);
+                    entities.addEntity();
+                }
+
+
+
+
+
+
+        }
     }
 
     public void resolveColission(EntitySet entities){
