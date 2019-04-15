@@ -1,6 +1,8 @@
 package Entity;
 
 
+import Movement.XY;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -79,6 +81,15 @@ public class EntitySet {
             }
         }
         return null;
+    }
+    public Entity findEntity(XY xy){
+        for (Entity e:entitySet
+             ) {
+            if(e.getPosition() == xy){
+                return e;
+            }
+
+        }return null;
     }
 
     public static int getLENTGH() {
