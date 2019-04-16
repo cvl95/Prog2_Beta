@@ -24,20 +24,21 @@ public class BadBeast extends Beast {
     public void nextStep(EntityContext context) {
 
         if (counter==0) {
-            XY xy= this.getPosition();
-            XY xyA= this.getPosition();
             List surround = context.checkSuroundings(this);
-
+            XY direction = null;
             for(Object entity: surround) {
 
                 if (entity instanceof Squirel) {
                     int x = entity.getPosition().getX() - this.getPosition().getX();
                     int y = entity.getPosition().getY() - this.getPosition().getY();
-                     xy = ;
+                    direction = this.culcRun(x,y) ;
                 }
 
             }
-
+            if (direction != null)
+                context.tryMove(this,direction);
+            else
+                context.tryMove(this,this.getPosition().getNewPosition());
         }
         counter++;
         if (counter == 3)

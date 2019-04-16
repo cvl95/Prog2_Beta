@@ -2,7 +2,7 @@ package Entity;
 
 import Core.EntityContext;
 import Movement.XY;
-import com.sun.java.util.jar.pack.Instruction;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,10 @@ public class MasterSquirel extends Squirel {
         this.stun = stun;
     }
 
+    public List<MiniSquirel> getMiniSquirelList() {
+        return miniSquirelList;
+    }
+
     // how to move to minisquirel
     public boolean checkOrigin(MiniSquirel miniSquirel){
 
@@ -39,25 +43,32 @@ public class MasterSquirel extends Squirel {
         return false;
 
     }
-
     @Override
     public void nextStep(EntityContext context) {
-        if (stun>0)
-            stun--;
-        else {
-            XY newPos = this.getPosition().getNewPosition();
-            Entity fighter = entities.findEntity(newPos);
-                if (fighter instanceof Wall) {
-                    stun = 3;
-                    this.updateEnergy(fighter.getEnergy());
-                }
-                if (fighter instanceof BadPlant){
-                    this.setPosition(newPos);
-                    updateEnergy(fighter.getEnergy());
-                    entities.deleteEntity(fighter);
-                    entities.addEntity();
-                }
-                        }
+
+        List surround = context.checkSuroundings(this);
+        XY direction = null;
+        for(Object entity: surround) {
+
+
+
+            if (entity instanceof GoodBeast|| entity instanceof GoodPlant) {
+                 int x = entity.getPosition().getX() - this.getPosition().getX();
+                 int y = entity.getPosition().getY() - this.getPosition().getY();
+                direction = this.culcRun(x,y);
+
+            }
+            if (entity instanceof BadBeast || entity instanceof BadPlant) {
+                 int x = this.getPosition().getX() - entity.getPosition().getX();
+                 int y = this.getPosition().getY() - entity.getPosition().getY();
+                direction = this.culcRun(x,y);
+            }
+
+        }
+        if (direction != null)
+            context.tryMove(this,direction);
+
+
     }
 
 

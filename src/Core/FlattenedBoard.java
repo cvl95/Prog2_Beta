@@ -129,29 +129,89 @@ public class FlattenedBoard implements Boardview, EntityContext {
             kill(entityAtMoveDirection);
             masterSquirel.setPosition(masterSquirel.getPosition().setNewPosition(moveDirection));
 
+        }else if(entityAtMoveDirection instanceof MasterSquirel){
+
         }
     }
 
     @Override
     public void tryMove(MiniSquirel miniSquirel, XY moveDirection) {
-        miniSquirel.
+        miniSquirel.setEnergy(miniSquirel.getEnergy()-1);
         Entity entityAtMoveDirection = board.getEntitySet().findEntity(moveDirection);
-
         miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+<<<<<<< HEAD
         killAndReplace(entityAtMoveDirection);
         miniSquirel.setPosition(miniSquirel.getPosition().setNewPosition(moveDirection));
+=======
+        if(miniSquirel.getEnergy()<=0){
+            kill(miniSquirel);
+        }else {
+            if (entityAtMoveDirection == null) {
+                miniSquirel.setPosition(miniSquirel.getPosition().setNewPosition(moveDirection));
+            } else if (entityAtMoveDirection instanceof Wall) {
+                miniSquirel.setStun(3);
+            } else if (entityAtMoveDirection instanceof Plant) {
+                killAndReplace(entityAtMoveDirection);
+                miniSquirel.setPosition(miniSquirel.getPosition().setNewPosition(moveDirection));
 
+            } else if (entityAtMoveDirection instanceof GoodBeast) {
+                killAndReplace(entityAtMoveDirection);
+                miniSquirel.setPosition(miniSquirel.getPosition().setNewPosition(moveDirection));
+
+            } else if (entityAtMoveDirection instanceof BadBeast) {
+                if (((BadBeast) entityAtMoveDirection).getSnack() == 0) {
+                    killAndReplace(entityAtMoveDirection);
+                    miniSquirel.setPosition(miniSquirel.getPosition().setNewPosition(moveDirection));
+                } else {
+                    ((BadBeast) entityAtMoveDirection).setSnack();
+                }
+            } else if (entityAtMoveDirection instanceof MiniSquirel) {
+            }else if (entityAtMoveDirection instanceof MasterSquirel){
+                entityAtMoveDirection.updateEnergy(miniSquirel.getEnergy());
+                if(((MasterSquirel) entityAtMoveDirection).checkOrigin(miniSquirel)){
+                    ((MasterSquirel) entityAtMoveDirection).getMiniSquirelList().remove(miniSquirel);
+                }
+>>>>>>> origin/master
+
+            }
+
+        }
     }
 
     @Override
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
-
+        Entity entityAtMoveDirection = board.getEntitySet().findEntity(moveDirection);
+        if(entityAtMoveDirection == null) {
+            goodBeast.setPosition(goodBeast.getPosition().setNewPosition(moveDirection));
+        }
     }
 
     @Override
     public void tryMove(BadBeast badBeast, XY moveDirection) {
+        Entity entityAtMoveDirection = board.getEntitySet().findEntity(moveDirection);
+            if (entityAtMoveDirection == null) {
+                badBeast.setPosition(badBeast.getPosition().setNewPosition(moveDirection));
+            } else if (entityAtMoveDirection instanceof Wall) {
 
-    }
+            } else if (entityAtMoveDirection instanceof Plant) {
+
+            } else if (entityAtMoveDirection instanceof GoodBeast) {
+
+            } else if (entityAtMoveDirection instanceof BadBeast) {
+
+            } else if (entityAtMoveDirection instanceof Squirel) {
+                if(badBeast.getSnack() > 0){
+                    badBeast.setSnack();
+                    entityAtMoveDirection.updateEnergy(badBeast.getEnergy());
+                }else{
+                    killAndReplace(badBeast);
+                }
+                if(entityAtMoveDirection.getEnergy() <= 0){
+                    kill(entityAtMoveDirection);
+                    badBeast.setPosition(badBeast.getPosition().setNewPosition(moveDirection));
+                }
+            }
+        }
 
     @Override
     public PlayerEntity nearestPlayerEntity(XY position) {
@@ -160,12 +220,15 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void kill(Entity entity) {
-        board.entitySet.deleteEntity(entity.getId());
-
+        if(entity instanceof MiniSquirel){
+            ((MiniSquirel) entity).getSuperMiniSquirelList().remove(entity);
+        }else{
+            board.entitySet.deleteEntity(entity.getId());
+        }
     }
 
     @Override
-        public void killAndReplace(Entity entity) {
+    public void killAndReplace(Entity entity) {
         Entity newEntity = null;
         XY newXY = board.calculateRandomPosition();
         newXY = board.findFreePlace(newXY);
@@ -195,6 +258,19 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
         }
         return surroundingEntities;
+    }
+
+    public Entity[][] getGameField() {
+        return gameField;
+    }
+
+    public void callNextStep() {
+        for (int i = 0; i < this.board.entitySet.getLENTGH(); i++) {
+            if(this.board.getEntitySet().getEntitySet()[i] instanceof Charachter ){
+                this.board.getEntitySet().getEntitySet()[i].nextStep(this);
+            }
+
+        }
     }
 
 }
