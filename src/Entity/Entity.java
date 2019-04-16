@@ -1,5 +1,6 @@
 package Entity;
 
+import Core.Board;
 import Core.EntityContext;
 import Movement.XY;
 
@@ -25,9 +26,6 @@ public class Entity {
         this.position = pos;
         this.id = assignID();
 
-    }
-    Entity(){
-        id = generateRandomId();
     }
 
 
@@ -73,6 +71,19 @@ public class Entity {
     }
     public void nextStep(EntityContext context){
 
+    }
+
+    public XY culcRun(int x, int y){
+        if (x<0)
+            x=-1;
+        if (x>0)
+            x=1;
+        if (y<0)
+            x=-1;
+        if (y>1)
+            x=1;
+
+        return new XY(x,y);
     }
 
 
