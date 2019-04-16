@@ -26,6 +26,9 @@ public class Entity {
         this.id = assignID();
 
     }
+    Entity(){
+        id = generateRandomId();
+    }
 
 
     public int getEnergy() {
@@ -70,10 +73,6 @@ public class Entity {
     }
     public void nextStep(EntityContext context){
 
-    }
-    private XY run(EntityContext context){
-        context.
-        return xy;
     }
 
 
