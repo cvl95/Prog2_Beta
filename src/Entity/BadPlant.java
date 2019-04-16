@@ -5,6 +5,6 @@ import Movement.XY;
 public class BadPlant extends Entity {
 
    public BadPlant(int energy, XY pos) {
-        super(-100, pos);
+        super(-100, pos, EntityType.BADPLANT);
     }
 }

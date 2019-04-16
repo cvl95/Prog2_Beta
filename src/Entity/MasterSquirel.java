@@ -11,7 +11,12 @@ public class MasterSquirel extends Entity {
 
     public MasterSquirel(int energy, XY pos){
 
-        super(1000, pos);
+        super(1000, pos, EntityType.MASTERSQUIRREL);
+
+    }
+    public MasterSquirel(int energy, XY pos, EntityType type){
+
+        super(1000, pos, type);
 
     }
 

@@ -4,7 +4,6 @@ import Entity.*;
 
 public class ConsoleUI implements UI {
 
-    @Override
     public MoveCommand getCommand() {
         return new MoveCommand();
     }

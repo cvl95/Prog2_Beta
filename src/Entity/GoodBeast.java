@@ -5,7 +5,7 @@ import Movement.XY;
 public class GoodBeast extends Entity {
 
     public GoodBeast(int energy, XY pos) {
-        super(200, pos);
+        super(200, pos, EntityType.GOODBEAST);
     }
 
     @Override

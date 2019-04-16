@@ -5,7 +5,7 @@ import Movement.XY;
 public class BadBeast extends Entity {
 
     public BadBeast(int energy, XY pos) {
-        super(-150, pos);
+        super(-150, pos, EntityType.BADBEAST);
     }
 
     @Override

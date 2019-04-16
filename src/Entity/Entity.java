@@ -11,18 +11,21 @@ public class Entity {
     private int energy;
     private XY position;
     private static List idList = new ArrayList<Integer>();
+    private EntityType type;
 
 
-    Entity(int energy, XY pos, int Id){
+    Entity(int energy, XY pos, int Id, EntityType type){
         this.energy = energy;
         this.position = pos;
         this.id = Id;
+        this.type = type;
     }
 
-    Entity(int energy, XY pos){
+    Entity(int energy, XY pos, EntityType type){
         this.energy = energy;
         this.position = pos;
         this.id = assignID();
+        this.type = type;
 
     }
 

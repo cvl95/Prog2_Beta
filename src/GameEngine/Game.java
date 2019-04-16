@@ -4,34 +4,26 @@ import Console.UI;
 
 
 
-public class Game {
+public abstract class Game {
 
     UI ui = new ConsoleUI();
-    
+
 
     public void run(){
         while (true){
             render(ui);
-            processInput();
+            processInput(ui);
             update();
         }
     }
 
-    public void render(UI ui){
-
-        ui.render();
-    }
+    public abstract void render(UI ui);
 
     public void update(){
 
-        //verändert (ggf. unter Berücksichtigung der Eingabe) den aktuellen Spielzustand
-        // , bereitet diesen also auf den nächsten Render-Vorgang vor
     }
 
-    public void processInput(){
-
-        //verarbeitet Benutzereingaben
-    }
+    public abstract void processInput(UI ui);
 
 
 }
