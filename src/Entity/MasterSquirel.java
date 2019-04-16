@@ -1,5 +1,6 @@
 package Entity;
 
+import Core.EntityContext;
 import Movement.XY;
 import com.sun.java.util.jar.pack.Instruction;
 
@@ -40,7 +41,7 @@ public class MasterSquirel extends Entity {
     }
 
     @Override
-    public void nextStep(EntitySet entities) {
+    public void nextStep(EntityContext context) {
         if (stun>0)
             stun--;
         else {
@@ -59,15 +60,7 @@ public class MasterSquirel extends Entity {
                         }
     }
 
-    public void resolveColission(EntitySet entities){
-        for (int i = 0; i<entities.getLENTGH();i++) {
-            Entity entity = entities.getEntitySet()[i];
-            if(entity instanceof GoodPlant && this.getPosition() == entity.getPosition()){
-                this.updateEnergy(entity.getEnergy());
-                entities.deleteEntity(entity.getId());
-                break;
-            }
 
-        }
-    }
+
+
 }

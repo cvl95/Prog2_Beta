@@ -1,7 +1,6 @@
 package Entity;
 
 import Core.EntityContext;
-import GameEngine.Collider;
 import Movement.XY;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ public class Entity {
     private int energy;
     private XY position;
     private static List idList = new ArrayList<Integer>();
-    private Collider colider;
 
 
     Entity(int energy, XY pos, int Id){
@@ -32,6 +30,10 @@ public class Entity {
 
     public int getEnergy() {
         return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
     }
 
     public int getId() {

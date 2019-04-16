@@ -1,5 +1,6 @@
 package Entity;
 
+import Core.EntityContext;
 import Movement.XY;
 
 public class MiniSquirel extends Entity {
@@ -10,7 +11,7 @@ public class MiniSquirel extends Entity {
     }
 
     @Override
-    public void nextStep(EntitySet entities) {
+    public void nextStep(EntityContext context) {
         this.setPosition(this.getPosition().getNewPosition());
     }
 }
