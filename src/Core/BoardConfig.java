@@ -18,7 +18,7 @@ public class BoardConfig {
 
 
 
-    public BoardConfig(int width,int height, int entitiesAmount) throws Exception {
+    public BoardConfig(int width,int height, int entitiesAmount) throws Exception{
         if(width == height) {
             this.boardX = width;
             this.boardY = height;

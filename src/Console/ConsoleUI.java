@@ -18,6 +18,7 @@ public class ConsoleUI implements UI {
     public void processInput() {
 
     }
+
 }
     //Ein Eingabekommando abholen (zunächst nur nächster Move des Eichhörnchens im Single-Player-Modus)
     // und das Rendern des Boards, was bedeutet, dass der Render-Code einen Blick auf das Board werfen mus
