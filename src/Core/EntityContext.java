@@ -3,6 +3,8 @@ package Core;
 import Entity.*;
 import Movement.XY;
 
+import java.util.List;
+
 public interface EntityContext {
         XY getSize();
         EntityType getEntityType(XY position);
@@ -13,5 +15,6 @@ public interface EntityContext {
         PlayerEntity nearestPlayerEntity(XY position);
         void kill(Entity entity);
         void killAndReplace(Entity entity);
+        List checkSuroundings(Entity entity);
 
 }

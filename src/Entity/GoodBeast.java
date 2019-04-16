@@ -1,5 +1,6 @@
 package Entity;
 
+import Core.EntityContext;
 import Movement.XY;
 
 public class GoodBeast extends Beast {
@@ -10,7 +11,7 @@ public class GoodBeast extends Beast {
     }
 
     @Override
-    public void nextStep(EntitySet entities) {
+    public void nextStep(EntityContext context) {
         if (counter==0)
             this.setPosition(this.getPosition().getNewPosition());
 
