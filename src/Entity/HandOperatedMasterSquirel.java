@@ -18,7 +18,7 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
     public void nextStep(EntityContext context) {
 
         MoveCommand moveCommand = new MoveCommand(this.getPosition());
-        this.setPosition(moveCommand.command());
+        context.tryMove(this,moveCommand.command());
 
     }
 

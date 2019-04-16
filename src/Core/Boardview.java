@@ -5,4 +5,5 @@ import Movement.XY;
 public interface Boardview {
     XY getSize();
     EntityType getEntityType(XY position);
+    Entity[][] getGameField();
 }
