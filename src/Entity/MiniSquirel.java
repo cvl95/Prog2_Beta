@@ -2,7 +2,7 @@ package Entity;
 
 import Movement.XY;
 
-public class MiniSquirel extends Entity {
+public class MiniSquirel extends Squirel {
 
 
     public MiniSquirel(int energy, XY pos){

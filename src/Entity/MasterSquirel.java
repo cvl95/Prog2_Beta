@@ -6,7 +6,7 @@ import com.sun.java.util.jar.pack.Instruction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MasterSquirel extends Entity {
+public class MasterSquirel extends Squirel {
 
     int stun= 0;
     private List<MiniSquirel> miniSquirelList = new ArrayList<>();

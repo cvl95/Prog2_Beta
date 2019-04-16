@@ -2,7 +2,7 @@ package Entity;
 
 import Movement.XY;
 
-public class GoodBeast extends Entity {
+public class GoodBeast extends Beast {
     int counter=0;
 
     public GoodBeast(int energy, XY pos) {
