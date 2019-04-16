@@ -37,6 +37,7 @@ public class Game {
     }
 
     public void update(){
+        state.update();
 
         //verändert (ggf. unter Berücksichtigung der Eingabe) den aktuellen Spielzustand
         // , bereitet diesen also auf den nächsten Render-Vorgang vor

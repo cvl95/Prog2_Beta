@@ -41,6 +41,16 @@ public class Board {
         int goodPlantNo = boardConfig.getNumberOfGoodplants();
         int wallNo =boardConfig.getNumberOfWalls();
         XY xy = calculateRandomPosition();
+        //Handoperated master squirrel
+
+        try{
+            xy  = findFreePlace(xy) ;
+            HandOperatedMasterSquirel handOperatedMasterSquirel = new HandOperatedMasterSquirel(1000, xy);
+            entitySet.addEntity(handOperatedMasterSquirel);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         // badBeast spawn
         for(int i = 1; i <= badBeastNo; i++ ){
 

@@ -22,8 +22,7 @@ public class MiniSquirel extends MasterSquirel {
         List surround = context.checkSuroundings(this);
         XY direction = null;
         for (Object entity : surround) {
-
-
+            
             if (entity instanceof GoodBeast || entity instanceof GoodPlant) {
                 int x = entity.getPosition().getX() - this.getPosition().getX();
                 int y = entity.getPosition().getY() - this.getPosition().getY();

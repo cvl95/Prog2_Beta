@@ -139,10 +139,10 @@ public class FlattenedBoard implements Boardview, EntityContext {
         miniSquirel.setEnergy(miniSquirel.getEnergy()-1);
         Entity entityAtMoveDirection = board.getEntitySet().findEntity(moveDirection);
         miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
-<<<<<<< HEAD
+
         killAndReplace(entityAtMoveDirection);
         miniSquirel.setPosition(miniSquirel.getPosition().setNewPosition(moveDirection));
-=======
+
         if(miniSquirel.getEnergy()<=0){
             kill(miniSquirel);
         }else {
@@ -171,8 +171,6 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 if(((MasterSquirel) entityAtMoveDirection).checkOrigin(miniSquirel)){
                     ((MasterSquirel) entityAtMoveDirection).getMiniSquirelList().remove(miniSquirel);
                 }
->>>>>>> origin/master
-
             }
 
         }
@@ -263,7 +261,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
     public Entity[][] getGameField() {
         return gameField;
     }
-
+    //Question
     public void callNextStep() {
         for (int i = 0; i < this.board.entitySet.getLENTGH(); i++) {
             if(this.board.getEntitySet().getEntitySet()[i] instanceof Charachter ){
