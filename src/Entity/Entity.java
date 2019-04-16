@@ -1,5 +1,6 @@
 package Entity;
 
+import Core.Board;
 import Core.EntityContext;
 import Movement.XY;
 
@@ -71,9 +72,7 @@ public class Entity {
     public void nextStep(EntityContext context){
 
     }
-    private XY run(EntityContext context){
-        context.
-        return xy;
+
     }
 
 
