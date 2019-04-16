@@ -19,7 +19,7 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
 
         MoveCommand moveCommand = new MoveCommand(this.getPosition());
         this.setPosition(moveCommand.command());
-        resolveColission(entities);
+
     }
 
 }

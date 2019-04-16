@@ -29,6 +29,10 @@ public class MasterSquirel extends Squirel {
         this.stun = stun;
     }
 
+    public List<MiniSquirel> getMiniSquirelList() {
+        return miniSquirelList;
+    }
+
     // how to move to minisquirel
     public boolean checkOrigin(MiniSquirel miniSquirel){
 

@@ -134,10 +134,12 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void tryMove(MiniSquirel miniSquirel, XY moveDirection) {
-        miniSquirel.
+        miniSquirel.setEnergy(miniSquirel.getEnergy()-1);
         Entity entityAtMoveDirection = board.getEntitySet().findEntity(moveDirection);
-
         miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+        if(miniSquirel.getEnergy()<=0){
+            kill(miniSquirel);
+        }
         killAndReplace(entityAtMoveDirection);
         masterSquirel.setPosition(masterSquirel.getPosition().setNewPosition(moveDirection));
 
@@ -160,12 +162,15 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void kill(Entity entity) {
-        board.entitySet.deleteEntity(entity.getId());
-
+        if(entity instanceof MiniSquirel){
+            ((MiniSquirel) entity).getMiniSquirelList().remove(entity);
+        }else{
+            board.entitySet.deleteEntity(entity.getId());
+        }
     }
 
     @Override
-        public void killAndReplace(Entity entity) {
+    public void killAndReplace(Entity entity) {
         Entity newEntity = null;
         XY newXY = board.calculateRandomPosition();
         newXY = board.findFreePlace(newXY);

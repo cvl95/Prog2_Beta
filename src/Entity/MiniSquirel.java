@@ -3,7 +3,7 @@ package Entity;
 import Core.EntityContext;
 import Movement.XY;
 
-public class MiniSquirel extends Squirel {
+public class MiniSquirel extends MasterSquirel {
 
 
     public MiniSquirel(int energy, XY pos){
