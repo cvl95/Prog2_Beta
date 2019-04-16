@@ -3,6 +3,8 @@ package Entity;
         import Core.EntityContext;
         import Movement.XY;
 
+        import java.util.*;
+
 public class BadBeast extends Beast {
     int counter = 0;
     int snack = 3;
@@ -20,6 +22,9 @@ public class BadBeast extends Beast {
 
     @Override
     public void nextStep(EntityContext context) {
+
+        List surround = context.checkSuroundings(this);
+
         if (counter==0)
             context.;
 

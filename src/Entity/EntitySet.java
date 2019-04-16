@@ -47,13 +47,7 @@ public class EntitySet {
             }
         }
     }
-    public void callNextStep(){
-        for (Entity en:entitySet) {
-            if(en != null){
-                en.nextStep(this);
-            }
-        }
-    }
+
     public Entity findEntity(int entityID){
         for (int i = 0; i<this.LENTGH;i++) {
             if(entitySet[i] == null){
