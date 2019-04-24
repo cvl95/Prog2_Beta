@@ -38,7 +38,7 @@ public class State {
 
     }
     public FlattenedBoard flattenedBoard(){
-        return this.flattenedBoard();
+        return this.board.flatten();
     }
 
     @Override

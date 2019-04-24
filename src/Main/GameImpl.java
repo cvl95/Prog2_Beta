@@ -4,21 +4,15 @@ import Core.Board;
 import Core.BoardConfig;
 import Core.FlattenedBoard;
 import Entity.*;
+import GameEngine.Game;
 import Movement.XY;
 
 
 
-public class Main {
+public class GameImpl extends Game{
 
-    public static void main(String[]args) throws Exception {
-        EntitySet entitySet = new EntitySet();
-        BoardConfig boardConf = new BoardConfig(30,30,14);
-        Board board = new Board(entitySet, boardConf);
-        FlattenedBoard flattenedBoard = new FlattenedBoard(board);
-        flattenedBoard.callNextStep();
-        while(true){
+    public static void main(String[]args){
 
-        }
 
 
 /*        MasterSquirel masterSquirel = new MasterSquirel(1,new XY(0,0));

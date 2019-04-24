@@ -29,6 +29,7 @@ public class Game {
     Board board;
     State state;
 
+    Game(){}
     Game(State state) throws Exception{
         boardConfig = new BoardConfig(30,30,30);
         board = new Board(entitySet,boardConfig);
@@ -45,11 +46,11 @@ public class Game {
         }
     }
 
-    public void render(){
+    protected void render(){
         ui.render(state.flattenedBoard());
     }
 
-    public void update(){
+    protected void update(){
 
         board.callNextStep();
         EntityContext newFlattenedboard = board.flatten();
@@ -58,9 +59,9 @@ public class Game {
         state.update();
     }
 
-    public void processInput(){
+    protected void processInput(){
         printHelp();
-        MoveCommand moveCommand = new MoveCommand();
+        MoveCommand moveCommand = ui.getCommand();
         String input = moveCommand.getCommand();
         char ch = input.charAt(0);
         int str = ch;

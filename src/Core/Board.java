@@ -7,13 +7,13 @@ import Movement.XY;
 public class Board {
     EntitySet entitySet;
     BoardConfig boardConfig;
-    private Entity[][] flattenedBoard;
+    private Entity[][] gameField;
 
 
     public Board(EntitySet entitySet, BoardConfig boardConfig){
         this.entitySet = entitySet;
         this.boardConfig = boardConfig;
-        this.flattenedBoard = new Entity[this.boardConfig.getBoardX()][this.boardConfig.getBoardY()];
+        this.gameField = new Entity[this.boardConfig.getBoardX()][this.boardConfig.getBoardY()];
         buildABoard();
     }
 
@@ -22,7 +22,7 @@ public class Board {
         fillEntitySet();
     }
     private void createWalls(){
-        int max = this.flattenedBoard.length;
+        int max = this.gameField.length;
         for(int i = 0; i <= max-1; i++ ){
             entitySet.addEntity(new Wall(new XY(i,0)));
             entitySet.addEntity(new Wall(new XY(i,max-1)));
@@ -33,7 +33,7 @@ public class Board {
 
     }
     private void fillEntitySet(){
-        //Fills flattenedBoard and EntitySet!
+        //Fills gameField and EntitySet!
 
         int badBeastNo = boardConfig.getNumberOfBadbeast();
         int goodBeastNo = boardConfig.getNumberOfGoodbeast();
@@ -105,7 +105,7 @@ public class Board {
 
     }
     public XY findFreePlace(XY xy){
-        if(this.flattenedBoard[xy.getX()][xy.getY()] == null){
+        if(this.gameField[xy.getX()][xy.getY()] == null){
             return  new XY (xy.getX(),xy.getY());
         }
         else{
@@ -114,8 +114,8 @@ public class Board {
         }
     }
     public XY calculateRandomPosition() {
-        int randomX = (int) (Math.random() * (this.flattenedBoard.length) - 1);
-        int randomY = (int) (Math.random() * (this.flattenedBoard.length) - 1);
+        int randomX = (int) (Math.random() * (this.gameField.length) - 1);
+        int randomY = (int) (Math.random() * (this.gameField.length) - 1);
         return new XY(randomX, randomY);
     }
     public XY getSize(){
@@ -126,8 +126,8 @@ public class Board {
         return entitySet;
     }
 
-    public Entity[][] getFlattenedBoard() {
-        return flattenedBoard;
+    public Entity[][] getGameField() {
+        return gameField;
     }
 
     public FlattenedBoard flatten() {

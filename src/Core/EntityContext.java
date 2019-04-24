@@ -15,6 +15,6 @@ public interface EntityContext {
         PlayerEntity nearestPlayerEntity(XY position);
         void kill(Entity entity);
         void killAndReplace(Entity entity);
-        List checkSuroundings(Entity entity);
+        Entity[] checkSuroundings(Entity entity);
 
 }

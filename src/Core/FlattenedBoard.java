@@ -241,14 +241,16 @@ public class FlattenedBoard implements Boardview, EntityContext {
         board.entitySet.addEntity(newEntity);
     }
 
-    public List checkSuroundings(Entity entity) {
-        List<Entity> surroundingEntities = new ArrayList<Entity>();
+    public Entity[] checkSuroundings(Entity entity) {
+        int counter = 0;
+        Entity[] surroundingEntities = new Entity[49];
         for (int i = -6; i < 7; i++) {
             for (int z = -6; z < 7; z++) {
                 if (new XY(entity.getPosition().getX() + i, entity.getPosition().getY() + z) == null) {
                     continue;
                 } else {
-                    surroundingEntities.add(board.entitySet.findEntity(new XY(entity.getPosition().getX() + i, entity.getPosition().getY() + z)));
+                    surroundingEntities[counter] = board.entitySet.findEntity(new XY(entity.getPosition().getX() + i, entity.getPosition().getY() + z));
+                    counter++;
                 }
             }
 
