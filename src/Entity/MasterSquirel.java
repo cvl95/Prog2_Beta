@@ -31,9 +31,9 @@ public class MasterSquirel extends Squirel {
     @Override
     public void nextStep(EntityContext context) {
 
-        List surround = context.checkSuroundings(this);
+        Entity[] surround = context.checkSuroundings(this);
         XY direction = null;
-        for(Object entity: surround) {
+        for(Entity entity: surround) {
 
 
 

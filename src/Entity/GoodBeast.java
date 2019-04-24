@@ -16,9 +16,9 @@ public class GoodBeast extends Beast {
     public void nextStep(EntityContext context) {
 
         if (counter==0) {
-            List surround = context.checkSuroundings(this);
+            Entity[] surround = context.checkSuroundings(this);
             XY direction = null;
-            for(Object entity: surround) {
+            for(Entity entity: surround) {
 
                 if (entity instanceof Squirel) {
                     int x = this.getPosition().getX() - entity.getPosition().getX();

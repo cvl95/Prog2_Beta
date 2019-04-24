@@ -22,15 +22,12 @@ public class BadBeast extends Beast {
 
     @Override
     public void nextStep(EntityContext context) {
-        context.
         if (counter==0) {
-            List surround = context.checkSuroundings(this);
+            Entity[] surround = context.checkSuroundings(this);
             XY direction = null;
-            for(Object entity: surround) {
+            for(Entity entity : surround) {
 
                 if (entity instanceof Squirel) {
-                    int z = ((Squirel) entity).getPosition().getX()
-
                     int x = entity.getPosition().getX() - this.getPosition().getX();
                     int y = entity.getPosition().getY() - this.getPosition().getY();
                     direction = this.culcRun(x,y) ;
