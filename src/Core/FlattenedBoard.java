@@ -23,43 +23,14 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < size.getX(); i++) {
-            for (int j = 0; j < size.getY(); j++) {
-                switch (getEntityType(new XY(i, j))) {
-                    case MASTER_SQUIRREL:
-                        builder.append('S');
-                        break;
-                    case MINI_SQUIRREL:
-                        builder.append('s');
-                        break;
-                    case GOOD_BEAST:
-                        builder.append('G');
-                        break;
-                    case BAD_BEAST:
-                        builder.append('B');
-                        break;
-                    case GOOD_PLANT:
-                        builder.append('+');
-                        break;
-                    case BAD_PLANT:
-                        builder.append('-');
-                        break;
-                    case WALL:
-                        builder.append('#');
-                        break;
-                    case NONE:
-                    default:
-                        builder.append(' ');
-                        break;
-                }
-                if (j < size.getY() - 1) {
-                    builder.append(' ');
-                }
-            }
-            builder.append('\n');
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for(int i = 0; i <= this.gameField.length-1; i++){
+            for(int j = 0; j<=this.gameField.length-1; j++){
+                stringBuilder.append(printHelper(this.gameField[i][j])+" ");
+            }stringBuilder.append("\n");
         }
-        return builder.toString();
+        return stringBuilder.toString();
     }
 
     @Override
@@ -264,5 +235,24 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     public Board getBoard() {
         return board;
+    }
+
+    private String printHelper(Entity entity){
+        if(entity instanceof BadBeast){
+            return " BB";
+        }else if(entity instanceof GoodBeast){
+            return " GB";
+        }else if(entity instanceof GoodPlant){
+            return " GP";
+        }else if(entity instanceof BadPlant){
+            return " BP";
+        }else if(entity instanceof Wall){
+            return " +";
+        }else if(entity instanceof MasterSquirel){
+            return " M";
+        }else{
+            return " -";
+        }
+
     }
 }
