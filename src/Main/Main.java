@@ -2,6 +2,7 @@ package Main;
 
 import Core.Board;
 import Core.BoardConfig;
+import Core.FlattenedBoard;
 import Entity.*;
 import Movement.XY;
 
@@ -10,10 +11,16 @@ import Movement.XY;
 public class Main {
 
     public static void main(String[]args) throws Exception {
+        EntitySet entitySet = new EntitySet();
+        BoardConfig boardConf = new BoardConfig(30,30,14);
+        Board board = new Board(entitySet, boardConf);
+        FlattenedBoard flattenedBoard = new FlattenedBoard(board);
+        flattenedBoard.callNextStep();
         while(true){
+
         }
 
-        EntitySet entitySet = new EntitySet();
+
 /*        MasterSquirel masterSquirel = new MasterSquirel(1,new XY(0,0));
         BadBeast badBeast = new BadBeast(2,new XY(3,4));
         GoodBeast goodBeast = new GoodBeast(3,new XY(2,1));
@@ -31,10 +38,9 @@ public class Main {
         entitySet.addEntity(wall);
         entitySet.addEntity(miniSquirel);*/
 
-        BoardConfig boardConf = new BoardConfig(30,30,14);
-        Board board = new Board(entitySet, boardConf);
-        entitySet.callNextStep();
-        entitySet.callNextStep();
+
+
+
 
        /* EntitySet entitySet = new EntitySet();
         BoardConfig boardConfig = new BoardConfig(20,20,20);

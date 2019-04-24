@@ -42,7 +42,6 @@ public class Board {
         int wallNo =boardConfig.getNumberOfWalls();
         XY xy = calculateRandomPosition();
         //Handoperated master squirrel
-
         try{
             xy  = findFreePlace(xy) ;
             HandOperatedMasterSquirel handOperatedMasterSquirel = new HandOperatedMasterSquirel(1000, xy);
@@ -127,8 +126,21 @@ public class Board {
         return entitySet;
     }
 
+    public Entity[][] getFlattenedBoard() {
+        return flattenedBoard;
+    }
+
     public FlattenedBoard flatten() {
         return new FlattenedBoard(this);
         }
+
+    public void callNextStep() {
+        for (int i = 0; i < this.entitySet.getLENTGH(); i++) {
+            if(this.getEntitySet().getEntitySet()[i] instanceof Charachter ){
+                this.getEntitySet().getEntitySet()[i].nextStep(flatten());
+            }
+
+        }
+    }
 
 }

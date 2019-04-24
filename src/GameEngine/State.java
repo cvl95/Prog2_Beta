@@ -1,8 +1,8 @@
 package GameEngine;
 
 import Core.Board;
-import Entity.HandOperatedMasterSquirel;
-import Entity.MasterSquirel;
+import Core.FlattenedBoard;
+
 
 public class State {
 
@@ -31,12 +31,14 @@ public class State {
         return highscore;
     }
     public void update(){
-        this.board.flatten();
         this.setActiveScore(board.getEntitySet().findHandoperated().getEnergy());
         if(activeScore > highscore){
             setHighscore(activeScore);
         }
 
+    }
+    public FlattenedBoard flattenedBoard(){
+        return this.flattenedBoard();
     }
 
     @Override

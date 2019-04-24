@@ -10,18 +10,17 @@ import java.util.List;
 public class MasterSquirel extends Squirel {
 
     int stun= 0;
-    private List<MiniSquirel> miniSquirelList = new ArrayList<>();
 
     public MasterSquirel(int energy, XY pos){
 
         super(1000, pos);
 
     }
-
+    //manage entry to entity set of minisquirel, also position
     public MiniSquirel createMinisquirel(int GivenEnergy, XY pos){
         MiniSquirel miniSquirel = new MiniSquirel(GivenEnergy, pos);
         this.updateEnergy(-GivenEnergy);
-        this.miniSquirelList.add(miniSquirel);
+        miniSquirel.setReferenceFather(this.getId());
         return miniSquirel;
     }
 
@@ -29,20 +28,6 @@ public class MasterSquirel extends Squirel {
         this.stun = stun;
     }
 
-    public List<MiniSquirel> getMiniSquirelList() {
-        return miniSquirelList;
-    }
-
-    // how to move to minisquirel
-    public boolean checkOrigin(MiniSquirel miniSquirel){
-
-        if(this.miniSquirelList.contains(miniSquirel)){
-            System.out.println("this squirel is a child of this squirel");
-            return true;
-        }
-        return false;
-
-    }
     @Override
     public void nextStep(EntityContext context) {
 

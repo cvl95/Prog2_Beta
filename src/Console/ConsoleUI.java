@@ -14,13 +14,6 @@ public class ConsoleUI implements UI {
         System.out.print(flattenedBoard.toString());
     }
 
-    @Override
-    public void processInput() {
-
-
-    }
 
 }
-    //Ein Eingabekommando abholen (zunächst nur nächster Move des Eichhörnchens im Single-Player-Modus)
-    // und das Rendern des Boards, was bedeutet, dass der Render-Code einen Blick auf das Board werfen mus
 

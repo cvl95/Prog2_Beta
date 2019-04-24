@@ -6,14 +6,18 @@ import Movement.XY;
 import java.util.List;
 
 public class MiniSquirel extends MasterSquirel {
-
+    private int referenceFather;
 
     public MiniSquirel(int energy, XY pos) {
         super(energy, pos);
     }
 
-    public List<MiniSquirel> getSuperMiniSquirelList() {
-        return super.getMiniSquirelList();
+    public void setReferenceFather(int referenceFather) {
+        this.referenceFather = referenceFather;
+    }
+
+    public int getReferenceFather() {
+        return referenceFather;
     }
 
     @Override
