@@ -21,7 +21,6 @@ public class Game {
     private static final int DOWNRIGHT = DOWN+RIGHT;
     private static final int DOWNLEFT = DOWN+LEFT;
     XY pos;
-
     //variables for game
     UI ui = new ConsoleUI();
     EntitySet entitySet = new EntitySet();

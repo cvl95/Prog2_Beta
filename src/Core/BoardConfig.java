@@ -27,8 +27,6 @@ public class BoardConfig {
         }else{
             throw new Exception("unequal width and height");
         }
-
-
     }
 
     private void calculateNumberOfBeasts() throws Exception {
@@ -50,9 +48,6 @@ public class BoardConfig {
             this.numberOfGoodplants = (int)(this.numberOfEntities * 0.2);
             this.numberOfWalls = (int)(this.numberOfEntities * 0.1);
         }
-
-
-
     }
 
     public int getBoardX() {

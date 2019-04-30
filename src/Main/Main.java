@@ -1,20 +1,14 @@
 package Main;
 
-import Core.Board;
-import Core.BoardConfig;
-import Core.FlattenedBoard;
-import Entity.*;
-import GameEngine.Game;
-import GameEngine.State;
-import Movement.XY;
 
-
+import GameEngine.GameImpl;
 
 public class Main{
 
-    public static void main(String[]args){
+    public static void main(String[]args)throws Exception{
 
-
+        GameImpl game = new GameImpl();
+        game.run();
 
 
 
@@ -24,9 +18,7 @@ public class Main{
         GoodPlant goodPlant = new GoodPlant(4,new XY(5,6));
         BadPlant badPlant = new BadPlant(5,new XY(3,3));
         Wall wall = new Wall(6, new XY(0,1));*//*
-
         MiniSquirel miniSquirel = masterSquirel.createMinisquirel(150, new XY(0,0));
-
         entitySet.addEntity(masterSquirel);
         entitySet.addEntity(badBeast);
         entitySet.addEntity(goodBeast);
@@ -34,15 +26,9 @@ public class Main{
         entitySet.addEntity(badPlant);
         entitySet.addEntity(wall);
         entitySet.addEntity(miniSquirel);*/
-
-
-
-
-
        /* EntitySet entitySet = new EntitySet();
         BoardConfig boardConfig = new BoardConfig(20,20,20);
         Board board =new Board(entitySet,boardConfig);
-
         System.out.println(board);
         */
 
