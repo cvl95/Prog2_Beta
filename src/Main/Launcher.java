@@ -1,14 +1,24 @@
 package Main;
 
 
-import GameEngine.GameImpl;
+import Core.Board;
+import Core.BoardConfig;
+import Entity.*;
+import GameEngine.*;
 
-public class Main{
+public class Launcher {
 
     public static void main(String[]args)throws Exception{
-
-        GameImpl game = new GameImpl();
+    //board, entityset state, game`
+        EntitySet entitySet = new EntitySet();
+        BoardConfig boardConfig = new BoardConfig(40,40,20);
+        Board board = new Board(entitySet, boardConfig);
+        State state = new State(board);
+        Game game = new GameImpl(state);
         game.run();
+
+
+
 
 
 

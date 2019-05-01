@@ -90,13 +90,13 @@ public class EntitySet {
         return null;
     }
 
-    public Entity findHandoperated() {
+    public HandOperatedMasterSquirel findHandoperated() {
         for (int i = 0; i < this.LENTGH; i++) {
             if (entitySet[i] == null) {
                 continue;
             }
             if (entitySet[i] instanceof HandOperatedMasterSquirel) {
-                return entitySet[i];
+                return (HandOperatedMasterSquirel) entitySet[i];
             } else if (i == entitySet.length) {
                 System.out.println("there is no such entity in Array.");
                 return null;

@@ -10,11 +10,8 @@ public class State {
     private int activeScore = 0;
     private Board board;
 
-    public State(int startScore, Board startBoard){
-        this.highscore = startScore;
-        this.activeScore = startScore;
+    public State( Board startBoard){
         this.board = startBoard;
-
     }
 
     public void setHighscore(int highscore) {
@@ -35,10 +32,14 @@ public class State {
         if(activeScore > highscore){
             setHighscore(activeScore);
         }
-
+        board.callNextStep();
     }
     public FlattenedBoard flattenedBoard(){
         return this.board.flatten();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     @Override
