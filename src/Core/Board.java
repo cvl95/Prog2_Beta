@@ -34,7 +34,7 @@ public class Board {
     }
     private void fillEntitySet(){
         //Fills gameField and EntitySet!
-
+        entitySet.setLENTGH(boardConfig.getNumberOfEntities() + 1);
         int badBeastNo = boardConfig.getNumberOfBadbeast();
         int goodBeastNo = boardConfig.getNumberOfGoodbeast();
         int badPlantNo = boardConfig.getNumberOfBadplants();

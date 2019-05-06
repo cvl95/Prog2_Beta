@@ -14,10 +14,9 @@ public class FlattenedBoard implements Boardview, EntityContext {
         this.board = board;
         size = board.getSize();
         gameField = new Entity[size.getX()][size.getY()];
-        EntitySet entities = board.getEntitySet();
-        for (int i = 0; i < entities.getLENTGH(); i++) {
-            Entity entity = entities.getEntitySet()[i];
-            gameField[entity.getPosition().getX()][entity.getPosition().getY()] = entity;
+        for (int i = 0; i < board.getEntitySet().getLENTGH(); i++) {
+            gameField[board.getEntitySet().getEntitySet()[i].getPosition().getX()][board.getEntitySet().getEntitySet()[i].getPosition().getY()]
+                      = board.getEntitySet().getEntitySet()[i];
         }
     }
 

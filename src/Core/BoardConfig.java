@@ -77,4 +77,8 @@ public class BoardConfig {
     public int getNumberOfBadbeast() {
         return numberOfBadbeast;
     }
+
+    public int getNumberOfEntities() {
+        return numberOfEntities;
+    }
 }

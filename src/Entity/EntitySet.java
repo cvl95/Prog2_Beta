@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EntitySet {
 
-    private static final int LENTGH = 300;
+    private static int LENTGH = 300;
     private Entity[] entitySet = new Entity[this.LENTGH];
 
 
@@ -111,6 +111,10 @@ public class EntitySet {
 
     public static int getLENTGH() {
         return LENTGH;
+    }
+
+    public void setLENTGH(int LENTGH) {
+        this.LENTGH = LENTGH;
     }
 
     @Override
