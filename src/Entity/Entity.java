@@ -14,7 +14,9 @@ public class Entity {
     private XY position;
     private static List idList = new ArrayList<Integer>();
 
-
+    Entity(){
+        this.id =generateRandomId();
+    }
     Entity(int energy, XY pos, int Id){
         this.energy = energy;
         this.position = pos;

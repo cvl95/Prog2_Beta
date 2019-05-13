@@ -8,22 +8,24 @@ public class Board {
     EntitySet entitySet;
     BoardConfig boardConfig;
     private Entity[][] gameField;
+    XY size;
 
 
     public Board(EntitySet entitySet, BoardConfig boardConfig){
         this.entitySet = entitySet;
         this.boardConfig = boardConfig;
-        this.gameField = new Entity[this.boardConfig.getBoardX()][this.boardConfig.getBoardY()];
+        this.gameField = new Entity[this.boardConfig.getSize().getX() + 2][this.boardConfig.getSize().getY() + 2];
+        this.size = new XY(this.boardConfig.getSize().getX() + 2,this.boardConfig.getSize().getY() + 2);
         buildABoard();
     }
 
     private void buildABoard(){
-        createWalls();
         fillEntitySet();
+        createWalls();
     }
     private void createWalls(){
         int max = this.gameField.length;
-        for(int i = 0; i <= max-1; i++ ){
+        for(int i = 0; i < max; i++ ){
             entitySet.addEntity(new Wall(new XY(i,0)));
             entitySet.addEntity(new Wall(new XY(i,max-1)));
             // problem with corners created two times
@@ -34,76 +36,52 @@ public class Board {
     }
     private void fillEntitySet(){
         //Fills gameField and EntitySet!
-        entitySet.setLENTGH(boardConfig.getNumberOfEntities() + 1);
-        int badBeastNo = boardConfig.getNumberOfBadbeast();
-        int goodBeastNo = boardConfig.getNumberOfGoodbeast();
-        int badPlantNo = boardConfig.getNumberOfBadplants();
-        int goodPlantNo = boardConfig.getNumberOfGoodplants();
-        int wallNo =boardConfig.getNumberOfWalls();
         XY xy = calculateRandomPosition();
-        //Handoperated master squirrel
-        try{
+        //squorels
+        for(int i = 0; i < boardConfig.getNumberOfSquirels(); i++){
             xy  = findFreePlace(xy) ;
             HandOperatedMasterSquirel handOperatedMasterSquirel = new HandOperatedMasterSquirel(1000, xy);
             entitySet.addEntity(handOperatedMasterSquirel);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+            gameField[xy.getX()][xy.getY()] =  handOperatedMasterSquirel;
         }
-
         // badBeast spawn
-        for(int i = 1; i <= badBeastNo; i++ ){
-
-                try{
-                    xy  = findFreePlace(xy) ;
-                    BadBeast badBeast = new BadBeast(-100 ,xy);
-                    entitySet.addEntity(badBeast);
-                }catch (Exception e){
-                    System.out.println(e.getMessage());
-                }
+        for(int i = 1; i < boardConfig.getNumberOfBadbeast(); i++ ){
+            xy  = findFreePlace(xy) ;
+            BadBeast badBeast = new BadBeast(100, xy);
+            entitySet.addEntity(badBeast);
+            gameField[xy.getX()][xy.getY()] = badBeast;
         }
         //goodBeast spawn
-        for(int i = 1; i <= goodBeastNo; i++ ){
-
-            try{
-                xy = findFreePlace(xy);
-                GoodBeast goodBeast = new GoodBeast(100,xy);
-                entitySet.addEntity(goodBeast);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
+        for(int i = 1; i < boardConfig.getNumberOfGoodbeast(); i++ ){
+            xy = findFreePlace(xy);
+            GoodBeast goodBeast = new GoodBeast(100, xy);
+            entitySet.addEntity(goodBeast);
+            gameField[xy.getX()][xy.getY()] = goodBeast;
         }
         // badPlant spawn
-        for(int i = 1; i <= badPlantNo; i++ ){
-            try{
-                xy = findFreePlace(xy);
-                BadPlant badPlant = new BadPlant(-100,xy);
-                entitySet.addEntity(badPlant);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
+        for(int i = 1; i < boardConfig.getNumberOfBadplants(); i++ ){
+            xy = findFreePlace(xy);
+            BadPlant badPlant = new BadPlant(-100,xy);
+            entitySet.addEntity(badPlant);
+            gameField[xy.getX()][xy.getY()] = badPlant;
         }
         //goodPlant spawn
-        for(int i = 1; i <= goodPlantNo; i++ ){
-            try{
-                xy = findFreePlace(xy);
-                GoodPlant goodPlant = new GoodPlant(50 ,xy);
-                entitySet.addEntity(goodPlant);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
+        for(int i = 1; i < boardConfig.getNumberOfGoodplants(); i++ ){
+            xy = findFreePlace(xy);
+            GoodPlant goodPlant = new GoodPlant(50, xy);
+            entitySet.addEntity(goodPlant);
+            gameField[xy.getX()][xy.getY()] = goodPlant;
+
         }
         //walls spawn
-        for(int i = 1; i <= wallNo ; i++ ){
-            try{
-                xy = findFreePlace(xy);
-                Wall wall = new Wall(-10,xy);
-                entitySet.addEntity(wall);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
+        for(int i = 1; i < boardConfig.getNumberOfWalls(); i++ ){
+            xy = findFreePlace(xy);
+            Wall wall = new Wall(-10, xy);
+            entitySet.addEntity(wall);
+            gameField[xy.getX()][xy.getY()] = wall;
         }
-
     }
+
     public XY findFreePlace(XY xy){
         if(this.gameField[xy.getX()][xy.getY()] == null){
             return  new XY (xy.getX(),xy.getY());
@@ -114,33 +92,28 @@ public class Board {
         }
     }
     public XY calculateRandomPosition() {
-        int randomX = (int) (Math.random() * (this.gameField.length) - 1);
-        int randomY = (int) (Math.random() * (this.gameField.length) - 1);
+        int randomX = (int) (Math.random() * (boardConfig.getSize().getX()) );
+        int randomY = (int) (Math.random() * (boardConfig.getSize().getY()) );
         return new XY(randomX, randomY);
     }
+
     public XY getSize(){
-        return new XY(this.boardConfig.getBoardX(),this.boardConfig.getBoardY());
+        return size;
     }
 
     public EntitySet getEntitySet() {
         return entitySet;
     }
 
+    public BoardConfig getBoardConfig() {
+        return boardConfig;
+    }
+
     public Entity[][] getGameField() {
-        return gameField;
+        return this.gameField;
     }
 
     public FlattenedBoard flatten() {
         return new FlattenedBoard(this);
         }
-
-    public void callNextStep() {
-        for (int i = 0; i < this.entitySet.getLENTGH(); i++) {
-            if(this.getEntitySet().getEntitySet()[i] instanceof Charachter ){
-                this.getEntitySet().getEntitySet()[i].nextStep(flatten());
-            }
-
-        }
-    }
-
 }

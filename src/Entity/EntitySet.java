@@ -11,14 +11,16 @@ import java.util.List;
 
 public class EntitySet {
 
-    private static int LENTGH = 300;
-    private Entity[] entitySet = new Entity[this.LENTGH];
+    private static final int LENTGH = 256;
+    private final Entity[] entitySet = new Entity[this.LENTGH];
+    private int sizeOfArray = 0;
 
 
     public void addEntity(Entity entity) {
         for (int i = 0; i < this.LENTGH; i++) {
             if (entitySet[i] == null) {
                 entitySet[i] = entity;
+                this.sizeOfArray = sizeOfArray + 1;
                 break;
             } else if (i == entitySet.length) {
                 System.out.println("no place in Array delete elements first");
@@ -82,19 +84,22 @@ public class EntitySet {
     public Entity findEntity(XY xy) {
         for (Entity e : entitySet
         ) {
-            if (e.getPosition() == xy) {
+            if ((e.getPosition().getX() == xy.getX() && e.getPosition().getY() == xy.getY())) {
                 return e;
             }
-
         }
         return null;
     }
 
+    public Entity get(int index) {
+        if (index >= entitySet.length) {
+            return null;
+        }
+        return entitySet[index];
+    }
+
     public HandOperatedMasterSquirel findHandoperated() {
         for (int i = 0; i < this.LENTGH; i++) {
-            if (entitySet[i] == null) {
-                continue;
-            }
             if (entitySet[i] instanceof HandOperatedMasterSquirel) {
                 return (HandOperatedMasterSquirel) entitySet[i];
             } else if (i == entitySet.length) {
@@ -109,12 +114,12 @@ public class EntitySet {
         return entitySet;
     }
 
-    public static int getLENTGH() {
+    public int getLENTGH() {
         return LENTGH;
     }
 
-    public void setLENTGH(int LENTGH) {
-        this.LENTGH = LENTGH;
+    public int getSizeOfArray() {
+        return sizeOfArray;
     }
 
     @Override

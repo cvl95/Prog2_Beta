@@ -9,11 +9,8 @@ import Movement.XY;
 
 public abstract class Game {
 
-    //variables for game
-    UI ui = new ConsoleUI();
-    State state;
+    private State state;
 
-    Game(){}
     Game(State state){
         this.state = state;
     }
@@ -25,12 +22,12 @@ public abstract class Game {
         }
     }
 
-    protected abstract void render();
-
-    protected void update(){
-        state.update();
+    public State getState() {
+        return state;
     }
 
+    protected abstract void render();
+    protected abstract void update();
     protected abstract void processInput();
 
 }

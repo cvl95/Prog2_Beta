@@ -8,6 +8,7 @@ import java.util.List;
 public interface EntityContext {
         XY getSize();
         EntityType getEntityType(XY position);
+        int calculateDistance(XY position1, XY position2);
         void tryMove( MasterSquirel masterSquirel, XY moveDirection);
         void tryMove(MiniSquirel miniSquirel, XY moveDirection);
         void tryMove(GoodBeast goodBeast, XY moveDirection);

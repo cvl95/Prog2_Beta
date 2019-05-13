@@ -11,7 +11,7 @@ public class Launcher {
     public static void main(String[]args)throws Exception{
     //board, entityset state, game`
         EntitySet entitySet = new EntitySet();
-        BoardConfig boardConfig = new BoardConfig(40,40,20);
+        BoardConfig boardConfig = new BoardConfig();
         Board board = new Board(entitySet, boardConfig);
         State state = new State(board);
         Game game = new GameImpl(state);

@@ -15,7 +15,7 @@ public class GoodBeast extends Beast {
     @Override
     public void nextStep(EntityContext context) {
 
-        if (counter==0) {
+     /*   if (counter==0) {
             Entity[] surround = context.checkSuroundings(this);
             XY direction = null;
             for(Entity entity: surround) {
@@ -36,6 +36,6 @@ public class GoodBeast extends Beast {
         }
         counter++;
         if (counter == 3)
-            counter = 0;
+            counter = 0;*/
     }
 }

@@ -10,8 +10,9 @@ public class ConsoleUI implements UI {
 
     @Override
     public void render(Boardview boardview) {
-        Entity [][] flattenedBoard = boardview.getGameField();
-        System.out.print(flattenedBoard.toString());
+        System.out.println();
+        System.out.print(boardview);
+        System.out.println();
     }
 
 
