@@ -142,8 +142,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
             case GOOD_BEAST:
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 killAndReplace(entityAtMoveDirection);
-                miniSquirel.setPosition(newPosition);
-                setPlace(miniSquirel.getPosition(),miniSquirel);
+                move(newPosition,miniSquirel);
                 break;
             case BAD_PLANT:
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
@@ -151,8 +150,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 if (miniSquirel.getEnergy() <= 0) {
                     kill(miniSquirel);
                 } else {
-                    miniSquirel.setPosition(newPosition);
-                    setPlace(miniSquirel.getPosition(),miniSquirel);
+                    move(newPosition,miniSquirel);
                 }
                 break;
             case BAD_BEAST:
@@ -162,8 +160,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                     kill(miniSquirel);
                 } else if (((BadBeast) entityAtMoveDirection).getSnack() == 0) {
                     killAndReplace(entityAtMoveDirection);
-                    miniSquirel.setPosition(newPosition);
-                    setPlace(miniSquirel.getPosition(),miniSquirel);
+                    move(newPosition,miniSquirel);
                 }
                 break;
             case WALL:
@@ -171,7 +168,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 miniSquirel.setStun(3);
                 break;
             case NONE:
-                miniSquirel.setPosition(newPosition);
+                move(newPosition,miniSquirel);
                 break;
             default:
                 break;
@@ -192,7 +189,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 break;
             case WALL:
             case NONE:
-                goodBeast.setPosition(newPosition);
+                move(newPosition,goodBeast);
                 break;
             default:
                 break;
@@ -214,7 +211,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 }
                 if(entityAtMoveDirection.getEnergy() <= 0){
                     kill(entityAtMoveDirection);
-                    badBeast.setPosition(newPosition);
+                    move(newPosition,badBeast);
                 }
                 break;
             case MINI_SQUIRREL:
@@ -226,7 +223,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 }
                 if(entityAtMoveDirection.getEnergy() <= 0){
                     kill(entityAtMoveDirection);
-                    badBeast.setPosition(newPosition);
+                    move(newPosition,badBeast);
                 }
                 break;
             case GOOD_PLANT:
@@ -235,7 +232,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
             case BAD_BEAST:
             case WALL:
             case NONE:
-                badBeast.setPosition(newPosition);
+                move(newPosition,badBeast);
                 break;
             default:
                 break;
