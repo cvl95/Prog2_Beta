@@ -12,7 +12,7 @@ import java.util.List;
 public class EntitySet {
 
     private static final int LENTGH = 256;
-    private final Entity[] entitySet = new Entity[this.LENTGH];
+    private Entity[] entitySet = new Entity[this.LENTGH];
     private int sizeOfArray = 0;
 
 
@@ -20,6 +20,7 @@ public class EntitySet {
         for (int i = 0; i < this.LENTGH; i++) {
             if (entitySet[i] == null) {
                 entitySet[i] = entity;
+
                 this.sizeOfArray = sizeOfArray + 1;
                 break;
             } else if (i == entitySet.length) {
@@ -41,14 +42,25 @@ public class EntitySet {
     }
 
     public void deleteEntity(int entityID) {
+    //    Entity[] newArray = new Entity[entitySet.length];
+     //   boolean on = true;
         for (int i = 0; i < this.LENTGH; i++) {
             if (entitySet[i].getId() == entityID) {
                 entitySet[i] = null;
+                this.sizeOfArray = sizeOfArray -1;
                 break;
+         //       on = false;
+      //          this.sizeOfArray = sizeOfArray - 1;
             } else if (i == entitySet.length) {
                 System.out.println("there is no such entity in Array.");
             }
+       //     if(on){
+       //         newArray[i] = entitySet[i];
+       //     }else{
+        //        newArray[i] = entitySet[i+1];
+       //     }
         }
+      //  entitySet = newArray;
     }
 
     public Entity findEntity(int entityID) {

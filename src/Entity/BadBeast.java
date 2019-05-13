@@ -13,7 +13,7 @@ public class BadBeast extends Beast {
     }
 
     public void setSnack() {
-        this.snack = this.snack--;
+        this.snack = this.snack - 1;
     }
 
     public int getSnack() {

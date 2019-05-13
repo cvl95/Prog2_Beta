@@ -15,7 +15,12 @@ public class FlattenedBoard implements Boardview, EntityContext {
         EntitySet entitySet = board.getEntitySet();
         for (int i = 0; i < entitySet.getSizeOfArray(); i++) {
             Entity entity = entitySet.get(i);
-            setPlace(entity.getPosition(),entity);
+            if(entity == null){
+                continue;
+            }else{
+                setPlace(entity.getPosition(),entity);
+            }
+
         }
     }
 
@@ -77,37 +82,37 @@ public class FlattenedBoard implements Boardview, EntityContext {
             case MINI_SQUIRREL:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 kill(entityAtMoveDirection);
-                masterSquirel.setPosition(newPosition);
+                move(newPosition,masterSquirel);
                 break;
             case GOOD_PLANT:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 killAndReplace(entityAtMoveDirection);
-                masterSquirel.setPosition(newPosition);
+                move(newPosition,masterSquirel);
                 break;
             case GOOD_BEAST:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 killAndReplace(entityAtMoveDirection);
-                masterSquirel.setPosition(newPosition);
+                move(newPosition,masterSquirel);
                 break;
             case BAD_PLANT:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 killAndReplace(entityAtMoveDirection);
-                masterSquirel.setPosition(newPosition);
+                move(newPosition,masterSquirel);
                 break;
             case BAD_BEAST:
                 ((BadBeast) entityAtMoveDirection).setSnack();
-                masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 if(((BadBeast) entityAtMoveDirection).getSnack() ==0 ) {
                     killAndReplace(entityAtMoveDirection);
-                    masterSquirel.setPosition(newPosition);
+                    move(newPosition,masterSquirel);
                 }
+                masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 break;
             case WALL:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 masterSquirel.setStun(3);
                 break;
             case NONE:
-                masterSquirel.setPosition(newPosition);
+                move(newPosition,masterSquirel);
                 break;
             default:
                 break;
@@ -138,6 +143,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 killAndReplace(entityAtMoveDirection);
                 miniSquirel.setPosition(newPosition);
+                setPlace(miniSquirel.getPosition(),miniSquirel);
                 break;
             case BAD_PLANT:
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
@@ -146,6 +152,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                     kill(miniSquirel);
                 } else {
                     miniSquirel.setPosition(newPosition);
+                    setPlace(miniSquirel.getPosition(),miniSquirel);
                 }
                 break;
             case BAD_BEAST:
@@ -156,6 +163,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 } else if (((BadBeast) entityAtMoveDirection).getSnack() == 0) {
                     killAndReplace(entityAtMoveDirection);
                     miniSquirel.setPosition(newPosition);
+                    setPlace(miniSquirel.getPosition(),miniSquirel);
                 }
                 break;
             case WALL:
@@ -256,8 +264,8 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void kill(Entity entity) {
-            board.getGameField()[entity.getPosition().getX()][entity.getPosition().getY()] = null;
-            board.entitySet.deleteEntity(entity.getId());
+            board.getEntitySet().deleteEntity(entity.getId());
+            setPlace(entity.getPosition(),null);
     }
 
     @Override
@@ -275,7 +283,9 @@ public class FlattenedBoard implements Boardview, EntityContext {
             newEntity = new BadBeast(-150,newXY);
         }
         kill(entity);
-        board.entitySet.addEntity(newEntity);
+        board.getEntitySet().addEntity(newEntity);
+        setPlace(newEntity.getPosition(),newEntity);
+
     }
 
 
@@ -302,11 +312,17 @@ public class FlattenedBoard implements Boardview, EntityContext {
         }
         return surroundingEntities;
     }
+
     private void setPlace(XY position, Entity entity){
         gameField[position.getX()][position.getY()] = entity;
     }
     private Entity getFieldValue(XY position){
         return gameField[position.getX()][position.getY()];
+    }
+    private void move(XY position,Entity entity){
+        setPlace(entity.getPosition(),null);
+        entity.setPosition(position);
+        setPlace(entity.getPosition(),entity);
     }
 
     public Entity[][] getGameField() {
