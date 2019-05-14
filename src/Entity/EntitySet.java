@@ -12,7 +12,7 @@ import java.util.List;
 public class EntitySet {
 
     private static final int LENTGH = 256;
-    private final Entity[] entitySet = new Entity[this.LENTGH];
+    private Entity[] entitySet = new Entity[this.LENTGH];
     private int sizeOfArray = 0;
 
 
@@ -20,13 +20,13 @@ public class EntitySet {
         for (int i = 0; i < this.LENTGH; i++) {
             if (entitySet[i] == null) {
                 entitySet[i] = entity;
+
                 this.sizeOfArray = sizeOfArray + 1;
                 break;
             } else if (i == entitySet.length) {
                 System.out.println("no place in Array delete elements first");
             }
         }
-
     }
 
     public void deleteEntity(Entity entity) {
@@ -44,6 +44,7 @@ public class EntitySet {
         for (int i = 0; i < this.LENTGH; i++) {
             if (entitySet[i].getId() == entityID) {
                 entitySet[i] = null;
+                this.sizeOfArray = sizeOfArray -1;
                 break;
             } else if (i == entitySet.length) {
                 System.out.println("there is no such entity in Array.");

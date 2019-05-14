@@ -43,6 +43,7 @@ public class State {
         if(activeScore > highscore){
             setHighscore(activeScore);
         }
+        flattenedBoard();
         callNextStep();
     }
     public FlattenedBoard flattenedBoard(){

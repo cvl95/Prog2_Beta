@@ -28,6 +28,10 @@ public class MasterSquirel extends Squirel {
         this.stun = stun;
     }
 
+    public int getStun() {
+        return stun;
+    }
+
     @Override
     public void nextStep(EntityContext context) {
 

@@ -13,9 +13,9 @@ public class MoveCommand {
          command = command();
     }
     public String command() {
+        System.out.print(">> ");
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        input = input.toLowerCase();
+        String input = scanner.nextLine().trim().toLowerCase();
         return input;
 
     }

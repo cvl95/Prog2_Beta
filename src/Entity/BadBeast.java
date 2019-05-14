@@ -3,44 +3,46 @@ package Entity;
         import Core.EntityContext;
         import Movement.XY;
 
-        import java.util.*;
-
 public class BadBeast extends Beast {
-    int counter = 0;
-    int snack = 3;
+   private int ACTION_TURN = 4;
+   private static int VIEW_RANGE = 6;
+   private int COUNTER = 0;
+   private int SNACK = 7;
+
     public BadBeast(int energy, XY pos) {
         super(-150, pos);
     }
 
     public void setSnack() {
-        this.snack = this.snack--;
+        this.SNACK = this.SNACK - 1;
     }
 
-    public int getSnack() {
-        return snack;
+    public int getSNACK() {
+        return SNACK;
     }
 
     @Override
     public void nextStep(EntityContext context) {
-     /*   if (counter==0) {
-            Entity[] surround = context.checkSuroundings(this);
-            XY direction = null;
-            for(Entity entity : surround) {
-
-                if (entity instanceof Squirel) {
-                    int x = entity.getPosition().getX() - this.getPosition().getX();
-                    int y = entity.getPosition().getY() - this.getPosition().getY();
-                    direction = this.culcRun(x,y) ;
-                }
-
+        COUNTER++;
+        if (COUNTER == ACTION_TURN) {
+            COUNTER = 0;
+            PlayerEntity playerEntity = context.nearestPlayerEntity(getPosition());
+            if (playerEntity == null) {
+                return;
             }
-            if (direction != null)
-                context.tryMove(this,direction);
-            else
-                context.tryMove(this,this.getPosition().getNewPosition());
+            int distance = context.calculateDistance(getPosition(), playerEntity.getPosition());
+            if (distance > BadBeast.VIEW_RANGE) {
+                return;
+            }
+            XY[] direction = XY.getDirections();
+            for (int i = 0; i < direction.length; i++) {
+                XY newPosition = getPosition().setNewVectorPosition(direction[i]);
+                if (context.testArrayBounds(newPosition) && !context.isOccupied(newPosition)
+                        && (context.calculateDistance(newPosition, playerEntity.getPosition()) < distance)) {
+                    context.tryMove(this, direction[i]);
+                    break;
+                }
+            }
         }
-        counter++;
-        if (counter == 3)
-            counter = 0;*/
     }
 }

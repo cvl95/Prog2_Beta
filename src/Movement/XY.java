@@ -33,6 +33,14 @@ public class XY {
         return new XY(this.x + xy.getX(), this.y + xy.getY());
     }
 
+    public static XY[] getDirections() {
+        return new XY[] {
+                new XY(-1, 0), new XY(1, 0),
+                new XY(0, -1), new XY(0, 1),
+                new XY(-1, -1), new XY(-1, 1),
+                new XY(1, -1), new XY(1, 1)
+        };
+    }
     public int getX() {
         return x;
     }

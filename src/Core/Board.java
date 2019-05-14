@@ -20,17 +20,27 @@ public class Board {
     }
 
     private void buildABoard(){
-        fillEntitySet();
         createWalls();
+        fillEntitySet();
     }
     private void createWalls(){
         int max = this.gameField.length;
+        Entity entity;
         for(int i = 0; i < max; i++ ){
-            entitySet.addEntity(new Wall(new XY(i,0)));
-            entitySet.addEntity(new Wall(new XY(i,max-1)));
-            // problem with corners created two times
-            entitySet.addEntity(new Wall(new XY(0,i)));
-            entitySet.addEntity(new Wall(new XY(max-1,i)));
+            entity = new Wall(new XY(i,0));
+            entitySet.addEntity(entity);
+            gameField[i][0] = entity;
+            entity = new Wall(new XY(i,max-1));
+            entitySet.addEntity(entity);
+            gameField[i][max-1] = entity;
+
+            entity = new Wall(new XY(0,i));
+            entitySet.addEntity(entity);
+            gameField[0][i] = entity;
+            entity = new Wall(new XY(max-1,i));
+            entitySet.addEntity(entity);
+            gameField[max-1][i] = entity;
+
         }
 
     }
@@ -92,8 +102,8 @@ public class Board {
         }
     }
     public XY calculateRandomPosition() {
-        int randomX = (int) (Math.random() * (boardConfig.getSize().getX()) );
-        int randomY = (int) (Math.random() * (boardConfig.getSize().getY()) );
+        int randomX = (int) (Math.random() * (boardConfig.getSize().getX()-1) );
+        int randomY = (int) (Math.random() * (boardConfig.getSize().getY()-1) );
         return new XY(randomX, randomY);
     }
 

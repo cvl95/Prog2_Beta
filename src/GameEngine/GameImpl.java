@@ -11,17 +11,16 @@ import Movement.XY;
 
 public class GameImpl extends Game {
     //command results
-    private static final int UP = 119;
-    private static final int DOWN = 115;
-    private static final int LEFT = 97;
-    private static final int RIGHT = 100;
-    private static final int UPLEFT = UP+LEFT;
-    private static final int UPRIGHT = UP+RIGHT;
-    private static final int DOWNRIGHT = DOWN+RIGHT;
-    private static final int DOWNLEFT = DOWN+LEFT;
+    private static final String UP = "w";
+    private static final String DOWN = "s";
+    private static final String LEFT = "a";
+    private static final String RIGHT = "d";
+    private static final String UPLEFT = "wa";
+    private static final String UPRIGHT = "wd";
+    private static final String DOWNRIGHT = "sd";
+    private static final String DOWNLEFT = "sa";
 
     private final UI consoleUI = new ConsoleUI();
-    private MoveCommand command;
 
     public GameImpl(State state){
         super(state);
@@ -29,6 +28,8 @@ public class GameImpl extends Game {
     @Override
     protected void render() {
         consoleUI.render(getState().getFlattenedBoard());
+        printLegend();
+        printHelp();
     }
 
     @Override
@@ -38,42 +39,34 @@ public class GameImpl extends Game {
 
     @Override
     protected void processInput() {
-        printHelp();
-        command = consoleUI.getCommand();
-        String input = command.getCommand();
-        char ch = input.charAt(0);
-        int str = ch;
-        if(input.length()>1) {
-            char ch2 = input.charAt(1);
-            str= ch+ch2;
-        }
-        switch (str){
+        //printHelp();
+        String input =consoleUI.getCommand().getCommand();
+        switch (input){
             case UP:
-                getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(0,-1));
-                break;
-            case DOWN:
-                getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(0,1));
-                break;
-            case LEFT:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(-1,0));
                 break;
-            case RIGHT:
+            case DOWN:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(1,0));
+                break;
+            case LEFT:
+                getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(0,-1));
+                break;
+            case RIGHT:
+                getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(0,1));
                 break;
             case UPLEFT:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(-1,-1));
                 break;
             case UPRIGHT:
-                getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(1,-1));
+                getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(-1,1));
                 break;
             case DOWNLEFT:
-                getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(-1,1));
+                getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(1,-1));
                 break;
             case DOWNRIGHT:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(1,1));
                 break;
             default:
-                System.out.println("Please enter correct directions. ");
                 printHelp();
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(0,0));
                 break;
@@ -89,6 +82,16 @@ public class GameImpl extends Game {
                 "down left  = sa \n" +
                 "up right   = wd \n"+
                 "down right = sd ");
+    }
+    private void printLegend(){
+        System.out.println("LEGEND TO CREEPS: \n" +
+                            "  M - Master squirel\n" +
+                            "  B - Bad Beast\n" +
+                            "  G - Good Beast\n" +
+                            "  b - Bad Plant\n" +
+                            "  g - Good Plant\n" +
+                            "  + - Wall\n" +
+                            "  - - Empty");
     }
 
 }
