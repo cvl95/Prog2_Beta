@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public class CommandoScanner {
+public class CommandScanner {
 
     // und von der String-Repräsentation auf die im Backend gebrauchten Datentypen umwandeln (Konvertierung).
 
@@ -18,7 +18,7 @@ public class CommandoScanner {
     private BufferedReader inputReader;
     private PrintStream outputstream;
 
-    public CommandoScanner(CommandTypeInfo[] commandTypes, BufferedReader inputReader){
+    public CommandScanner(CommandTypeInfo[] commandTypes, BufferedReader inputReader){
         this.commandTypeInfos = commandTypes;
         this.inputReader = inputReader;
     }
@@ -27,10 +27,18 @@ public class CommandoScanner {
         String input = inputReader.readLine().toLowerCase();
         for(int i = 0; i < commandTypeInfos.length; i++){
             if(input.equals(commandTypeInfos[i].getName())){
+             /*   Class<?>[] paramarray=  commandTypeInfos[i].getParamTypes();
+                Class<?> param= paramarray[0];
+                if(param == int.class){
+                    int parmType = (int)param.get;
+                }*/
                 return new Command(commandTypeInfos[i],commandTypeInfos[i].getParamTypes());
             }
         }
         return null;
     }
 
+    public CommandTypeInfo[] getCommandTypeInfos() {
+        return commandTypeInfos;
+    }
 }

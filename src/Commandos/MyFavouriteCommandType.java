@@ -19,6 +19,7 @@ public enum MyFavouriteCommandType implements CommandTypeInfo {
 
     @Override
     public String getName() {
+
         return this.commandName;
     }
 
