@@ -21,7 +21,6 @@ public class GameImpl extends Game {
     private static final String DOWNLEFT = "sa";
 
     private final UI consoleUI = new ConsoleUI();
-    private MoveCommand command;
 
     public GameImpl(State state){
         super(state);
@@ -29,6 +28,8 @@ public class GameImpl extends Game {
     @Override
     protected void render() {
         consoleUI.render(getState().getFlattenedBoard());
+        printLegend();
+        printHelp();
     }
 
     @Override
@@ -81,6 +82,16 @@ public class GameImpl extends Game {
                 "down left  = sa \n" +
                 "up right   = wd \n"+
                 "down right = sd ");
+    }
+    private void printLegend(){
+        System.out.println("LEGEND TO CREEPS: \n" +
+                            "  M - Master squirel\n" +
+                            "  B - Bad Beast\n" +
+                            "  G - Good Beast\n" +
+                            "  b - Bad Plant\n" +
+                            "  g - Good Plant\n" +
+                            "  + - Wall\n" +
+                            "  - - Empty");
     }
 
 }

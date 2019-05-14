@@ -365,13 +365,13 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     private String printHelper(Entity entity){
         if(entity instanceof BadBeast){
-            return " BB";
+            return " B";
         }else if(entity instanceof GoodBeast){
-            return " GB";
+            return " G";
         }else if(entity instanceof GoodPlant){
-            return " GP";
+            return " g";
         }else if(entity instanceof BadPlant){
-            return " BP";
+            return " b";
         }else if(entity instanceof Wall){
             return " +";
         }else if(entity instanceof MasterSquirel){
