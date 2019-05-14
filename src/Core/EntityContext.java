@@ -17,5 +17,7 @@ public interface EntityContext {
         void kill(Entity entity);
         void killAndReplace(Entity entity);
         Entity[] checkSuroundings(Entity entity);
+        boolean testArrayBounds(XY position);
+        boolean isOccupied(XY position);
 
 }

@@ -76,6 +76,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
     public void tryMove(MasterSquirel masterSquirel, XY moveDirection) {
         XY newPosition = masterSquirel.getPosition().setNewVectorPosition(moveDirection);
         Entity entityAtMoveDirection = getFieldValue(newPosition);
+
         switch (getEntityType(newPosition)){
             case MASTER_SQUIRREL:
                 break;
@@ -98,14 +99,22 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 killAndReplace(entityAtMoveDirection);
                 move(newPosition,masterSquirel);
+                if(masterSquirel.getEnergy() <= 0){
+                    kill(masterSquirel);
+                    System.exit(1);
+                }
                 break;
             case BAD_BEAST:
                 ((BadBeast) entityAtMoveDirection).setSnack();
-                if(((BadBeast) entityAtMoveDirection).getSnack() ==0 ) {
+                if(((BadBeast) entityAtMoveDirection).getSNACK() ==0 ) {
                     killAndReplace(entityAtMoveDirection);
                     move(newPosition,masterSquirel);
                 }
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+                if(masterSquirel.getEnergy() <= 0){
+                    kill(masterSquirel);
+                    System.exit(1);
+                }
                 break;
             case WALL:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
@@ -158,7 +167,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 if (miniSquirel.getEnergy() <= 0) {
                     kill(miniSquirel);
-                } else if (((BadBeast) entityAtMoveDirection).getSnack() == 0) {
+                } else if (((BadBeast) entityAtMoveDirection).getSNACK() == 0) {
                     killAndReplace(entityAtMoveDirection);
                     move(newPosition,miniSquirel);
                 }
@@ -203,7 +212,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
         Entity entityAtMoveDirection = getFieldValue(newPosition);
         switch (getEntityType(newPosition)){
             case MASTER_SQUIRREL:
-                if(badBeast.getSnack() > 0){
+                if(badBeast.getSNACK() > 0){
                     badBeast.setSnack();
                     entityAtMoveDirection.updateEnergy(badBeast.getEnergy());
                 }else{
@@ -215,7 +224,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 }
                 break;
             case MINI_SQUIRREL:
-                if(badBeast.getSnack() > 0){
+                if(badBeast.getSNACK() > 0){
                     badBeast.setSnack();
                     entityAtMoveDirection.updateEnergy(badBeast.getEnergy());
                 }else{
@@ -244,7 +253,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
     public PlayerEntity nearestPlayerEntity(XY position) {
         PlayerEntity nearestPlayerEntity = null;
         int minDistance = Integer.MAX_VALUE;
-        for (int i = 0; i < board.getEntitySet().getLENTGH(); i++) {
+        for (int i = 0; i < board.getEntitySet().getSizeOfArray(); i++) {
             Entity entity = board.getEntitySet().get(i);
             if (!(entity instanceof PlayerEntity)) {
                 continue;
@@ -293,17 +302,41 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 Math.abs(position1.getY() - position2.getY()));
     }
 
+    @Override
+    public boolean testArrayBounds(XY cell) {
+        if ((cell.getX() >= 0 && cell.getX() < size.getX())
+                && (cell.getY() >= 0 && cell.getY() < size.getY())) {
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean isOccupied(XY cell) {
+        if(gameField[cell.getX()][cell.getY()] != null){
+            return true;
+        }
+        return false ;
+    }
+
+
     public Entity[] checkSuroundings(Entity entity) {
         int counter = 0;
-        Entity[] surroundingEntities = new Entity[49];
+        int entity_X = entity.getPosition().getX();
+        int entity_Y = entity.getPosition().getY();
+        Entity[] surroundingEntities = new Entity[100];
         for (int i = -6; i < 7; i++) {
             for (int z = -6; z < 7; z++) {
-                if (new XY(entity.getPosition().getX() + i, entity.getPosition().getY() + z) == null) {
-                    continue;
-                } else {
-                    surroundingEntities[counter] = board.entitySet.findEntity(new XY(entity.getPosition().getX() + i, entity.getPosition().getY() + z));
-                    counter++;
+                if((entity_Y+z < getSize().getY() && entity_Y >= 0) && (entity_X+i <getSize().getX() && entity_X >= 0)){
+                    if (gameField[entity_Y+z][entity_X+i] == null) {
+                        continue;
+                    } else {
+                        surroundingEntities[counter] = gameField[entity_Y+z][entity_X+i];
+                        counter++;
+                    }
                 }
+
             }
 
         }

@@ -6,7 +6,9 @@ import Movement.XY;
 import java.util.List;
 
 public class GoodBeast extends Beast {
-    int counter=0;
+    public int ACTION_TURN = 4;
+    public static int VIEW_RANGE = 6;
+    private int COUNTER=0;
 
     public GoodBeast(int energy, XY pos) {
         super(200, pos);
@@ -14,28 +16,26 @@ public class GoodBeast extends Beast {
 
     @Override
     public void nextStep(EntityContext context) {
-
-     /*   if (counter==0) {
-            Entity[] surround = context.checkSuroundings(this);
-            XY direction = null;
-            for(Entity entity: surround) {
-
-                if (entity instanceof Squirel) {
-                    int x = this.getPosition().getX() - entity.getPosition().getX();
-                    int y = this.getPosition().getY() - entity.getPosition().getY();
-                    direction = this.culcRun(x,y);
-
-                }
-
+        COUNTER++;
+        if (COUNTER == ACTION_TURN) {
+            COUNTER = 0;
+            PlayerEntity playerEntity = context.nearestPlayerEntity(getPosition());
+            if (playerEntity == null) {
+                return;
             }
-            if (direction != null)
-                context.tryMove(this,direction);
-            else
-                context.tryMove(this, this.getPosition().getNewPosition());
-
+            int distance = context.calculateDistance(getPosition(), playerEntity.getPosition());
+            if (distance > GoodBeast.VIEW_RANGE) {
+                return;
+            }
+            XY[] direction = XY.getDirections();
+            for (int i = 0; i < direction.length; i++) {
+                XY newPosition = getPosition().setNewVectorPosition(direction[i]);
+                if (context.testArrayBounds(newPosition) && !context.isOccupied(newPosition)
+                        && (context.calculateDistance(newPosition, playerEntity.getPosition()) > distance)) {
+                    context.tryMove(this, direction[i]);
+                    break;
+                }
+            }
         }
-        counter++;
-        if (counter == 3)
-            counter = 0;*/
     }
 }
