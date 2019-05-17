@@ -1,11 +1,29 @@
 package Console;
+import Commandos.Command;
+import Commandos.CommandScanner;
 import Core.Boardview;
-import Entity.*;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class ConsoleUI implements UI {
 
-    public MoveCommand getCommand() {
-        return new MoveCommand();
+    private BufferedReader inputreader = new BufferedReader(new InputStreamReader(System.in));
+    private CommandScanner commandScanner =new CommandScanner(GameCommandType.values(), inputreader);
+
+    public CommandScanner getCommandScanner() {
+        return commandScanner;
+    }
+
+    @Override
+    public Command getCommand(){
+        try {
+           Command command =  commandScanner.next();
+          return  command;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -14,6 +32,15 @@ public class ConsoleUI implements UI {
         System.out.print(boardview);
         System.out.println();
     }
+
+    @Override
+    public void message(String msg) {
+        System.out.println(msg);
+    }
+
+
+
+
 
 
 }

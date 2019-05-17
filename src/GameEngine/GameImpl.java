@@ -1,35 +1,30 @@
 package GameEngine;
 
-import Console.ConsoleUI;
-import Console.MoveCommand;
+import Commandos.Command;
+import Commandos.CommandScanner;
+import Console.GameCommandType;
 import Console.UI;
-import Core.Board;
-import Core.BoardConfig;
-import Entity.EntitySet;
-import Entity.HandOperatedMasterSquirel;
 import Movement.XY;
 
 public class GameImpl extends Game {
     //command results
-    private static final String UP = "w";
+    /*private static final String UP = "w";
     private static final String DOWN = "s";
     private static final String LEFT = "a";
     private static final String RIGHT = "d";
     private static final String UPLEFT = "wa";
     private static final String UPRIGHT = "wd";
-    private static final String DOWNRIGHT = "sd";
-    private static final String DOWNLEFT = "sa";
+    private static final String DOWNRIGHT = "sd";*/
+   // private final UI consoleUI = new ConsoleUI();
+    private Command command;
 
-    private final UI consoleUI = new ConsoleUI();
-
-    public GameImpl(State state){
-        super(state);
+    public GameImpl(State state, UI ui){
+        super(state,ui);
     }
     @Override
     protected void render() {
-        consoleUI.render(getState().getFlattenedBoard());
+        ui.render(getState().getFlattenedBoard());
         printLegend();
-        printHelp();
     }
 
     @Override
@@ -39,9 +34,24 @@ public class GameImpl extends Game {
 
     @Override
     protected void processInput() {
-        //printHelp();
-        String input =consoleUI.getCommand().getCommand();
-        switch (input){
+        command =  ui.getCommand();
+        GameCommandType gameCommandType = (GameCommandType) command.getCommandType();
+        switch (gameCommandType){
+            case EXIT:
+                System.exit(0);
+                break;
+            case HELP:
+                printCommandos();
+                break;
+            case ALL:
+                getState().getFlattenedBoard().getBoard().getEntitySet().toString();
+                break;
+            case SPAWN_MINI:
+
+                break;
+            case MASTER_ENERGY:
+                getState().getFlattenedBoard().getBoard().getEntitySet().findHandoperated().toString();
+                break;
             case UP:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(-1,0));
                 break;
@@ -54,35 +64,34 @@ public class GameImpl extends Game {
             case RIGHT:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(0,1));
                 break;
-            case UPLEFT:
+            case UP_LEFT:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(-1,-1));
                 break;
-            case UPRIGHT:
+            case UP_RIGHT:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(-1,1));
                 break;
-            case DOWNLEFT:
+            case DOWN_LEFT:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(1,-1));
                 break;
-            case DOWNRIGHT:
+            case DOWN_RIGHT:
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(1,1));
                 break;
             default:
-                printHelp();
                 getState().getBoard().getEntitySet().findHandoperated().setMovementDirection(new XY(0,0));
                 break;
         }
     }
-    private void printHelp(){
-        System.out.println("Possible Directions: \n" +
-                "up         = w \n" +
-                "down       = s \n" +
-                "left       = a \n" +
-                "right      = d \n" +
-                "up left    = wa \n" +
-                "down left  = sa \n" +
-                "up right   = wd \n"+
-                "down right = sd ");
+    // is this correct way
+    public void printCommandos(){
+        StringBuilder stringBuilder = new StringBuilder();
+        CommandScanner commandScanner = ui.getCommandScanner();
+        for(int i = 0; i<commandScanner.getCommandTypeInfos().length; i++){
+            stringBuilder.append(commandScanner.getCommandTypeInfos()[i].getName() + commandScanner.getCommandTypeInfos()[i].getHelpText() +"\n");
+
+        }
+        System.out.println(stringBuilder);
     }
+
     private void printLegend(){
         System.out.println("LEGEND TO CREEPS: \n" +
                             "  M - Master squirel\n" +

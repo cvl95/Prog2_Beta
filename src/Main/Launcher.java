@@ -1,6 +1,8 @@
 package Main;
 
 
+import Console.ConsoleUI;
+import Console.UI;
 import Core.Board;
 import Core.BoardConfig;
 import Entity.*;
@@ -8,13 +10,14 @@ import GameEngine.*;
 
 public class Launcher {
 
-    public static void min(String[]args)throws Exception{
+    public static void main(String[]args)throws Exception{
     //board, entityset state, game`
         EntitySet entitySet = new EntitySet();
         BoardConfig boardConfig = new BoardConfig();
         Board board = new Board(entitySet, boardConfig);
         State state = new State(board);
-        Game game = new GameImpl(state);
+        UI ui = new ConsoleUI();
+        Game game = new GameImpl(state,ui);
         game.run();
 
 

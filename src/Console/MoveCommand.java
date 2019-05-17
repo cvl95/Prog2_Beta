@@ -1,30 +1,27 @@
 package Console;
 
+import Commandos.Command;
 import Entity.HandOperatedMasterSquirel;
 import Movement.XY;
 
 import java.util.Scanner;
 
-public class MoveCommand {
+public class MoveCommand extends Command {
 
-    private String command;
+    private GameCommandType gameCommandType;
+    private Object [] params;
 
-    public MoveCommand() {
-         command = command();
-    }
-    public String command() {
-        System.out.print(">> ");
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine().trim().toLowerCase();
-        return input;
-
+    MoveCommand(GameCommandType commandType, Object[] params){
+        this.gameCommandType = commandType;
+        this.params = params;
     }
 
-    public String getCommand() {
-        return command;
+    public Object [] getParams(){
+        return params;
     }
-
-
+    public GameCommandType getCommandType(){
+        return gameCommandType;
+    }
 
 
 }
