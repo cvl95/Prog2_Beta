@@ -1,9 +1,7 @@
 package Commandos;
 
-import Commandos.Exceptions.ScanExceptions;
-import com.sun.tools.jdeprscan.scan.Scan;
+import Util.ui.cosoleTest.console.Exceptions.ScanExceptions;
 
-import javax.print.DocFlavor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;

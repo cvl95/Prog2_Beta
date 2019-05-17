@@ -1,4 +1,8 @@
-package Commandos;
+package Util.ui.cosoleTest;
+
+import Commandos.Command;
+import Commandos.CommandScanner;
+import Commandos.CommandTypeInfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,11 +14,20 @@ public class MyFavouriteCommandProcessor {
     private BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
     private CommandScanner commandScanner = new CommandScanner(MyFavouriteCommandType.values(), inputReader);
 
+    public  static void main(String[]args){
+
+        MyFavouriteCommandProcessor myFavouriteCommandProcessor = new MyFavouriteCommandProcessor();
+        try{
+            myFavouriteCommandProcessor.process();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     void process() throws IOException {
-
         while(true){
-
+            outputStream.println(">> ");
             Command command = commandScanner.next();
 
             Object[] params = command.getParams();
@@ -31,12 +44,14 @@ public class MyFavouriteCommandProcessor {
                     break;
                 case ADDI:
                     result = (Integer) params[0] + (Integer) params[1];
+                    outputStream.print(result);
                     break;
                 case ADDF:
                     result = (Float) params[0] + (Float) params[1];
+                    outputStream.print(result);
                     break;
                 case ECHO:
-                    System.out.println();
+                    echo(params);
             }
 
         }
@@ -51,5 +66,12 @@ public class MyFavouriteCommandProcessor {
                 helpText = helpText + help.getName();
         }
         outputStream.append(helpText);
+    }
+
+    void echo(Object[] input){
+        for(int i = 0; i < input.length;i ++){
+           outputStream.print(input[i] + " ");
+        }
+
     }
 }

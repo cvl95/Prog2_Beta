@@ -1,4 +1,6 @@
-package Commandos;
+package Util.ui.cosoleTest;
+
+import Commandos.CommandTypeInfo;
 
 public enum MyFavouriteCommandType implements CommandTypeInfo {
     HELP("help", " * list all commands "),
