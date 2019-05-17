@@ -4,11 +4,11 @@ package Commandos.Exceptions;
 
 public class ScanExceptions extends RuntimeException{
 
-    ScanExceptions(){
+   public ScanExceptions(){
         super();
     }
 
-    ScanExceptions(String message){
+   public ScanExceptions(String message){
         super(message);
     }
 }
