@@ -73,7 +73,7 @@ public class GameImpl extends Game {
         }
     }
     private void printHelp(){
-        System.out.println("Please enter a direction you want move: \n" +
+        System.out.println("Possible Directions: \n" +
                 "up         = w \n" +
                 "down       = s \n" +
                 "left       = a \n" +

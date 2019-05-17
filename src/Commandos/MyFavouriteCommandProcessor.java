@@ -18,6 +18,7 @@ public class MyFavouriteCommandProcessor {
             Command command = commandScanner.next();
 
             Object[] params = command.getParams();
+            Object result;
 
             MyFavouriteCommandType commandType = (MyFavouriteCommandType) command.getCommandType();
 
@@ -29,8 +30,10 @@ public class MyFavouriteCommandProcessor {
                     help();
                     break;
                 case ADDI:
+                    result = (Integer) params[0] + (Integer) params[1];
                     break;
                 case ADDF:
+                    result = (Float) params[0] + (Float) params[1];
                     break;
                 case ECHO:
                     System.out.println();
@@ -40,7 +43,6 @@ public class MyFavouriteCommandProcessor {
     }
     void help(){
         String helpText = null;
-
         for(CommandTypeInfo help: commandScanner.getCommandTypeInfos()){
             if (helpText== null){
                 helpText = help.getName();
@@ -50,6 +52,4 @@ public class MyFavouriteCommandProcessor {
         }
         outputStream.append(helpText);
     }
-
-
 }
