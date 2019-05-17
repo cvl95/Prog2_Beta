@@ -19,5 +19,7 @@ public interface EntityContext {
         Entity[] checkSuroundings(Entity entity);
         boolean testArrayBounds(XY position);
         boolean isOccupied(XY position);
+        XY getFreeSurrounding(XY postion);
+
 
 }

@@ -362,6 +362,17 @@ public class FlattenedBoard implements Boardview, EntityContext {
     public Board getBoard() {
         return board;
     }
+    public XY getFreeSurrounding(XY postion){
+        for(int i = -1; i < 3; i++){
+            for(int j = -1; j < 3; j++){
+                XY xy = new XY(postion.getY()+i,postion.getX() + j);
+                if(!isOccupied(xy)){
+                    return xy;
+                }
+            }
+        }
+        return null;
+    }
 
     private String printHelper(Entity entity){
         if(entity instanceof BadBeast){

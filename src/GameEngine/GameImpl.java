@@ -47,7 +47,8 @@ public class GameImpl extends Game {
                 getState().getFlattenedBoard().getBoard().getEntitySet().toString();
                 break;
             case SPAWN_MINI:
-
+                int energy = (Integer) command.getParams()[0];
+                getState().getFlattenedBoard().getBoard().getEntitySet().findHandoperated().setSpawn(energy,getState().getFlattenedBoard());
                 break;
             case MASTER_ENERGY:
                 getState().getFlattenedBoard().getBoard().getEntitySet().findHandoperated().toString();

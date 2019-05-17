@@ -3,10 +3,6 @@ package Entity;
 import Core.EntityContext;
 import Movement.XY;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class MasterSquirel extends Squirel {
 
     int stun= 0;
@@ -16,7 +12,7 @@ public class MasterSquirel extends Squirel {
         super(1000, pos);
 
     }
-    //manage entry to entity set of minisquirel, also position
+
     public MiniSquirel createMinisquirel(int GivenEnergy, XY pos){
         MiniSquirel miniSquirel = new MiniSquirel(GivenEnergy, pos);
         this.updateEnergy(-GivenEnergy);
