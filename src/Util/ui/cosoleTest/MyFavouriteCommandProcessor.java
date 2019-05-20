@@ -26,6 +26,7 @@ public class MyFavouriteCommandProcessor {
 
 
     void process() throws IOException {
+
         while(true){
             outputStream.println(">> ");
             Command command = commandScanner.next();
