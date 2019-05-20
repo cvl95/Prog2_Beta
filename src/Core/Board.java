@@ -2,6 +2,8 @@ package Core;
 
 import Entity.*;
 import Entity.EntitySet;
+import Entity.bots.MasterSquirelBot;
+import GameEngine.GameMode;
 import Movement.XY;
 
 public class Board {
@@ -9,10 +11,11 @@ public class Board {
     BoardConfig boardConfig;
     private Entity[][] gameField;
     XY size;
+    private GameMode gameMode;
 
 
-    public Board(EntitySet entitySet, BoardConfig boardConfig){
-        this.entitySet = entitySet;
+    public Board(BoardConfig boardConfig, GameMode mode){
+        gameMode = mode;
         this.boardConfig = boardConfig;
         this.gameField = new Entity[this.boardConfig.getSize().getX() + 2][this.boardConfig.getSize().getY() + 2];
         this.size = new XY(this.boardConfig.getSize().getX() + 2,this.boardConfig.getSize().getY() + 2);
@@ -49,10 +52,15 @@ public class Board {
         XY xy = calculateRandomPosition();
         //squorels
         for(int i = 0; i < boardConfig.getNumberOfSquirels(); i++){
-            xy  = findFreePlace(xy) ;
-            HandOperatedMasterSquirel handOperatedMasterSquirel = new HandOperatedMasterSquirel(1000, xy);
-            entitySet.addEntity(handOperatedMasterSquirel);
-            gameField[xy.getX()][xy.getY()] =  handOperatedMasterSquirel;
+            xy  = findFreePlace(xy);
+            MasterSquirel player = null;
+            if(gameMode == GameMode.SINGLE_PLAYER){
+                player = new HandOperatedMasterSquirel(1000, xy);
+            }else{
+                player = new MasterSquirelBot(1000,xy);
+            }
+            entitySet.addEntity(player);
+            gameField[xy.getX()][xy.getY()] =  player;
         }
         // badBeast spawn
         for(int i = 1; i < boardConfig.getNumberOfBadbeast(); i++ ){

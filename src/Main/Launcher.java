@@ -21,6 +21,8 @@ public class Launcher extends Application{
         }
         Launcher launcher = new Launcher();
         if(args[0].equals("-singleplayer")){
+            chooseGameMode(gameMode.SINGLE_PLAYER);
+
 
         }
 
@@ -31,8 +33,12 @@ public class Launcher extends Application{
     public void start(Stage stage) throws Exception {
 
     }
-    private static void chooseGameMode(GameMode gameMode){
-        
+    private static void chooseGameMode(GameMode mode){
+        gameMode = mode;
+        boardConfig = new BoardConfig();
+        board = new Board(boardConfig,gameMode);
+        state = new State(board);
+
     }
 
     public static void optionHelp(){

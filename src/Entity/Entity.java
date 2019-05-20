@@ -31,6 +31,7 @@ public class Entity {
     }
 
 
+
     public int getEnergy() {
         return energy;
     }
