@@ -56,7 +56,7 @@ public class UniversalCommandProcessor {
     }
 /*    private PrintStream outputStream = System.out;
     private BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-    private CommandScanner commandScanner = new CommandScanner(MyFavouriteCommandType.values(), inputReader);
+    private CommandScanner commandScanner = new CommandScanner(MyFavoriteCommandType.values(), inputReader);
 
     public  static void main(String[]args){
 
@@ -78,7 +78,7 @@ public class UniversalCommandProcessor {
             Object[] params = command.getParams();
             Object result;
 
-            MyFavouriteCommandType commandType = (MyFavouriteCommandType) command.getCommandType();
+            MyFavoriteCommandType commandType = (MyFavoriteCommandType) command.getCommandType();
 
         }
     }
