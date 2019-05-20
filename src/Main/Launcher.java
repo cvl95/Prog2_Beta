@@ -1,49 +1,41 @@
 package Main;
 
-
-import Console.ConsoleUI;
-import Console.UI;
 import Core.Board;
 import Core.BoardConfig;
-import Entity.*;
-import GameEngine.*;
+import GameEngine.Game;
+import GameEngine.GameMode;
+import GameEngine.State;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class Launcher {
+public class Launcher extends Application{
+    private static GameMode gameMode;
+    private static BoardConfig boardConfig;
+    private static Board board;
+    private static State state;
 
     public static void main(String[]args)throws Exception{
-    //board, entityset state, game`
-        EntitySet entitySet = new EntitySet();
-        BoardConfig boardConfig = new BoardConfig();
-        Board board = new Board(entitySet, boardConfig);
-        State state = new State(board);
-        UI ui = new ConsoleUI();
-        Game game = new GameImpl(state,ui);
-        game.run();
+        if(args.length < 1){
+            optionHelp();
+            System.exit(1);
+        }
+        Launcher launcher = new Launcher();
+        if(args[0].equals("-singleplayer")){
+
+        }
 
 
+    }
 
+    @Override
+    public void start(Stage stage) throws Exception {
 
+    }
+    private static void chooseGameMode(GameMode gameMode){
+        
+    }
 
-
-/*        MasterSquirel masterSquirel = new MasterSquirel(1,new XY(0,0));
-        BadBeast badBeast = new BadBeast(2,new XY(3,4));
-        GoodBeast goodBeast = new GoodBeast(3,new XY(2,1));
-        GoodPlant goodPlant = new GoodPlant(4,new XY(5,6));
-        BadPlant badPlant = new BadPlant(5,new XY(3,3));
-        Wall wall = new Wall(6, new XY(0,1));*//*
-        MiniSquirel miniSquirel = masterSquirel.createMinisquirel(150, new XY(0,0));
-        entitySet.addEntity(masterSquirel);
-        entitySet.addEntity(badBeast);
-        entitySet.addEntity(goodBeast);
-        entitySet.addEntity(goodPlant);
-        entitySet.addEntity(badPlant);
-        entitySet.addEntity(wall);
-        entitySet.addEntity(miniSquirel);*/
-       /* EntitySet entitySet = new EntitySet();
-        BoardConfig boardConfig = new BoardConfig(20,20,20);
-        Board board =new Board(entitySet,boardConfig);
-        System.out.println(board);
-        */
-
+    public static void optionHelp(){
+        System.out.println("-singleplayer ( -console | -fx ) | -ai");
     }
 }
