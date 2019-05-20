@@ -6,16 +6,16 @@ import Console.GameCommandType;
 import Console.UI;
 import Movement.XY;
 
-public class GameImpl extends Game {
+/*public class GameImpl extends Game {
     //command results
-    /*private static final String UP = "w";
+    private static final String UP = "w";
     private static final String DOWN = "s";
     private static final String LEFT = "a";
     private static final String RIGHT = "d";
     private static final String UPLEFT = "wa";
     private static final String UPRIGHT = "wd";
-    private static final String DOWNRIGHT = "sd";*/
-   // private final UI consoleUI = new ConsoleUI();
+    private static final String DOWNRIGHT = "sd";
+    private final UI consoleUI = new ConsoleUI();
     private Command command;
 
     public GameImpl(State state, UI ui){
@@ -103,5 +103,6 @@ public class GameImpl extends Game {
                             "  + - Wall\n" +
                             "  - - Empty");
     }
-
 }
+*/
+

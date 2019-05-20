@@ -3,7 +3,7 @@ package Util.ui.cosoleTest;
 import Commandos.AsConsoleCommand;
 
 
-public /*enum*/ interface MyFavouriteCommandType /*implements CommandTypeInfo*/ {
+public /*enum*/ interface MyFavoriteCommandType /*implements CommandTypeInfo*/ {
     @AsConsoleCommand(name = "help", helpText = "* list all commands", order = 0)
     void help();
 
@@ -29,7 +29,7 @@ public /*enum*/ interface MyFavouriteCommandType /*implements CommandTypeInfo*/ 
     private String helptext;
     private Class<?>[] parameters;
 
-    MyFavouriteCommandType(String commandName, String helpText, Class<?>... param){
+    MyFavoriteCommandType(String commandName, String helpText, Class<?>... param){
         this.commandName = commandName;
         this.helptext = helpText;
         this.parameters = param;
@@ -50,4 +50,4 @@ public /*enum*/ interface MyFavouriteCommandType /*implements CommandTypeInfo*/ 
     public Class<?>[] getParamTypes() {
         return parameters;
     }
-}/*
+}*/

@@ -53,3 +53,5 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
     }
 
 }
+
+// Übergabe von Process input an handoperated
