@@ -50,4 +50,4 @@ public /*enum*/ interface MyFavouriteCommandType /*implements CommandTypeInfo*/ 
     public Class<?>[] getParamTypes() {
         return parameters;
     }
-}/*
+}*/

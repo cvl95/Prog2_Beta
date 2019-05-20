@@ -2,7 +2,10 @@ package Console;
 
 import Commandos.CommandTypeInfo;
 
+import java.lang.reflect.Method;
+
 public enum GameCommandType implements CommandTypeInfo {
+
     HELP("help", " * list all commands "),
     EXIT("exit", " * exit programm "),
     ALL("all", " * lists all beasts "),
@@ -42,6 +45,16 @@ public enum GameCommandType implements CommandTypeInfo {
     @Override
     public Class<?>[] getParamTypes() {
         return parameters;
+    }
+
+    @Override
+    public Method getMethod() {
+        return null;
+    }
+
+    @Override
+    public Object getTarget() {
+        return null;
     }
 
 }

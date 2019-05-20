@@ -49,7 +49,9 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
         if (freePosition == null) {
             throw new SpawnException("No place to spawn.");
         }
-        createMinisquirel(energy,freePosition, context);
+        createMinisquirel(energy,freePosition);
     }
 
 }
+
+// Übergabe von Process input an handoperated

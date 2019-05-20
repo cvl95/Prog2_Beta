@@ -1,29 +1,28 @@
 package Main;
 
 
+import Commandos.CommandScanner;
+import Commandos.CommandTypeInfo;
+import Commandos.ConsoleCommandType;
 import Console.ConsoleUI;
 import Console.UI;
 import Core.Board;
 import Core.BoardConfig;
 import Entity.*;
 import GameEngine.*;
+import Util.ui.cosoleTest.MyFavouriteCommandType;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.List;
 
 public class Launcher {
 
     public static void main(String[]args)throws Exception{
     //board, entityset state, game`
-        EntitySet entitySet = new EntitySet();
-        BoardConfig boardConfig = new BoardConfig();
-        Board board = new Board(entitySet, boardConfig);
-        State state = new State(board);
-        UI ui = new ConsoleUI();
-        Game game = new GameImpl(state,ui);
-        game.run();
 
-
-
-
-
+        List<ConsoleCommandType> commandTypes = ConsoleCommandType.getCommandTypes(MyFavouriteCommandType, CommandTypeInfo);
+        CommandScanner cs= new CommandScanner(commandTypes, new BufferedReader(new InputStreamReader(System.in)));
 
 /*        MasterSquirel masterSquirel = new MasterSquirel(1,new XY(0,0));
         BadBeast badBeast = new BadBeast(2,new XY(3,4));

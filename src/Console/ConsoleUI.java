@@ -9,7 +9,11 @@ import java.io.InputStreamReader;
 public class ConsoleUI implements UI {
 
     private BufferedReader inputreader = new BufferedReader(new InputStreamReader(System.in));
-    private CommandScanner commandScanner =new CommandScanner(GameCommandType.values(), inputreader);
+    private CommandScanner commandScanner;
+
+    ConsoleUI(CommandScanner commandScanner){
+        this.commandScanner= commandScanner;
+    }
 
     public CommandScanner getCommandScanner() {
         return commandScanner;

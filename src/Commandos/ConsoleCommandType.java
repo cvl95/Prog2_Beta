@@ -56,4 +56,5 @@ public class ConsoleCommandType implements CommandTypeInfo {
     public Object getTarget() {
         return target;
     }
+
 }
