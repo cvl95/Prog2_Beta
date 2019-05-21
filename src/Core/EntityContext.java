@@ -20,6 +20,7 @@ public interface EntityContext {
         boolean testArrayBounds(XY position);
         boolean isOccupied(XY position);
         XY getFreeSurrounding(XY postion);
+        Entity getEntityAt(XY position);
 
 
 }

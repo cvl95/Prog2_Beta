@@ -374,6 +374,11 @@ public class FlattenedBoard implements Boardview, EntityContext {
         return null;
     }
 
+    @Override
+    public Entity getEntityAt(XY position) {
+        return gameField[position.getY()][ position.getX()];
+    }
+
     private String printHelper(Entity entity){
         if(entity instanceof BadBeast){
             return " B";

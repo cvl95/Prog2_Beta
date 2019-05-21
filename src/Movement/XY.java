@@ -5,10 +5,25 @@ public class XY {
     private final int x;
     private final int y;
 
+    public static final XY NONE = new XY(0, 0);
+    public static final XY RIGHT = new XY(1, 0);
+    public static final XY LEFT = new XY(-1, 0);
+    public static final XY UP = new XY(0, -1);
+    public static final XY DOWN = new XY(0, 1);
+    public static final XY RIGHT_UP = new XY(1, -1);
+    public static final XY RIGHT_DOWN = new XY(1, 1);
+    public static final XY LEFT_UP = new XY(-1, -1);
+    public static final XY LEFT_DOWN = new XY(-1, 1);
+
     public XY(int x, int y){
         this.x = x;
         this.y = y;
     }
+
+    public XY increase(XY xy){
+        return new XY(x +xy.x, y + xy.y);
+    }
+
     public XY getNewPosition(){
         int newX = calculateRandom();
         int newY = calculateRandom();

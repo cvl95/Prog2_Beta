@@ -5,12 +5,10 @@ import Console.UI;
 
 public abstract class Game {
     private static int FPS = 10;
-    protected UI ui;
     private State state;
 
-    Game(State state, UI ui){
+    Game(State state){
         this.state = state;
-        this.ui = ui;
     }
     public void run() {
         while (true){
@@ -29,10 +27,6 @@ public abstract class Game {
 
     public State getState() {
         return state;
-    }
-
-    public UI getUi() {
-        return ui;
     }
 
     protected abstract void render();

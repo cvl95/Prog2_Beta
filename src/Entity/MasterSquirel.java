@@ -2,6 +2,7 @@ package Entity;
 
 import Core.EntityContext;
 import Movement.XY;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class MasterSquirel extends Squirel {
 
@@ -12,12 +13,17 @@ public class MasterSquirel extends Squirel {
         super(1000, pos);
 
     }
+    public MasterSquirel(){}
 
     public MiniSquirel createMinisquirel(int GivenEnergy, XY pos){
         MiniSquirel miniSquirel = new MiniSquirel(GivenEnergy, pos);
         this.updateEnergy(-GivenEnergy);
         miniSquirel.setReferenceFather(this.getId());
         return miniSquirel;
+    }
+
+    public Boolean ownsMini(MiniSquirel miniSquirel){
+        return miniSquirel.getReferenceFather() == getId();
     }
 
     public void setStun(int stun) {

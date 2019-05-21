@@ -5,7 +5,8 @@ import Movement.XY;
 
 public class MiniSquirel extends MasterSquirel {
     private int referenceFather;
-    static final int MINIMUM_SPAWN_ENERGY = 100;
+    public static final int MINIMUM_SPAWN_ENERGY = 100;
+    public MiniSquirel(){}
     public MiniSquirel(int energy, XY pos) {
         super(energy, pos);
     }
