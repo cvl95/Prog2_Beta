@@ -1,6 +1,7 @@
 package Console;
 import Commandos.Command;
 import Commandos.CommandScanner;
+import Commandos.ExecutableCommand;
 import Core.Boardview;
 
 import java.io.BufferedReader;
@@ -20,9 +21,9 @@ public class ConsoleUI implements UI {
     }
 
     @Override
-    public Command getCommand(){
+    public ExecutableCommand getCommand(){
         try {
-            Command command =  commandScanner.next();
+            ExecutableCommand command =  commandScanner.next();
           return  command;
         }catch (Exception e){
             e.printStackTrace();

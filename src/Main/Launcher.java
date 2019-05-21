@@ -1,12 +1,9 @@
 package Main;
 
-import Commandos.ExecutableCommand;
-import Commandos.KeyCommandType;
-import Commandos.UserActions;
-import Commandos.UserActionsImpl;
+import Commandos.*;
+import Console.ConsoleUI;
 import Core.Board;
 import Core.BoardConfig;
-import Entity.Entity;
 import Entity.HandOperatedMasterSquirel;
 import GameEngine.*;
 import Util.ui.cosoleTest.FxUI;
@@ -15,21 +12,25 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Launcher extends Application{
+public class Launcher extends Application {
     private static GameMode gameMode;
     private static BoardConfig boardConfig;
     private static Board board;
     private static State state;
 
-    public static void main(String[]args)throws Exception{
-        if(args.length < 1){
+    public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
             optionHelp();
             System.exit(1);
         }
         Launcher launcher = new Launcher();
-        if(args[0].equals("-singleplayer")) {
+        if (args[0].equals("-singleplayer")) {
             chooseGameMode(gameMode.SINGLE_PLAYER);
             if (args.length < 2) {
                 optionHelp();
@@ -42,31 +43,28 @@ public class Launcher extends Application{
                 Application.launch(args);
             } else {
                 optionHelp();
-                System.exit(1)
+                System.exit(1);
             }
 
-        }else if(args[0].equals("-ai")){
+        } else if (args[0].equals("-ai")) {
             chooseGameMode(GameMode.AI);
             Application.launch(args);
-        }
-        else{
+        } else {
             optionHelp();
             System.exit(1);
         }
     }
-
     @Override
     public void start(Stage stage) throws Exception {
         Game game = null;
-        FxUI fxUI =null;
-        if(gameMode == GameMode.SINGLE_PLAYER){
+        FxUI fxUI = null;
+        if (gameMode == GameMode.SINGLE_PLAYER) {
             HandOperatedMasterSquirel player = getPlayerEntity();
-            UserActionsImpl userActions = new UserActionsImpl(player, state.getFlattenedBoard())
+            UserActionsImpl userActions = new UserActionsImpl(player, state.getFlattenedBoard());
             List<KeyCommandType> commandTypes = KeyCommandType.getCommandTypes(userActions, UserActions.class);
             fxUI = FxUI.createInstance(boardConfig.getSize(), commandTypes);
             game = new FxGameImpl(state, fxUI, player);
-        }
-        else{
+        } else {
             fxUI = FxUI.createInstance(boardConfig.getSize());
             game = new AIGameImpl(state, fxUI);
         }
@@ -83,22 +81,37 @@ public class Launcher extends Application{
         stage.show();
         startGame(game);
     }
-    private static void chooseGameMode(GameMode mode){
+
+    private static void chooseGameMode(GameMode mode) {
         gameMode = mode;
         boardConfig = new BoardConfig();
-        board = new Board(boardConfig,gameMode);
+        board = new Board(boardConfig, gameMode);
         state = new State(board);
 
     }
-    private void startGame(Game game){
-        if(game instanceof ConsoleGameImpl){
 
+    private void startGame(Game game) {
+        if (game instanceof ConsoleGameImpl) {
+            ConsoleGameImpl consoleGame = (ConsoleGameImpl) game;
+            consoleGame.getUserActions().help();
+            consoleGame.run();
+        } else if (game instanceof FxGameImpl || game instanceof AIGameImpl) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    game.run();
+                }
+            }, 500);
         }
     }
-
     private void launchConsole(String[]args){
-        //dont forget to implement
-
+        UserActionsImpl userActions = new UserActionsImpl(getPlayerEntity(),state.getFlattenedBoard());
+        List<ConsoleCommandType> commandTypes = ConsoleCommandType.getCommandTypes(userActions,UserActions.class);
+        CommandScanner scanner = new CommandScanner(commandTypes, new BufferedReader(new InputStreamReader(System.in)));
+        Game game;
+        ConsoleUI consoleUI = new ConsoleUI(scanner);
+        game = new ConsoleGameImpl(state,consoleUI,userActions);
+        startGame(game);
     }
     private HandOperatedMasterSquirel getPlayerEntity() {
         return state.getBoard().getEntitySet().findHandoperated();
