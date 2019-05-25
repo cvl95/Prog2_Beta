@@ -12,6 +12,7 @@ public class ConsoleGameImpl extends Game{
 
     public ConsoleGameImpl(State state, ConsoleUI consoleUI, UserActionsImpl actions){
         super(state);
+        // casten zum
         this.consoleUI = consoleUI;
         this.userActions = actions;
     }
@@ -27,7 +28,7 @@ public class ConsoleGameImpl extends Game{
     @Override
     protected void render() {
         consoleUI.message("Highscore: " + getState().getHighscore());
-        consoleUI.render(getState().getFlattenedBoard());
+        consoleUI.render(getState().flattenedBoard());
     }
 
     @Override

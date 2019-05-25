@@ -15,6 +15,7 @@ import javafx.stage.WindowEvent;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,38 +25,44 @@ public class Launcher extends Application {
     private static Board board;
     private static State state;
 
-    public static void main(String[] args) throws Exception {
-        if (args.length < 1) {
+    public static void main(String[] args){
+        optionHelp();
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        String[] inputSplit = input.split(" ");
+
+        if (inputSplit.length < 1) {
             optionHelp();
             System.exit(1);
         }
         Launcher launcher = new Launcher();
-        if (args[0].equals("-singleplayer")) {
+
+        if (inputSplit[0].equals("-singleplayer")) {
             chooseGameMode(gameMode.SINGLE_PLAYER);
-            if (args.length < 2) {
+            if (inputSplit.length < 2) {
                 optionHelp();
                 System.exit(1);
             }
 
-            if (args[1].equals("-console")) {
+            if (inputSplit[1].equals("-console")) {
                 launcher.launchConsole(args);
-            } else if (args[1].equals("-fx")) {
-                Application.launch(args);
+            } else if (inputSplit[1].equals("-fx")) {
+                Application.launch();
             } else {
                 optionHelp();
                 System.exit(1);
             }
 
-        } else if (args[0].equals("-ai")) {
+        } else if (inputSplit[0].equals("-ai")) {
             chooseGameMode(GameMode.AI);
-            Application.launch(args);
+            Application.launch(inputSplit);
         } else {
             optionHelp();
             System.exit(1);
         }
     }
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage){
         Game game = null;
         FxUI fxUI = null;
         if (gameMode == GameMode.SINGLE_PLAYER) {
@@ -96,6 +103,8 @@ public class Launcher extends Application {
             consoleGame.getUserActions().help();
             consoleGame.run();
         } else if (game instanceof FxGameImpl || game instanceof AIGameImpl) {
+          //  FxGameImpl fxGame = (FxGameImpl) game;
+          //  fxGame.run();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {

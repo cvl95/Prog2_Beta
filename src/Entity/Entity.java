@@ -1,6 +1,6 @@
 package Entity;
 
-import Core.Board;
+
 import Core.EntityContext;
 import Movement.XY;
 
@@ -79,7 +79,7 @@ public class Entity {
 
     @Override
     public String toString() {
-       String s = String.format(("id: %s , energy: %s , position: %s"),this.id,this.energy,this.position);
+       String s = String.format(("%s id: %s , energy: %s , position: %s"), getClass().getSimpleName(), this.id,this.energy,this.position);
         return s;
     }
 }

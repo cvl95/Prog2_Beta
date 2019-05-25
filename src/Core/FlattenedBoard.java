@@ -2,14 +2,19 @@ package Core;
 import Entity.*;
 import Movement.XY;
 
+import java.util.logging.Logger;
+
 public class FlattenedBoard implements Boardview, EntityContext {
     private final Board board;
     private final Entity[][] gameField;
     private final XY size;
+    private final Logger logger = Logger.getLogger(FlattenedBoard.class.getName());
+
 
     public FlattenedBoard(Board board) {
+
         this.board = board;
-        this.size = board.getSize();
+        this.size = new XY(board.getSize().getX(),board.getSize().getY());
         this.gameField = new Entity[size.getX()][size.getY()];
 
         EntitySet entitySet = board.getEntitySet();
@@ -79,33 +84,44 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
         switch (getEntityType(newPosition)){
             case MASTER_SQUIRREL:
+                logger.info(masterSquirel +  " collided with " + entityAtMoveDirection);
                 break;
             case MINI_SQUIRREL:
+                logger.info(entityAtMoveDirection + " was consumed by " + masterSquirel);
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+                logger.info(masterSquirel + " has new energy " + masterSquirel.getEnergy());
                 kill(entityAtMoveDirection);
                 move(newPosition,masterSquirel);
                 break;
             case GOOD_PLANT:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+                logger.info(entityAtMoveDirection + " was consumed by " + masterSquirel);
+                logger.info(masterSquirel + " has new energy " + masterSquirel.getEnergy());
                 killAndReplace(entityAtMoveDirection);
                 move(newPosition,masterSquirel);
                 break;
             case GOOD_BEAST:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+                logger.info(entityAtMoveDirection + " was consumed by " + masterSquirel);
+                logger.info(masterSquirel + " has new energy " + masterSquirel.getEnergy());
                 killAndReplace(entityAtMoveDirection);
                 move(newPosition,masterSquirel);
                 break;
             case BAD_PLANT:
                 masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 killAndReplace(entityAtMoveDirection);
+                logger.info(entityAtMoveDirection + " was consumed by " + masterSquirel);
+                logger.info(masterSquirel + " has new energy " + masterSquirel.getEnergy());
                 move(newPosition,masterSquirel);
                 if(masterSquirel.getEnergy() <= 0){
                     kill(masterSquirel);
+                    logger.info(masterSquirel + " has died");
                     System.exit(1);
                 }
                 break;
             case BAD_BEAST:
                 ((BadBeast) entityAtMoveDirection).setSnack();
+                logger.info(entityAtMoveDirection + " took a bite of " + masterSquirel);
                 if(((BadBeast) entityAtMoveDirection).getSNACK() ==0 ) {
                     killAndReplace(entityAtMoveDirection);
                     move(newPosition,masterSquirel);
@@ -117,7 +133,8 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 }
                 break;
             case WALL:
-                masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+                masterSquirel.updateEnergy(entityAtMoveDirection.getEnergy());                logger.info(masterSquirel +  " collided with " + entityAtMoveDirection);
+                logger.info(masterSquirel +  " collided with " + entityAtMoveDirection);
                 masterSquirel.setStun(3);
                 break;
             case NONE:
@@ -141,20 +158,24 @@ public class FlattenedBoard implements Boardview, EntityContext {
             case MASTER_SQUIRREL:
                 if (((MasterSquirel) entityAtMoveDirection).getId() == miniSquirel.getReferenceFather()) {
                     entityAtMoveDirection.updateEnergy(miniSquirel.getEnergy());
+                    logger.info(miniSquirel +  " was eaten " + entityAtMoveDirection);
                     kill(miniSquirel);
                 }
                 break;
             case MINI_SQUIRREL:
+                logger.info(miniSquirel +  " collided with " + entityAtMoveDirection);
                 break;
             case GOOD_PLANT:
                 break;
             case GOOD_BEAST:
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+                logger.info(miniSquirel +  " collided with " + entityAtMoveDirection);
                 killAndReplace(entityAtMoveDirection);
                 move(newPosition,miniSquirel);
                 break;
             case BAD_PLANT:
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+                logger.info(miniSquirel +  " collided with " + entityAtMoveDirection);
                 killAndReplace(entityAtMoveDirection);
                 if (miniSquirel.getEnergy() <= 0) {
                     kill(miniSquirel);
@@ -166,14 +187,18 @@ public class FlattenedBoard implements Boardview, EntityContext {
                 ((BadBeast) entityAtMoveDirection).setSnack();
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
                 if (miniSquirel.getEnergy() <= 0) {
+                    logger.info(miniSquirel +  " died");
                     kill(miniSquirel);
                 } else if (((BadBeast) entityAtMoveDirection).getSNACK() == 0) {
+                    logger.info(miniSquirel +  " collided with " + entityAtMoveDirection);
+
                     killAndReplace(entityAtMoveDirection);
                     move(newPosition,miniSquirel);
                 }
                 break;
             case WALL:
                 miniSquirel.updateEnergy(entityAtMoveDirection.getEnergy());
+                logger.info(miniSquirel +  " collided with " + entityAtMoveDirection);
                 miniSquirel.setStun(3);
                 break;
             case NONE:
@@ -272,6 +297,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
     public void kill(Entity entity) {
             board.getEntitySet().deleteEntity(entity.getId());
             setPlace(entity.getPosition(),null);
+            logger.info(entity + " was removed.");
     }
 
     @Override
@@ -291,6 +317,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
         kill(entity);
         board.getEntitySet().addEntity(newEntity);
         setPlace(newEntity.getPosition(),newEntity);
+        logger.info(newEntity + " newly added");
 
     }
 
@@ -345,6 +372,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     private void setPlace(XY position, Entity entity){
         gameField[position.getX()][position.getY()] = entity;
+        logger.info("Position is set for " + entity);
     }
     private Entity getFieldValue(XY position){
         return gameField[position.getX()][position.getY()];
@@ -353,6 +381,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
         setPlace(entity.getPosition(),null);
         entity.setPosition(position);
         setPlace(entity.getPosition(),entity);
+        logger.info(entity + " moved to new postion: " + position);
     }
 
     public Entity[][] getGameField() {

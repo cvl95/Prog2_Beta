@@ -2,7 +2,7 @@ package Entity;
 
 import Core.EntityContext;
 import Movement.XY;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 
 public class MasterSquirel extends Squirel {
 

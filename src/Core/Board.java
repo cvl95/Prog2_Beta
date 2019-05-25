@@ -7,7 +7,7 @@ import GameEngine.GameMode;
 import Movement.XY;
 
 public class Board {
-    EntitySet entitySet;
+    EntitySet entitySet = new EntitySet();
     BoardConfig boardConfig;
     private Entity[][] gameField;
     XY size;

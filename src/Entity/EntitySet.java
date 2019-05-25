@@ -13,7 +13,7 @@ public class EntitySet {
 
     private static final int LENTGH = 256;
     private Entity[] entitySet = new Entity[this.LENTGH];
-    private int sizeOfArray = 0;
+    private int sizeOfArray;
 
 
     public void addEntity(Entity entity) {
@@ -22,6 +22,8 @@ public class EntitySet {
                 entitySet[i] = entity;
 
                 this.sizeOfArray = sizeOfArray + 1;
+                //add to log
+                System.out.println("added " + entity.toString());
                 break;
             } else if (i == entitySet.length) {
                 System.out.println("no place in Array delete elements first");

@@ -6,7 +6,7 @@ import Movement.XY;
 public class BoardConfig {
 
     // später wollen wir diese in eine separate Text-Datei auslagern
-    private static final XY SIZE = new XY(10,10);
+    private static final XY SIZE = new XY(20,20);
     private static final int NUMBER_OF_WALLS = 30;
     private static final int NUMBER_OF_GOOD_PLANTS = 10;
     private static final int NUMBER_OF_BAD_PLANTS = 10;
@@ -33,9 +33,9 @@ public class BoardConfig {
         size = SIZE;
     }
     public BoardConfig(XY boardSize, int numberOfBadbeast,int numberOfBadplants, int numberOfGoodbeast,
-                       int numberOfGoodplants, int numberOfWalls, int numberOfSquirels) {
+                       int numberOfGoodplants, int numberOfWalls, int numberOfSquirels) throws InvalidBoardSize {
         if(boardSize.getY() <= 0 || boardSize.getX() <= 0){
-            System.out.println("Too small board");
+            throw new InvalidBoardSize("Board size is not correct " + getSize());
         }
         this.numberOfBadbeast = numberOfBadbeast;
         this.size = boardSize;
