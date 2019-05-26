@@ -20,7 +20,11 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
     public void nextStep(EntityContext context) {
 
         if(this.getStun() == 0){
-            context.tryMove(this,movementDirection);
+            if(movementDirection == null){
+                return;
+            }else {
+                context.tryMove(this,movementDirection);
+            }
         }else {
             this.setStun(this.getStun()-1);
         }
