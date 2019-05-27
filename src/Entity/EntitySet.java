@@ -3,12 +3,15 @@ package Entity;
 
 import Movement.XY;
 
+import java.util.logging.Logger;
+
 
 public class EntitySet {
 
     private static final int LENTGH = 256;
     private Entity[] entitySet = new Entity[this.LENTGH];
     private int sizeOfArray;
+    Logger logger = Logger.getLogger(EntitySet.class.getName().toString());
 
 
     public void addEntity(Entity entity) {
@@ -18,10 +21,11 @@ public class EntitySet {
 
                 this.sizeOfArray = sizeOfArray + 1;
                 //add to log
-                System.out.println("added " + entity.toString());
+                logger.info("added " + entity.toString());
                 break;
             } else if (i == entitySet.length) {
-                System.out.println("no place in Array delete elements first");
+                logger.info("no place in Array delete elements first");
+
             }
         }
     }
