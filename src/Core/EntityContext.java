@@ -104,6 +104,7 @@ public interface EntityContext {
          * @return the type of the entity
          */
         Entity getEntityAt(XY position);
+        Entity getEntityByID(int id);
 
 
 }
