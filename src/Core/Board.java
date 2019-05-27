@@ -6,16 +6,24 @@ import Entity.bots.MasterSquirelBot;
 import GameEngine.GameMode;
 import Movement.XY;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 public class Board {
-    EntitySet entitySet = new EntitySet();
-    BoardConfig boardConfig;
+    private Logger logger = Logger.getLogger(Board.class.getName());
+
+    private BoardConfig boardConfig;
     private Entity[][] gameField;
-    XY size;
     private GameMode gameMode;
 
+    private EntitySet entitySet = new EntitySet();
+    private List<MasterSquirelBot> bots = new ArrayList<>();
+    private HandOperatedMasterSquirel masterSquirel;
+    XY size;
 
     public Board(BoardConfig boardConfig, GameMode mode){
-        gameMode = mode;
+        this.gameMode = mode;
         this.boardConfig = boardConfig;
         this.gameField = new Entity[this.boardConfig.getSize().getX() + 2][this.boardConfig.getSize().getY() + 2];
         this.size = new XY(this.boardConfig.getSize().getX() + 2,this.boardConfig.getSize().getY() + 2);

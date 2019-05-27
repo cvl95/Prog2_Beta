@@ -93,7 +93,7 @@ public class UserActionsImpl implements UserActions {
         System.out.println("Player energy: " +player.getEnergy());
         turnFinished = false;
     }
-    
+
     @Override
     public void spawnMiniSquirrel(int energy) {
         player.setSpawn(energy, entityContext);
