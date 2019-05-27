@@ -4,6 +4,7 @@ module Prog2 {
     requires javafx.controls;
     requires java.logging;
     requires java.datatransfer;
+    requires junit;
 
     opens Main;
 }

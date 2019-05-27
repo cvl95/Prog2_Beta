@@ -70,4 +70,10 @@ public class XY {
         return s;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+
+
+        return super.equals(obj);
+    }
 }

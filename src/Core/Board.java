@@ -1,5 +1,7 @@
 package Core;
 
+import BotAPI.BotController;
+import BotAPI.BotControllerFactory;
 import Entity.*;
 import Entity.EntitySet;
 import Entity.bots.MasterSquirelBot;
@@ -7,7 +9,9 @@ import GameEngine.GameMode;
 import Movement.XY;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class Board {
@@ -59,17 +63,32 @@ public class Board {
         //Fills gameField and EntitySet!
         XY xy = calculateRandomPosition();
         //squorels
-        for(int i = 0; i < boardConfig.getNumberOfSquirels(); i++){
-            xy  = findFreePlace(xy);
-            MasterSquirel player = null;
-            if(gameMode == GameMode.SINGLE_PLAYER){
-                player = new HandOperatedMasterSquirel(1000, xy);
-            }else{
-                player = new MasterSquirelBot(1000,xy);
-            }
+        xy  = findFreePlace(xy);
+        MasterSquirel player = null;
+        if(gameMode == GameMode.SINGLE_PLAYER){
+            player = new HandOperatedMasterSquirel(1000, xy);
             entitySet.addEntity(player);
             gameField[xy.getX()][xy.getY()] =  player;
-        }
+        }else{
+            Map<String, Integer> nameCountMap = new HashMap<>();
+            for (int j = 0; j < boardConfig.getNumberOfSquirels(); j++) {
+                String packageName = "Prog2_Beta.src.Entity.bots";
+                String masterBotClassName = packageName + "." + boardConfig.getMasterBotNames().get(j);
+                String miniBotClassName = packageName + "." + boardConfig.getMiniBotnames().get(j);
+                String botName = masterBotClassName;
+                if (nameCountMap.containsKey(botName)) {
+                    botName += "-" + nameCountMap.get(botName);
+                }
+
+                xy  = findFreePlace(xy);
+
+                MasterSquirelBot masterBot = new MasterSquirelBot(1000 ,xy, botName);
+                entitySet.addEntity(masterBot);
+                bots.add(masterBot);
+                int count = nameCountMap.getOrDefault(masterBotClassName, 0);
+                nameCountMap.put(masterBotClassName, count + 1);
+                }
+            }
         // badBeast spawn
         for(int i = 1; i < boardConfig.getNumberOfBadbeast(); i++ ){
             xy  = findFreePlace(xy) ;
@@ -139,6 +158,10 @@ public class Board {
         return this.gameField;
     }
 
+    /**
+     *
+     * @return a two-dimensional representation of the board
+     */
     public FlattenedBoard flatten() {
         return new FlattenedBoard(this);
         }

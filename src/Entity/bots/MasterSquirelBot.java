@@ -12,10 +12,12 @@ public class MasterSquirelBot extends MasterSquirel {
     private BotControllerFactory botControllerFactory;
     private BotController masterBotController;
     private ControllerContext controllerContext;
+    private final String name;
 
 
-    public MasterSquirelBot(int energy, XY pos) {
+    public MasterSquirelBot(int energy, XY pos, String name) {
         super(energy, pos);
+        this.name = name;
         botControllerFactory = new BotControllerFactoryImpl();
         masterBotController = botControllerFactory.createMasterBotController();
     }
