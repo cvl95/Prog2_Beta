@@ -3,11 +3,6 @@ package Entity;
 
 import Movement.XY;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
 
 public class EntitySet {
 

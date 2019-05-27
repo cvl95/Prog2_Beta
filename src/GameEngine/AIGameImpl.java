@@ -14,7 +14,7 @@ public class AIGameImpl extends Game {
     public AIGameImpl(State state, FxUI fxUI){
         super(state);
         this.fxUI = fxUI;
-        masterSquirelBots = getMasterSquirelBots();
+        this.masterSquirelBots = getMasterSquirelBots();
     }
 
     public List<MasterSquirelBot> getMasterSquirelBots() {
@@ -24,7 +24,7 @@ public class AIGameImpl extends Game {
                 masterBots.add((MasterSquirelBot) entity);
             }
         }
-        return masterSquirelBots;
+        return masterBots;
     }
 
     @Override

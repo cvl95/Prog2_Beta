@@ -8,7 +8,6 @@ import Movement.XY;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MasterBotController implements BotController {
     @Override
@@ -27,11 +26,11 @@ public class MasterBotController implements BotController {
         }
         MoveDirection direction;
         if(!prefferedDirections.isEmpty()){
-            int random = (int)(Math.random() * prefferedDirections.size() + 1);
+            int random = (int)(Math.random() * prefferedDirections.size());
             direction = prefferedDirections.get(random);
 
         }else if(!acceptableDirections.isEmpty()){
-            int random = (int)(Math.random() * acceptableDirections.size() + 1);
+            int random = (int)(Math.random() * acceptableDirections.size());
             direction = acceptableDirections.get(random);
         }else{
             return;

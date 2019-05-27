@@ -134,4 +134,8 @@ public class Board {
     public FlattenedBoard flatten() {
         return new FlattenedBoard(this);
         }
+
+    public GameMode getGameMode() {
+        return gameMode;
+    }
 }

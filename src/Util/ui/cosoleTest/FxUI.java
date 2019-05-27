@@ -24,14 +24,14 @@ import java.util.Set;
 public class FxUI extends Scene implements UI {
     private static final int CELL_SIZE = 20;
     private final Canvas boardCanvas;
-  //  private final Label msgLabel;
+    private final Label msgLabel;
     private final Set<KeyCode> pressedKeys = new HashSet<>();
     private ExecutableCommand command;
 
-    FxUI(Parent parent, Canvas boardCanvas){
+    FxUI(Parent parent, Canvas boardCanvas, Label msgLabel){
         super(parent);
         this.boardCanvas = boardCanvas;
-        //this.msgLabel = msgLabel;
+        this.msgLabel = msgLabel;
     }
     public static FxUI createInstance(XY boardSize, List<KeyCommandType> commandTypes) {
         FxUI fxUI = createInstance(boardSize);
@@ -41,7 +41,7 @@ public class FxUI extends Scene implements UI {
             for (KeyCommandType commandType : commandTypes) {
                 if (pressedKeys.containsAll(Arrays.asList(commandType.getKeys()))) {
                     Object[] parameters = new Object[commandType.getParamTypes().length];
-                    if (commandType.getName().equals("spawn")) {
+                    if (commandType.getName().equals("spawnMiniSquirrel")) {
                         parameters[0] = MiniSquirel.MINIMUM_SPAWN_ENERGY;
                     }
                     fxUI.setCommand(new ExecutableCommand(commandType, parameters));
@@ -59,12 +59,12 @@ public class FxUI extends Scene implements UI {
 
 
     public static FxUI createInstance(XY boardSize){
-        Canvas boardCanvas = new Canvas(boardSize.getX() * CELL_SIZE, boardSize.getY() * CELL_SIZE);
-        //Label statusLabel = new Label();
+        Canvas boardCanvas = new Canvas(boardSize.getX()* 22 , boardSize.getY()*22 );
+        Label statusLabel = new Label();
         VBox top = new VBox();
-       // top.getChildren().add(boardCanvas);
-      //  top.getChildren().add;
-        final FxUI fxUI = new FxUI(top, boardCanvas);
+        top.getChildren().add(boardCanvas);
+        top.getChildren().add(statusLabel);
+        final FxUI fxUI = new FxUI(top, boardCanvas, new Label("Diligent squirel"));
         return fxUI;
     }
 

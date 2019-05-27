@@ -39,12 +39,18 @@ public class State {
 
 
     public void update(){
-        this.setActiveScore(board.getEntitySet().findHandoperated().getEnergy());
-        if(activeScore > highscore){
-            setHighscore(activeScore);
+        if(board.getGameMode() == GameMode.AI){
+            flattenedBoard();
+            callNextStep();
+        }else{
+            this.setActiveScore(board.getEntitySet().findHandoperated().getEnergy());
+            if(activeScore > highscore){
+                setHighscore(activeScore);
+            }
+            flattenedBoard();
+            callNextStep();
         }
-        flattenedBoard();
-        callNextStep();
+
     }
     public FlattenedBoard flattenedBoard(){
         return this.board.flatten();
