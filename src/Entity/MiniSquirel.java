@@ -24,4 +24,5 @@ public class MiniSquirel extends MasterSquirel {
     public void nextStep(EntityContext context) {
 
     }
+
 }

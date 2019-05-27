@@ -408,6 +408,11 @@ public class FlattenedBoard implements Boardview, EntityContext {
         return gameField[position.getY()][ position.getX()];
     }
 
+    @Override
+    public Entity getEntityByID(int id) {
+        return this.board.getEntitySet().findEntity(id);
+    }
+
     private String printHelper(Entity entity){
         if(entity instanceof BadBeast){
             return " B";
@@ -426,4 +431,5 @@ public class FlattenedBoard implements Boardview, EntityContext {
         }
 
     }
+
 }

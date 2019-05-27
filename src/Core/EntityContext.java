@@ -21,6 +21,7 @@ public interface EntityContext {
         boolean isOccupied(XY position);
         XY getFreeSurrounding(XY postion);
         Entity getEntityAt(XY position);
+        Entity getEntityByID(int id);
 
 
 }

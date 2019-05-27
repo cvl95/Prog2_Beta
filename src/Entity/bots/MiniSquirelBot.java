@@ -5,9 +5,11 @@ import BotAPI.BotControllerFactory;
 import BotAPI.BotControllerFactoryImpl;
 import BotAPI.ControllerContext;
 import Core.EntityContext;
+import Entity.Entity;
 import Entity.EntityType;
 import Entity.MiniSquirel;
 import Movement.XY;
+import Entity.MasterSquirel;
 import Movement.XYSupport;
 
 public class MiniSquirelBot extends MiniSquirel {
@@ -15,6 +17,7 @@ public class MiniSquirelBot extends MiniSquirel {
     private final BotControllerFactory botControllerFactory;
     private final BotController miniBotController;
     private ControllerContext controllerContext;
+    private Entity patron;
 
     public MiniSquirelBot(int energy, XY position) {
         super(energy, position);
@@ -44,12 +47,21 @@ public class MiniSquirelBot extends MiniSquirel {
 
         @Override
         public XY getViewLowerLeft() {
-            return null;
+            int x = getPosition().getX() - VIEW_RANGE;
+            int y = getPosition().getY() + VIEW_RANGE;
+            x = (x < 0) ? 0 : x;
+            y = (y >context.getSize().getY()) ? context.getSize().getY() : y;
+            return new XY(x, y);
         }
 
         @Override
         public XY getViewUpperRight() {
-            return null;
+
+            int x = getPosition().getX() + VIEW_RANGE;
+            int y = getPosition().getY() - VIEW_RANGE;
+            x = (x > 0) ? context.getSize().getX() : x;
+            y = (y < 0) ? 0 : y;
+            return new XY(x, y);
         }
 
         @Override
@@ -75,6 +87,71 @@ public class MiniSquirelBot extends MiniSquirel {
         @Override
         public void implode(int impactRadius) {
 
+            patron=context.getEntityByID(getReferenceFather());
+            if (impactRadius <= 0) {
+                throw new IllegalArgumentException();
+            }
+            XY lowerLeft = XY.getLowerLeft(getPosition(),impactRadius,i);
+            XY upperRight = XY.getUpperRight(getPosition(), impactRadius, context.getSize());
+            double impactArea = impactRadius * impactRadius * Math.PI;
+            int energy = getEnergy();
+            int collectedEnergy = 0;
+            for (int y = upperRight.y; y <= lowerLeft.y; y++) {
+                for (int x = lowerLeft.x; x <= upperRight.x; x++) {
+                    XY affectedCell = new XY(x, y);
+                    double distance = affectedCell.distanceFrom(getPosition());
+                    int energyLoss = (int) (200 * (energy / impactArea) * (1 - distance / impactRadius));
+                    Entity entity = context.getEntityAt(affectedCell);
+                    switch (context.getEntityType(affectedCell)) {
+                        case MASTER_SQUIRREL:
+                            MasterSquirel masterSquirrel = (MasterSquirel) entity;
+                            if (!patron.equals(masterSquirrel)) {
+                                if (energyLoss > masterSquirrel.getEnergy()) {
+                                    energyLoss = masterSquirrel.getEnergy();
+                                }
+                                masterSquirrel.updateEnergy(-energyLoss);
+                            }
+                            collectedEnergy += energyLoss;
+                            break;
+                        case MINI_SQUIRREL:
+                            MiniSquirel miniSquirrel = (MiniSquirel) entity;
+                            if (patron.getId() !=(miniSquirrel.getReferenceFather())) {
+                                if (energyLoss >= miniSquirrel.getEnergy()) {
+                                    energyLoss = miniSquirrel.getEnergy();
+                                    context.kill(miniSquirrel);
+                                }
+                                else {
+                                    miniSquirrel.updateEnergy(-energyLoss);
+                                }
+                            }
+                            collectedEnergy += energyLoss;
+                            break;
+                        case GOOD_BEAST:
+                        case GOOD_PLANT:
+                            if (energyLoss >= entity.getEnergy()) {
+                                energyLoss = entity.getEnergy();
+                                context.killAndReplace(entity);
+                            }
+                            else {
+                                entity.updateEnergy(-energyLoss);
+                            }
+                            collectedEnergy += energyLoss;
+                            break;
+                        case BAD_BEAST:
+                        case BAD_PLANT:
+                            if (energyLoss >= -entity.getEnergy()) {
+                                context.killAndReplace(entity);
+                            }
+                            else {
+                                entity.updateEnergy(energyLoss);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            patron.updateEnergy(collectedEnergy);
         }
 
         @Override
@@ -84,7 +161,10 @@ public class MiniSquirelBot extends MiniSquirel {
 
         @Override
         public XY directionOfMaster() {
-            return null;
+
+            int x= getPosition().getX() - context.getEntityByID(getReferenceFather()).getPosition().getX();
+            int y= getPosition().getY() - context.getEntityByID(getReferenceFather()).getPosition().getY();
+            return new XY(x,y);
         }
 
         @Override
