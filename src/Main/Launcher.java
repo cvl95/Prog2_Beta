@@ -129,3 +129,4 @@ public class Launcher extends Application {
         System.out.println("-singleplayer ( -console | -fx ) | -ai");
     }
 }
+

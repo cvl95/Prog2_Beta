@@ -2,6 +2,7 @@ package GameEngine;
 
 import Commandos.Command;
 import Commandos.CommandScanner;
+import Console.ConsoleUI;
 import Console.GameCommandType;
 import Console.UI;
 import Movement.XY;
@@ -15,10 +16,10 @@ import Movement.XY;
     private static final String UPLEFT = "wa";
     private static final String UPRIGHT = "wd";
     private static final String DOWNRIGHT = "sd";
-    private final UI consoleUI = new ConsoleUI();
+    private final ConsoleUI consoleUI = new ConsoleUI();
     private Command command;
 
-    public GameImpl(State state, UI ui){
+    public GameImpl(State state, ConsoleUI ui){
         super(state,ui);
     }
     @Override
@@ -103,6 +104,6 @@ import Movement.XY;
                             "  + - Wall\n" +
                             "  - - Empty");
     }
-}
-*/
+}*/
+
 

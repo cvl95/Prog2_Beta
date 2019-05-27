@@ -65,25 +65,7 @@ public class CommandScanner {
     }
 
 
-    private Object convert(Class<?> object, String value){
-        if(object.equals(int.class)){
-            try{
-                return Integer.parseInt(value);
-            }catch (ScanExceptions ex){
-                throw  new ScanExceptions(value + " wrong Integer format");
-            }
-        }else if(object.equals(float.class)){
-            try {
-                return Float.parseFloat(value);
-            }catch (ScanExceptions ex){
-                throw new ScanExceptions(value + " wrong float value.");
-            }
-        }else if (object.equals(String.class)){
-            return value;
-        }
-        return null;
 
-    }
 
 
 }

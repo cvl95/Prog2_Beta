@@ -54,6 +54,59 @@ public class UniversalCommandProcessor {
     private void prompt() {
         System.out.println("> ");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*    private PrintStream outputStream = System.out;
     private BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
     private CommandScanner commandScanner = new CommandScanner(MyFavoriteCommandType.values(), inputReader);
