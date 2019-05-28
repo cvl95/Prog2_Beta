@@ -104,6 +104,12 @@ public interface EntityContext {
          * @return the type of the entity
          */
         Entity getEntityAt(XY position);
+
+        /**
+         *
+         * @param id
+         * @return entity with given id
+         */
         Entity getEntityByID(int id);
 
 

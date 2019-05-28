@@ -3,14 +3,22 @@ package GameEngine;
 import Core.Board;
 import Core.FlattenedBoard;
 import Entity.*;
+import Entity.bots.MasterSquirelBot;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class State {
+    private Logger logger = Logger.getLogger(State.class.getName());
 
     private int highscore = 0;
     private int activeScore = 0;
     private final Board board;
     private final FlattenedBoard flattenedBoard;
+    private Map<String, Integer> botscores = new HashMap<>();
 
     public State( Board startBoard){
         this.board = startBoard;
@@ -40,7 +48,12 @@ public class State {
 
     public void update(){
         if(board.getGameMode() == GameMode.AI){
+
             flattenedBoard();
+            for(MasterSquirelBot masterSquirelBot : board.getBots()){
+                botscores.put(masterSquirelBot.getName(),masterSquirelBot.getEnergy());
+            }
+            printBotscore();
             callNextStep();
         }else{
             this.setActiveScore(board.getEntitySet().findHandoperated().getEnergy());
@@ -76,6 +89,14 @@ public class State {
 
         String s = "Your current score is: " + this.highscore;
         return s;
+    }
+    private void printBotscore(){
+        String scores = String.format(" Botscore \n");
+        for(Map.Entry<String,Integer> entry : botscores.entrySet()){
+            scores += entry.getKey() + "\n" + entry.getValue() + "\n";
+        }
+        System.out.println(scores);
+        logger.log(Level.INFO, scores);
     }
 
 }

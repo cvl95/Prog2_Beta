@@ -142,6 +142,10 @@ public class Board {
         return new XY(randomX, randomY);
     }
 
+    public List<MasterSquirelBot> getBots() {
+        return bots;
+    }
+
     public XY getSize(){
         return size;
     }

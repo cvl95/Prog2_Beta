@@ -18,8 +18,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 public class Launcher extends Application {
+    private static Logger logger = Logger.getLogger(Launcher.class.getName());
+    private static String BOARD_CONFIG = "resources/board_config.properties";
     private static GameMode gameMode;
     private static BoardConfig boardConfig;
     private static Board board;
@@ -55,11 +58,19 @@ public class Launcher extends Application {
 
         } else if (inputSplit[0].equals("-ai")) {
             chooseGameMode(GameMode.AI);
-            Application.launch(inputSplit);
-        } else {
+            Application.launch();
+
+
+        } else if(inputSplit[0].equals("-file")){
+            startWithFile(GameMode.AI);
+            Application.launch();
+
+        }else {
             optionHelp();
             System.exit(1);
         }
+
+
     }
     @Override
     public void start(Stage stage){
@@ -96,6 +107,12 @@ public class Launcher extends Application {
         state = new State(board);
 
     }
+    private static void startWithFile(GameMode mode){
+        gameMode = mode;
+        boardConfig = BoardConfig.load(BOARD_CONFIG);
+        board = new Board(boardConfig,gameMode);
+        state =new State(board);
+    }
 
     private void startGame(Game game) {
         if (game instanceof ConsoleGameImpl) {
@@ -103,8 +120,6 @@ public class Launcher extends Application {
             consoleGame.getUserActions().help();
             consoleGame.run();
         } else if (game instanceof FxGameImpl || game instanceof AIGameImpl) {
-          //  FxGameImpl fxGame = (FxGameImpl) game;
-          //  fxGame.run();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -126,7 +141,7 @@ public class Launcher extends Application {
         return state.getBoard().getEntitySet().findHandoperated();
     }
     public static void optionHelp(){
-        System.out.println("-singleplayer ( -console | -fx ) | -ai");
+        System.out.println("-singleplayer ( -console | -fx ) | -ai | -file");
     }
 }
 

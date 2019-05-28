@@ -38,6 +38,10 @@ public class MasterSquirelBot extends MasterSquirel {
         return new ControllerContextImpl(context);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public class ControllerContextImpl implements ControllerContext {
 
         private EntityContext context;
@@ -113,6 +117,7 @@ public class MasterSquirelBot extends MasterSquirel {
             System.out.println("This operation is not implemented");
             return null;
         }
+
 
         @Override
         public long getRemainingSteps() {

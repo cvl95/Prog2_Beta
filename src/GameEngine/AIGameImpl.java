@@ -14,18 +14,10 @@ public class AIGameImpl extends Game {
     public AIGameImpl(State state, FxUI fxUI){
         super(state);
         this.fxUI = fxUI;
-        this.masterSquirelBots = getMasterSquirelBots();
+        this.masterSquirelBots = state.getBoard().getBots();
     }
 
-    public List<MasterSquirelBot> getMasterSquirelBots() {
-        List<MasterSquirelBot> masterBots = new ArrayList<>();
-        for (Entity entity : getState().getBoard().getEntitySet().getEntitySet()) {
-            if (entity instanceof MasterSquirelBot) {
-                masterBots.add((MasterSquirelBot) entity);
-            }
-        }
-        return masterBots;
-    }
+
 
     @Override
     protected void render() {
