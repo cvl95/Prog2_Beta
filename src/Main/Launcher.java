@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 public class Launcher extends Application {
     private static Logger logger = Logger.getLogger(Launcher.class.getName());
-    private static String BOARD_CONFIG = "resources/board_config.properties";
+    private static String BOARD_CONFIG = "C://Users/agnet/IdeaProjects/Prog2_Beta/src/resources/board_config.properties";
     private static GameMode gameMode;
     private static BoardConfig boardConfig;
     private static Board board;

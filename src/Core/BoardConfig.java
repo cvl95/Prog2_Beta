@@ -1,11 +1,9 @@
 package Core;
 
-import Entity.EntitySet;
-import Entity.bots.MasterSquirelBot;
+
 import Movement.XY;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -67,7 +65,13 @@ public class BoardConfig {
     }
 
     public static BoardConfig load(String propertiespath){
-        InputStream in = BoardConfig.class.getResourceAsStream(propertiespath);
+        File board_config = new File(propertiespath);
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(board_config);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         Properties properties = new Properties();
         try{
             properties.load(in);
