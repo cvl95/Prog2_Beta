@@ -1,5 +1,7 @@
 package Movement;
 
+import static java.lang.Math.sqrt;
+
 public class XY {
 
     private final int x;
@@ -102,6 +104,12 @@ public class XY {
     public static boolean insideBorders(XY point, XY lowerLeft, XY upperRight) {
         return (lowerLeft.getX() <= point.getX() && point.getX() <= upperRight.getX())
                 && (upperRight.getY() <= point.getY() && point.getY() <= lowerLeft.getY());
+    }
+
+    public double distanceFrom(XY position){
+        int x = this.getX()-position.getX();
+        int y = this.getY()-position.getY();
+        return sqrt(x^2+y^2);
     }
 
 
