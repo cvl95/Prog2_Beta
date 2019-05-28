@@ -91,13 +91,13 @@ public class MiniSquirelBot extends MiniSquirel {
             if (impactRadius <= 0) {
                 throw new IllegalArgumentException();
             }
-            XY lowerLeft = XY.getLowerLeft(getPosition(),impactRadius,i);
+            XY lowerLeft = XY.getLowerLeft(getPosition(),impactRadius,context.getSize());
             XY upperRight = XY.getUpperRight(getPosition(), impactRadius, context.getSize());
             double impactArea = impactRadius * impactRadius * Math.PI;
             int energy = getEnergy();
             int collectedEnergy = 0;
-            for (int y = upperRight.y; y <= lowerLeft.y; y++) {
-                for (int x = lowerLeft.x; x <= upperRight.x; x++) {
+            for (int y = upperRight.getY(); y <= lowerLeft.getY(); y++) {
+                for (int x = lowerLeft.getX(); x <= upperRight.getX(); x++) {
                     XY affectedCell = new XY(x, y);
                     double distance = affectedCell.distanceFrom(getPosition());
                     int energyLoss = (int) (200 * (energy / impactArea) * (1 - distance / impactRadius));
