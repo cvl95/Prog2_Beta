@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class EntitySet {
 
     private static final int LENTGH = 256;
-    private Entity[] entitySet = new Entity[this.LENTGH];
+    private Entity[] entitySet = new Entity[this.LENTGH];//in die Liste
     private int sizeOfArray;
     Logger logger = Logger.getLogger(EntitySet.class.getName().toString());
 

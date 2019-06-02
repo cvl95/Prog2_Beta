@@ -71,6 +71,7 @@ public class Board {
             gameField[xy.getX()][xy.getY()] =  player;
         }else{
             Map<String, Integer> nameCountMap = new HashMap<>();
+            // uber der Factory laufen
             for (int j = 0; j < boardConfig.getNumberOfSquirels(); j++) {
                 String packageName = "Prog2_Beta.src.Entity.bots";
                 String masterBotClassName = packageName + "." + boardConfig.getMasterBotNames().get(j);

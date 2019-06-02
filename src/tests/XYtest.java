@@ -1,9 +1,8 @@
 package tests;
 
 import org.junit.Test;
-import Movement.XY;
 import static org.junit.Assert.*;
-
+import Movement.XY;
 public class XYtest {
 
     @Test

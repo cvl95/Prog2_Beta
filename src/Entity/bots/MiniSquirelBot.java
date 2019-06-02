@@ -8,15 +8,18 @@ import Core.EntityContext;
 import Entity.Entity;
 import Entity.EntityType;
 import Entity.MiniSquirel;
+import Handlers.ControllerContextHandler;
 import Movement.XY;
 import Entity.MasterSquirel;
 import Movement.XYSupport;
+
+import java.lang.reflect.Proxy;
 
 public class MiniSquirelBot extends MiniSquirel {
     public static final int VIEW_RANGE = 10;
     private final BotControllerFactory botControllerFactory;
     private final BotController miniBotController;
-    private ControllerContext controllerContext;
+    private ControllerContext controllerContextProxy;
     private Entity patron;
 
     public MiniSquirelBot(int energy, XY position) {
@@ -27,23 +30,29 @@ public class MiniSquirelBot extends MiniSquirel {
 
     @Override
     public void nextStep(EntityContext context) {
+        if(controllerContextProxy == null){
+            ControllerContext controllerContext = new ControllerContextImpl(context);
+            ControllerContextHandler handler = new ControllerContextHandler(controllerContext);
+            controllerContextProxy =(ControllerContext) Proxy.newProxyInstance(ControllerContext.class.getClassLoader(),new Class[]{ControllerContext.class},handler);
+        }
         if (getStun()>0) {
             return;
         }
-        if(controllerContext == null){
-            controllerContext = new ControllerContextImpl();
-        }
-        miniBotController.nextStep(controllerContext);
+        miniBotController.nextStep(controllerContextProxy);
 
     }
 
     public ControllerContext getControllerContext() {
-        return controllerContext;
+        return controllerContextProxy;
     }
 
     public class ControllerContextImpl implements ControllerContext {
 
         private EntityContext context;
+
+        public ControllerContextImpl(EntityContext context){
+            this.context = context;
+        }
 
         @Override
         public XY getViewLowerLeft() {
@@ -88,7 +97,7 @@ public class MiniSquirelBot extends MiniSquirel {
         public void implode(int impactRadius) {
 
             patron=context.getEntityByID(getReferenceFather());
-            if (impactRadius <= 0) {
+            if (impactRadius <= 2) {
                 throw new IllegalArgumentException();
             }
             XY lowerLeft = XY.getLowerLeft(getPosition(),impactRadius,context.getSize());
@@ -163,7 +172,7 @@ public class MiniSquirelBot extends MiniSquirel {
         public XY directionOfMaster() {
 
             int x= getPosition().getX() - context.getEntityByID(getReferenceFather()).getPosition().getX();
-            int y= getPosition().getY() - context.getEntityByID(getReferenceFather()).getPosition().getY();
+            int y= getPosition().getY() - context.getEntityByID(getReferenceFather()).getPosition().getY(); // direction
             return new XY(x,y);
         }
 

@@ -24,7 +24,7 @@ public class XY {
 
     public XY increase(XY xy){
         return new XY(x +xy.x, y + xy.y);
-    }
+    }// umbenenneen
 
     public XY getNewPosition(){
         int newX = calculateRandom();
@@ -112,5 +112,12 @@ public class XY {
         return sqrt(x^2+y^2);
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        XY xy = (XY) obj;
+        if(this.getY() == xy.getY() && xy.getX() == xy.getX()){
+            return true;
+        }
+        return false;
+    }
 }

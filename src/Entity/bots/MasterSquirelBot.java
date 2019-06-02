@@ -4,14 +4,19 @@ import BotAPI.*;
 import Core.EntityContext;
 import Entity.*;
 import Entity.MasterSquirel;
+import Handlers.ControllerContextHandler;
 import Movement.XY;
 import Movement.XYSupport;
 
+import java.lang.reflect.Proxy;
+
 public class MasterSquirelBot extends MasterSquirel {
     public static int VIEW_RANGE = 15;
+
     private BotControllerFactory botControllerFactory;
     private BotController masterBotController;
-    private ControllerContext controllerContext;
+    private ControllerContext controllerContextProxy;
+
     private final String name;
 
 
@@ -23,15 +28,19 @@ public class MasterSquirelBot extends MasterSquirel {
     }
     @Override
     public void nextStep(EntityContext context){
+        if(controllerContextProxy == null){
+            ControllerContext controllerContext = new ControllerContextImpl(context);
+            ControllerContextHandler handler = new ControllerContextHandler(controllerContext);
+            controllerContextProxy =(ControllerContext) Proxy.newProxyInstance(ControllerContext.class.getClassLoader(),new Class[]{ControllerContext.class},handler);
+        }
 
         if (getStun()>0) {
             return;
-        }
-        if(controllerContext == null){
-           controllerContext = new ControllerContextImpl(context);
 
         }
-        masterBotController.nextStep(controllerContext);
+
+
+        masterBotController.nextStep(controllerContextProxy);
 
     }
     public ControllerContext getControllerContextImpl(EntityContext context){
