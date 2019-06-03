@@ -7,22 +7,26 @@ import Core.BoardConfig;
 import Entity.HandOperatedMasterSquirel;
 import GameEngine.*;
 import Util.ui.cosoleTest.FxUI;
+import Util.ui.cosoleTest.json.BotScoreWriter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Launcher extends Application {
     private static Logger logger = Logger.getLogger(Launcher.class.getName());
     private static String BOARD_CONFIG = "C://Users/agnet/IdeaProjects/Prog2_Beta/src/resources/board_config.properties";
+    private static String SCORES_FILE_LOCATION = "scores.json";
     private static GameMode gameMode;
     private static BoardConfig boardConfig;
     private static Board board;
@@ -77,7 +81,7 @@ public class Launcher extends Application {
         Game game = null;
         FxUI fxUI = null;
         if (gameMode == GameMode.SINGLE_PLAYER) {
-            HandOperatedMasterSquirel player = getPlayerEntity();
+            HandOperatedMasterSquirel player = board.getMasterSquirel();
             UserActionsImpl userActions = new UserActionsImpl(player, state.getFlattenedBoard());
             List<KeyCommandType> commandTypes = KeyCommandType.getCommandTypes(userActions, UserActions.class);
             fxUI = FxUI.createInstance(boardConfig.getSize(), commandTypes);
@@ -93,6 +97,13 @@ public class Launcher extends Application {
         fxUI.getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
+                if (gameMode == GameMode.AI) {
+                    try {
+                        BotScoreWriter.write(state.getSortedBotScores(), SCORES_FILE_LOCATION);
+                    } catch (IOException ex) {
+                        logger.log(Level.SEVERE, ex.getMessage(), ex);
+                    }
+                }
                 System.exit(1);
             }
         });
@@ -129,16 +140,13 @@ public class Launcher extends Application {
         }
     }
     private void launchConsole(String[]args){
-        UserActionsImpl userActions = new UserActionsImpl(getPlayerEntity(),state.getFlattenedBoard());
+        UserActionsImpl userActions = new UserActionsImpl(board.getMasterSquirel(),state.getFlattenedBoard());
         List<ConsoleCommandType> commandTypes = ConsoleCommandType.getCommandTypes(userActions,UserActions.class);
         CommandScanner scanner = new CommandScanner(commandTypes, new BufferedReader(new InputStreamReader(System.in)));
         Game game;
         ConsoleUI consoleUI = new ConsoleUI(scanner);
         game = new ConsoleGameImpl(state,consoleUI,userActions);
         startGame(game);
-    }
-    private HandOperatedMasterSquirel getPlayerEntity() {
-        return state.getBoard().getEntitySet().findHandoperated();
     }
     public static void optionHelp(){
         System.out.println("-singleplayer ( -console | -fx ) | -ai | -file");

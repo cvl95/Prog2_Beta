@@ -1,8 +1,14 @@
 package Core;
 import Entity.*;
 import Movement.XY;
+import Movement.XYSupport;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class FlattenedBoard implements Boardview, EntityContext {
     private final Board board;
@@ -17,15 +23,9 @@ public class FlattenedBoard implements Boardview, EntityContext {
         this.size = new XY(board.getSize().getX(),board.getSize().getY());
         this.gameField = new Entity[size.getX()][size.getY()];
 
-        EntitySet entitySet = board.getEntitySet();
-        for (int i = 0; i < entitySet.getSizeOfArray(); i++) {
-            Entity entity = entitySet.get(i);
-            if(entity == null){
-                continue;
-            }else{
-                setPlace(entity.getPosition(),entity);
-            }
-
+        Set<Entity> entitySet = board.getEntitySet();
+        for (Entity entity: entitySet) {
+            setPlace(entity.getPosition(),entity);
         }
     }
 
@@ -276,26 +276,16 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public PlayerEntity nearestPlayerEntity(XY position) {
-        PlayerEntity nearestPlayerEntity = null;
-        int minDistance = Integer.MAX_VALUE;
-        for (int i = 0; i < board.getEntitySet().getSizeOfArray(); i++) {
-            Entity entity = board.getEntitySet().get(i);
-            if (!(entity instanceof PlayerEntity)) {
-                continue;
-            }
-            int distance = calculateDistance(position, entity.getPosition());
-            if (distance < minDistance) {
-                minDistance = distance;
-                nearestPlayerEntity = (PlayerEntity) entity;
-                break;
-            }
-        }
-        return nearestPlayerEntity;
+        checkPositionInsideBorders(position);
+        List<Entity> playerEntities = board.getEntitySet().stream()
+                .filter(entity -> entity instanceof PlayerEntity).collect(Collectors.toList());
+        return (PlayerEntity) Collections.min(playerEntities,
+                Comparator.comparingInt((Entity entity) -> calculateDistance(entity.getPosition(), position)));
     }
 
     @Override
     public void kill(Entity entity) {
-            board.getEntitySet().deleteEntity(entity.getId());
+            board.remove(entity);
             setPlace(entity.getPosition(),null);
             logger.info(entity + " was removed.");
     }
@@ -315,7 +305,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
             newEntity = new BadBeast(-150,newXY);
         }
         kill(entity);
-        board.getEntitySet().addEntity(newEntity);
+        board.add(newEntity);
         setPlace(newEntity.getPosition(),newEntity);
         logger.info(newEntity + " newly added");
 
@@ -410,7 +400,22 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public Entity getEntityByID(int id) {
-        return this.board.getEntitySet().findEntity(id);
+        for(Entity entity: board.getEntitySet()){
+            if(entity.getId() == id){
+                return entity;
+            }
+        }
+        return null;
+    }
+
+    private void checkPositionInsideBorders(XY position) {
+        if (!XYSupport.insideBorders(position, size)) {
+            try {
+                throw new Exception("Position out of bounds: " + position.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private String printHelper(Entity entity){

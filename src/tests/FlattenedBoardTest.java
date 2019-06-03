@@ -21,7 +21,7 @@ public class FlattenedBoardTest {
     public void setUp() throws InvalidBoardSize {
         BoardConfig config = new BoardConfig(new XY(10, 10), 0, 1, 1, 0, 0, 0,  new String[] {}, new String[] {});
         board = new Board(config, GameMode.SINGLE_PLAYER);
-        for (Entity entity : board.getEntitySet().getEntitySet()) {
+        for (Entity entity : board.getEntitySet()) {
             switch (entity.getType()) {
                 case MASTER_SQUIRREL:
                     entity.setPosition(new XY(2, 2));
