@@ -80,14 +80,29 @@ public class Board {
                 if (nameCountMap.containsKey(botName)) {
                     botName += "-" + nameCountMap.get(botName);
                 }
-
                 xy  = findFreePlace(xy);
+                try {
+                    final BotController masterBotController = (BotController) Class.forName(masterBotClassName).newInstance();
+                    final BotController miniBotController = (BotController) Class.forName(miniBotClassName).newInstance();
+                    MasterSquirelBot masterBot = new MasterSquirelBot(MasterSquirel.START_ENERGY, xy, botName, new BotControllerFactory() {
+                        @Override
+                        public BotController createMasterBotController() {
+                            return masterBotController;
+                        }
 
-                MasterSquirelBot masterBot = new MasterSquirelBot(1000 ,xy, botName);
+                        @Override
+                        public BotController createMiniBotController() {
+                            return miniBotController;
+                        }
+                    });
+
                 entitySet.addEntity(masterBot);
                 bots.add(masterBot);
                 int count = nameCountMap.getOrDefault(masterBotClassName, 0);
                 nameCountMap.put(masterBotClassName, count + 1);
+            }catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                    logger.severe(ex.getMessage());
+                }
                 }
             }
         // badBeast spawn

@@ -20,11 +20,11 @@ public class MasterSquirelBot extends MasterSquirel {
     private final String name;
 
 
-    public MasterSquirelBot(int energy, XY pos, String name) {
+    public MasterSquirelBot(int energy, XY pos, String name, BotControllerFactory botControllerFactory) {
         super(energy, pos);
         this.name = name;
-        botControllerFactory = new BotControllerFactoryImpl();
-        masterBotController = botControllerFactory.createMasterBotController();
+        this.botControllerFactory = botControllerFactory;
+        this.masterBotController = botControllerFactory.createMasterBotController();
     }
     @Override
     public void nextStep(EntityContext context){
