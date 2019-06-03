@@ -79,7 +79,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void tryMove(MasterSquirel masterSquirel, XY moveDirection) {
-        XY newPosition = masterSquirel.getPosition().setNewVectorPosition(moveDirection);
+        XY newPosition = masterSquirel.getPosition().plus(moveDirection);
         Entity entityAtMoveDirection = getFieldValue(newPosition);
 
         switch (getEntityType(newPosition)){
@@ -151,7 +151,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
         if (miniSquirel.getEnergy() <= 0) {
             kill(miniSquirel);
         }
-        XY newPosition = miniSquirel.getPosition().setNewVectorPosition(moveDirection);
+        XY newPosition = miniSquirel.getPosition().plus(moveDirection);
         Entity entityAtMoveDirection = getFieldValue(newPosition);
 
         switch (getEntityType(newPosition)) {
@@ -211,7 +211,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void tryMove(GoodBeast goodBeast, XY moveDirection) {
-        XY newPosition = goodBeast.getPosition().setNewVectorPosition(moveDirection);
+        XY newPosition = goodBeast.getPosition().plus(moveDirection);
         Entity entityAtMoveDirection =getFieldValue(newPosition);
         switch (getEntityType(newPosition)){
             case MASTER_SQUIRREL:
@@ -233,7 +233,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
 
     @Override
     public void tryMove(BadBeast badBeast, XY moveDirection) {
-        XY newPosition = badBeast.getPosition().setNewVectorPosition(moveDirection);
+        XY newPosition = badBeast.getPosition().plus(moveDirection);
         Entity entityAtMoveDirection = getFieldValue(newPosition);
         switch (getEntityType(newPosition)){
             case MASTER_SQUIRREL:

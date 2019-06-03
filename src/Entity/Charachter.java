@@ -22,4 +22,8 @@ public class Charachter extends Entity {
         return new XY(x,y);
 
     }
+    @Override
+    public EntityType getType() {
+        return EntityType.BAD_BEAST;
+    }
 }

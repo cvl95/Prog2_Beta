@@ -30,6 +30,10 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
         }
 
     }
+    @Override
+    public EntityType getType() {
+        return EntityType.MASTER_SQUIRREL;
+    }
 
     public void setMiniSquirelSpawn() {
         this.miniSquirelSpawn = miniSquirelSpawn++;

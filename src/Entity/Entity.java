@@ -7,7 +7,7 @@ import Movement.XY;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entity {
+public abstract class Entity {
 
     private final int id;
     private int energy;
@@ -75,7 +75,7 @@ public class Entity {
     public void nextStep(EntityContext context){
 
     }
-
+    public abstract EntityType getType();
 
     @Override
     public String toString() {

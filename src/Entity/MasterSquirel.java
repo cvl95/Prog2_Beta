@@ -7,6 +7,7 @@ import Movement.XY;
 public class MasterSquirel extends Squirel {
 
     int stun= 0;
+    public static int START_ENERGY = 1000;
 
     public MasterSquirel(int energy, XY pos){
 
@@ -32,6 +33,11 @@ public class MasterSquirel extends Squirel {
 
     public int getStun() {
         return stun;
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.MASTER_SQUIRREL;
     }
 
     @Override

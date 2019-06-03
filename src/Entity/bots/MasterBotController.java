@@ -16,7 +16,7 @@ public class MasterBotController implements BotController {
         List<MoveDirection> acceptableDirections = new ArrayList<>();
         XY position = context.locate();
         for(MoveDirection direction: MoveDirection.values()){
-            XY newPosition =position.increase(direction.getDirection());
+            XY newPosition =position.plus(direction.getDirection());
             EntityType entityType = context.getEntityAt(newPosition);
             if(entityType == EntityType.GOOD_PLANT || entityType == entityType.GOOD_BEAST){
                 prefferedDirections.add(direction);

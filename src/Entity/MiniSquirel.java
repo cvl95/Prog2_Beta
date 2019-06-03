@@ -19,6 +19,11 @@ public class MiniSquirel extends MasterSquirel {
         return referenceFather;
     }
 
+    @Override
+    public EntityType getType() {
+        return EntityType.MINI_SQUIRREL;
+    }
+
 
     @Override
     public void nextStep(EntityContext context) {

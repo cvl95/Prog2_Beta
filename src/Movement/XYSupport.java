@@ -48,5 +48,27 @@ public class XYSupport {
         return (lowerLeft.getX() <= point.getX() && point.getX() <= upperRight.getX())
                 && (upperRight.getY() <= point.getY() && point.getY() <= lowerLeft.getY());
     }
+    private int calculateRandom(){
+
+        double random;
+        int y;
+        random = Math.random()*3;
+        y= -1 + (int)random;
+        return y;
+    }
+
+
+
+    public static XY[] getDirections() {
+        return new XY[] {
+                new XY(-1, 0), new XY(1, 0),
+                new XY(0, -1), new XY(0, 1),
+                new XY(-1, -1), new XY(-1, 1),
+                new XY(1, -1), new XY(1, 1)
+        };
+    }
+
+
+
 
 }

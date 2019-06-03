@@ -100,8 +100,8 @@ public class MiniSquirelBot extends MiniSquirel {
             if (impactRadius <= 2) {
                 throw new IllegalArgumentException();
             }
-            XY lowerLeft = XY.getLowerLeft(getPosition(),impactRadius,context.getSize());
-            XY upperRight = XY.getUpperRight(getPosition(), impactRadius, context.getSize());
+            XY lowerLeft = XYSupport.getLowerLeft(getPosition(),impactRadius,context.getSize());
+            XY upperRight = XYSupport.getUpperRight(getPosition(), impactRadius, context.getSize());
             double impactArea = impactRadius * impactRadius * Math.PI;
             int energy = getEnergy();
             int collectedEnergy = 0;
