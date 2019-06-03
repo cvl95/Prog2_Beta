@@ -4,10 +4,13 @@ import BotAPI.BotController;
 import BotAPI.BotControllerFactory;
 import Entity.*;
 import Entity.EntitySet;
+import Entity.bots.MasterBotController;
 import Entity.bots.MasterSquirelBot;
+import Entity.bots.MiniBotController;
 import GameEngine.GameMode;
 import Movement.XY;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,8 +85,8 @@ public class Board {
                 }
                 xy  = findFreePlace(xy);
                 try {
-                    final BotController masterBotController = (BotController) Class.forName(masterBotClassName).newInstance();
-                    final BotController miniBotController = (BotController) Class.forName(miniBotClassName).newInstance();
+                    BotController masterBotController = (BotController)  Class.forName(masterBotClassName).newInstance();
+                    BotController miniBotController = (BotController) Class.forName(miniBotClassName).newInstance();
                     MasterSquirelBot masterBot = new MasterSquirelBot(MasterSquirel.START_ENERGY, xy, botName, new BotControllerFactory() {
                         @Override
                         public BotController createMasterBotController() {
@@ -100,7 +103,7 @@ public class Board {
                 bots.add(masterBot);
                 int count = nameCountMap.getOrDefault(masterBotClassName, 0);
                 nameCountMap.put(masterBotClassName, count + 1);
-            }catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+            }catch (ClassNotFoundException | IllegalAccessException | InstantiationException  ex) {
                     logger.severe(ex.getMessage());
                 }
                 }
