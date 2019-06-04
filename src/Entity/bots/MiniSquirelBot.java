@@ -173,6 +173,12 @@ public class MiniSquirelBot extends MiniSquirel {
 
             int x= getPosition().getX() - context.getEntityByID(getReferenceFather()).getPosition().getX();
             int y= getPosition().getY() - context.getEntityByID(getReferenceFather()).getPosition().getY(); // direction
+
+            x = x<0?-1:x;
+            x = x>0?1:x;
+            y = y<0?-1:x;
+            y = y>0?1:x;
+
             return new XY(x,y);
         }
 
