@@ -12,6 +12,7 @@ import Movement.XY;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Board {
@@ -72,6 +73,7 @@ public class Board {
             this.masterSquirel = (HandOperatedMasterSquirel) player;
             entitySet.add(player);
             gameField[xy.getX()][xy.getY()] =  player;
+            logger.log(Level.INFO, masterSquirel.toString());
         }else{
             Map<String, Integer> nameCountMap = new HashMap<>();
             // uber der Factory laufen
@@ -109,28 +111,30 @@ public class Board {
                 }
             }
         // badBeast spawn
-        for(int i = 1; i < boardConfig.getNumberOfBadbeast(); i++ ){
+        for(int i = 0; i < boardConfig.getNumberOfBadbeast(); i++ ){
             xy  = findFreePlace(xy) ;
             BadBeast badBeast = new BadBeast(100, xy);
             entitySet.add(badBeast);
             gameField[xy.getX()][xy.getY()] = badBeast;
+            logger.log(Level.INFO, badBeast.toString());
         }
         //goodBeast spawn
-        for(int i = 1; i < boardConfig.getNumberOfGoodbeast(); i++ ){
+        for(int i = 0; i < boardConfig.getNumberOfGoodbeast(); i++ ){
             xy = findFreePlace(xy);
             GoodBeast goodBeast = new GoodBeast(100, xy);
             entitySet.add(goodBeast);
             gameField[xy.getX()][xy.getY()] = goodBeast;
+            logger.log(Level.INFO, goodBeast.toString());
         }
         // badPlant spawn
-        for(int i = 1; i < boardConfig.getNumberOfBadplants(); i++ ){
+        for(int i = 0; i < boardConfig.getNumberOfBadplants(); i++ ){
             xy = findFreePlace(xy);
             BadPlant badPlant = new BadPlant(-100,xy);
             entitySet.add(badPlant);
             gameField[xy.getX()][xy.getY()] = badPlant;
         }
         //goodPlant spawn
-        for(int i = 1; i < boardConfig.getNumberOfGoodplants(); i++ ){
+        for(int i = 0; i < boardConfig.getNumberOfGoodplants(); i++ ){
             xy = findFreePlace(xy);
             GoodPlant goodPlant = new GoodPlant(50, xy);
             entitySet.add(goodPlant);
@@ -138,7 +142,7 @@ public class Board {
 
         }
         //walls spawn
-        for(int i = 1; i < boardConfig.getNumberOfWalls(); i++ ){
+        for(int i = 0; i < boardConfig.getNumberOfWalls(); i++ ){
             xy = findFreePlace(xy);
             Wall wall = new Wall(-10, xy);
             entitySet.add(wall);

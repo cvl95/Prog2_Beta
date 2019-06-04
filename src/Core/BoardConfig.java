@@ -161,11 +161,11 @@ public class BoardConfig {
     }
 
     public int getNumberOfGoodbeast() {
-        return numberOfGoodbeast;
+        return this.numberOfGoodbeast;
     }
 
     public int getNumberOfBadbeast() {
-        return numberOfBadbeast;
+        return this.numberOfBadbeast;
     }
 
     public XY getSize() {
