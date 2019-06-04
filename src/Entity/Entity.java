@@ -77,6 +77,10 @@ public abstract class Entity implements Comparable<Entity>{
     }
     public abstract EntityType getType();
 
+    public static List getIdList() {
+        return idList;
+    }
+
     @Override
     public String toString() {
        String s = String.format(("%s id: %s , energy: %s , position: %s"), getClass().getSimpleName(), this.id,this.energy,this.position);

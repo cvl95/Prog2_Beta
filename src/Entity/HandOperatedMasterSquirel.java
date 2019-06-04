@@ -1,12 +1,14 @@
 package Entity;
 
 import Core.EntityContext;
+import Entity.bots.MiniSquirelBot;
 import Movement.XY;
 import Util.ui.cosoleTest.console.Exceptions.SpawnException;
 
 public class HandOperatedMasterSquirel extends MasterSquirel {
     XY movementDirection;
     private int miniSquirelSpawn = 0;
+    MiniSquirel miniSquirel;
 
     public HandOperatedMasterSquirel(int energy, XY pos){
         super(1000,pos);
@@ -18,6 +20,10 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
 
     @Override
     public void nextStep(EntityContext context) {
+        if (miniSquirelSpawn != 0){
+            miniSquirelSpawn--;
+            context.spawnMini(miniSquirel);
+        }
 
         if(this.getStun() == 0){
             if(movementDirection == null){
@@ -44,22 +50,23 @@ public class HandOperatedMasterSquirel extends MasterSquirel {
     }
 
     public void setSpawn(int energy, EntityContext context) throws SpawnException {
+        XY freePosition = context.getFreeSurrounding(getPosition());
+
+        if (freePosition == null) {
+            throw new SpawnException("No place to spawn.");
+        }
         if (energy < 0) {
             throw new SpawnException("Cannot spawn a mini-squirrel with negative energy.");
         }
-        if (energy < MiniSquirel.MINIMUM_SPAWN_ENERGY) {
-            throw new SpawnException("At least " +  MiniSquirel.MINIMUM_SPAWN_ENERGY + " points of energy should be given.");
+        if (energy < MiniSquirel.MINIMUM_SPAWN_ENERGY && MiniSquirel.MINIMUM_SPAWN_ENERGY > getEnergy()){
+            this.miniSquirelSpawn = 1;
+             this.miniSquirel  = (MiniSquirelBot) createMinisquirel(MiniSquirel.MINIMUM_SPAWN_ENERGY, freePosition);
         }
         if (energy > getEnergy()) {
             throw new SpawnException("Not enough energy to spawn a mini-squirrel. Required: " +  MiniSquirel.MINIMUM_SPAWN_ENERGY);
         }
-        XY freePosition = context.getFreeSurrounding(getPosition());
-        if (freePosition == null) {
-            throw new SpawnException("No place to spawn.");
-        }
-        createMinisquirel(energy,freePosition);
+
+        miniSquirel = createMinisquirel(energy,freePosition);
     }
 
 }
-
-// Übergabe von Process input an handoperated

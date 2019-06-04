@@ -20,18 +20,12 @@ public class ControllerContextHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if (!method.getName().equals("getEntityAt")) {
-            String message = "* Calling method \"" + method.getName() + "\"";
-            if (args != null && args.length > 0) {
-                message += " with parameters " + Arrays.toString(args);
-            }
-            logger.log(Level.INFO, message);
-        }
         Object result = null;
-        try {
+        try{
             result = method.invoke(controllerContext, args);
-        } catch (InvocationTargetException ex) {
+        }catch (InvocationTargetException ex){
             logger.severe(ex.getTargetException().getMessage());
+            throw ex.getTargetException();
         }
         return result;
     }

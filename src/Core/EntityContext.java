@@ -79,7 +79,7 @@ public interface EntityContext {
 
         /**
          *
-         * @param position
+         * @param position is given from current entity which
          * @return returns true
          */
 
@@ -93,7 +93,7 @@ public interface EntityContext {
 
         /**
          *
-         * @param position
+         * @param position tested if given position in board is occupied by another beast
          * @return free xy is returned
          */
 
@@ -107,10 +107,21 @@ public interface EntityContext {
 
         /**
          *
-         * @param id
+         * @param id we get entity by giving it id
          * @return entity with given id
          */
         Entity getEntityByID(int id);
 
+        /**
+         *
+         * @return game board
+         */
+        Board getBoard();
+
+        /**
+         *
+         * @param miniSquirel minisquirel created from master is passed to flattened board
+         */
+        void spawnMini(MiniSquirel miniSquirel);
 
 }

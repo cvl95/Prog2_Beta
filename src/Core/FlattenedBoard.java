@@ -286,6 +286,7 @@ public class FlattenedBoard implements Boardview, EntityContext {
     @Override
     public void kill(Entity entity) {
             board.remove(entity);
+           // Entity.getIdList().remove(entity.getId());
             setPlace(entity.getPosition(),null);
             logger.info(entity + " was removed.");
     }
@@ -381,6 +382,13 @@ public class FlattenedBoard implements Boardview, EntityContext {
     public Board getBoard() {
         return board;
     }
+
+    @Override
+    public void spawnMini(MiniSquirel miniSquirel) {
+        board.add(miniSquirel);
+        setPlace(miniSquirel.getPosition(),miniSquirel);
+    }
+
     public XY getFreeSurrounding(XY postion){
         for(int i = -1; i < 3; i++){
             for(int j = -1; j < 3; j++){
@@ -436,5 +444,6 @@ public class FlattenedBoard implements Boardview, EntityContext {
         }
 
     }
+
 
 }

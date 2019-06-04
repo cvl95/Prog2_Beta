@@ -7,6 +7,7 @@ import Core.BoardConfig;
 import Entity.HandOperatedMasterSquirel;
 import GameEngine.*;
 import Util.ui.cosoleTest.FxUI;
+import Util.ui.cosoleTest.json.BotScoreReader;
 import Util.ui.cosoleTest.json.BotScoreWriter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -115,7 +116,17 @@ public class Launcher extends Application {
         gameMode = mode;
         boardConfig = new BoardConfig();
         board = new Board(boardConfig, gameMode);
-        state = new State(board);
+        if (gameMode == GameMode.AI) {
+            try {
+                state = new State(board, BotScoreReader.read(SCORES_FILE_LOCATION));
+            } catch (IOException ex) {
+                logger.log(Level.INFO, ex.getMessage(), ex);
+                state = new State(board);
+            }
+        }
+        else {
+            state = new State(board);
+        }
 
     }
     private static void startWithFile(GameMode mode){

@@ -2,6 +2,10 @@ package Core;
 import Entity.*;
 import Movement.XY;
 
+/**
+ * provides methods that help by rendering
+ */
+
 public interface Boardview {
     /**
      *

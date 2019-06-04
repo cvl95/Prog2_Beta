@@ -1,5 +1,6 @@
 package tests;
 
+import Core.Board;
 import Core.EntityContext;
 import Entity.*;
 import Movement.XY;
@@ -86,6 +87,17 @@ public class EntityContextMock implements EntityContext {
     public Entity getEntityByID(int id) {
         logger.log(Level.INFO, "getEntityByID" + id);
         return null;
+    }
+
+    @Override
+    public Board getBoard() {
+        logger.log(Level.INFO, "getBoard" );
+        return null;
+    }
+
+    @Override
+    public void spawnMini(MiniSquirel miniSquirel) {
+        logger.log(Level.INFO, "spawnMini" + miniSquirel);
     }
 
     @Override

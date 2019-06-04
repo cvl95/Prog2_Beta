@@ -2,6 +2,10 @@ package Commandos;
 
 import javafx.scene.input.KeyCode;
 
+/**
+ * Provides methods for movement of hand operated squirel
+ */
+
 public interface UserActions {
     @AsConsoleCommand(name = "help", helpText = "* list all commands",order = 0)
     public void help();
