@@ -22,8 +22,8 @@ public class BoardConfig {
     private static final int NUMBER_OF_GOOD_BEAST = 3;
     private static final int NUMBER_OF_BAD_BEAST = 3;
     private static final int NUMBER_OF_SQUIREL = 1;
-    private static final String[] MASTER_BOT_NAMES = {"MasterSquirelBot","MasterSquirelBot","MasterSquirelBot"};
-    private static final String[] MINI_SQUIREL_NAMES = {"MiniSquirelBot", "MiniSquirelBot", "MiniSquirelBot"};
+    private static final String[] MASTER_BOT_NAMES = {"MasterBotController","MasterBotController","MasterBotController"};
+    private static final String[] MINI_SQUIREL_NAMES = {"MiniBotController", "MiniBotController", "MiniBotController"};
 
 
     private final XY size;

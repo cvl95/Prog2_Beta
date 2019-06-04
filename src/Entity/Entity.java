@@ -7,7 +7,7 @@ import Movement.XY;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity {
+public abstract class Entity implements Comparable<Entity>{
 
     private final int id;
     private int energy;
@@ -81,5 +81,12 @@ public abstract class Entity {
     public String toString() {
        String s = String.format(("%s id: %s , energy: %s , position: %s"), getClass().getSimpleName(), this.id,this.energy,this.position);
         return s;
+    }
+    @Override
+    public int compareTo(Entity other) {
+        if (Entity.class.getSimpleName().equals(other.getClass().getSimpleName())) {
+            return this.getId() - other.getId();
+        }
+        return other.getId();
     }
 }

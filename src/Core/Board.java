@@ -11,10 +11,7 @@ import GameEngine.GameMode;
 import Movement.XY;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class Board {
@@ -24,8 +21,10 @@ public class Board {
     private Entity[][] gameField;
     private GameMode gameMode;
 
-    private EntitySet entitySet = new EntitySet();
+    private Set<Entity> entitySet = new TreeSet<>();
     private List<MasterSquirelBot> bots = new ArrayList<>();
+    private Set<Entity> addedEntities = new HashSet<>();
+    private Set<Entity> removedEntities = new HashSet<>();
     private HandOperatedMasterSquirel masterSquirel;
     XY size;
 
@@ -46,17 +45,17 @@ public class Board {
         Entity entity;
         for(int i = 0; i < max; i++ ){
             entity = new Wall(new XY(i,0));
-            entitySet.addEntity(entity);
+            entitySet.add(entity);
             gameField[i][0] = entity;
             entity = new Wall(new XY(i,max-1));
-            entitySet.addEntity(entity);
+            entitySet.add(entity);
             gameField[i][max-1] = entity;
 
             entity = new Wall(new XY(0,i));
-            entitySet.addEntity(entity);
+            entitySet.add(entity);
             gameField[0][i] = entity;
             entity = new Wall(new XY(max-1,i));
-            entitySet.addEntity(entity);
+            entitySet.add(entity);
             gameField[max-1][i] = entity;
 
         }
@@ -70,13 +69,14 @@ public class Board {
         MasterSquirel player = null;
         if(gameMode == GameMode.SINGLE_PLAYER){
             player = new HandOperatedMasterSquirel(1000, xy);
-            entitySet.addEntity(player);
+            this.masterSquirel = (HandOperatedMasterSquirel) player;
+            entitySet.add(player);
             gameField[xy.getX()][xy.getY()] =  player;
         }else{
             Map<String, Integer> nameCountMap = new HashMap<>();
             // uber der Factory laufen
             for (int j = 0; j < boardConfig.getNumberOfSquirels(); j++) {
-                String packageName = "Prog2_Beta.src.Entity.bots";
+                String packageName = "Entity.bots";
                 String masterBotClassName = packageName + "." + boardConfig.getMasterBotNames().get(j);
                 String miniBotClassName = packageName + "." + boardConfig.getMiniBotnames().get(j);
                 String botName = masterBotClassName;
@@ -85,8 +85,8 @@ public class Board {
                 }
                 xy  = findFreePlace(xy);
                 try {
-                    BotController masterBotController = (BotController)  Class.forName(masterBotClassName).newInstance();
-                    BotController miniBotController = (BotController) Class.forName(miniBotClassName).newInstance();
+                    BotController masterBotController = (BotController)  Class.forName(masterBotClassName).getDeclaredConstructor().newInstance();
+                    BotController miniBotController = (BotController) Class.forName(miniBotClassName).getDeclaredConstructor().newInstance();
                     MasterSquirelBot masterBot = new MasterSquirelBot(MasterSquirel.START_ENERGY, xy, botName, new BotControllerFactory() {
                         @Override
                         public BotController createMasterBotController() {
@@ -99,12 +99,12 @@ public class Board {
                         }
                     });
 
-                entitySet.addEntity(masterBot);
+                entitySet.add(masterBot);
                 bots.add(masterBot);
                 int count = nameCountMap.getOrDefault(masterBotClassName, 0);
                 nameCountMap.put(masterBotClassName, count + 1);
-            }catch (ClassNotFoundException | IllegalAccessException | InstantiationException  ex) {
-                    logger.severe(ex.getMessage());
+            }catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex) {
+                    logger.severe(ex.toString());
                 }
                 }
             }
@@ -112,28 +112,28 @@ public class Board {
         for(int i = 1; i < boardConfig.getNumberOfBadbeast(); i++ ){
             xy  = findFreePlace(xy) ;
             BadBeast badBeast = new BadBeast(100, xy);
-            entitySet.addEntity(badBeast);
+            entitySet.add(badBeast);
             gameField[xy.getX()][xy.getY()] = badBeast;
         }
         //goodBeast spawn
         for(int i = 1; i < boardConfig.getNumberOfGoodbeast(); i++ ){
             xy = findFreePlace(xy);
             GoodBeast goodBeast = new GoodBeast(100, xy);
-            entitySet.addEntity(goodBeast);
+            entitySet.add(goodBeast);
             gameField[xy.getX()][xy.getY()] = goodBeast;
         }
         // badPlant spawn
         for(int i = 1; i < boardConfig.getNumberOfBadplants(); i++ ){
             xy = findFreePlace(xy);
             BadPlant badPlant = new BadPlant(-100,xy);
-            entitySet.addEntity(badPlant);
+            entitySet.add(badPlant);
             gameField[xy.getX()][xy.getY()] = badPlant;
         }
         //goodPlant spawn
         for(int i = 1; i < boardConfig.getNumberOfGoodplants(); i++ ){
             xy = findFreePlace(xy);
             GoodPlant goodPlant = new GoodPlant(50, xy);
-            entitySet.addEntity(goodPlant);
+            entitySet.add(goodPlant);
             gameField[xy.getX()][xy.getY()] = goodPlant;
 
         }
@@ -141,7 +141,7 @@ public class Board {
         for(int i = 1; i < boardConfig.getNumberOfWalls(); i++ ){
             xy = findFreePlace(xy);
             Wall wall = new Wall(-10, xy);
-            entitySet.addEntity(wall);
+            entitySet.add(wall);
             gameField[xy.getX()][xy.getY()] = wall;
         }
     }
@@ -165,11 +165,27 @@ public class Board {
         return bots;
     }
 
+    public Set<Entity> getAddedEntities() {
+        return addedEntities;
+    }
+
+    public Set<Entity> getRemovedEntities() {
+        return removedEntities;
+    }
+    public void add(Entity entity) {
+        addedEntities.add(entity);
+    }
+
+    public void remove(Entity entity) {
+        removedEntities.add(entity);
+    }
+
+
     public XY getSize(){
         return size;
     }
 
-    public EntitySet getEntitySet() {
+    public Set<Entity> getEntitySet() {
         return entitySet;
     }
 
@@ -177,8 +193,8 @@ public class Board {
         return boardConfig;
     }
 
-    public Entity[][] getGameField() {
-        return this.gameField;
+    public HandOperatedMasterSquirel getMasterSquirel() {
+        return masterSquirel;
     }
 
     /**
